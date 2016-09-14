@@ -1,0 +1,289 @@
+using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Collections.Generic;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+
+public partial class UserControls_Common_uctReservationSummary : BaseUserControl {
+
+    #region Properties
+    
+    private DataTable m_dtGuests;
+	private DataTable m_dtRooms;
+	private DataTable m_dtTours;
+	private DataTable m_dtTransfers;
+
+	private int m_intHotelID;
+	private string m_strHotelName;
+	private string m_strHotelClass;
+	private DateTime m_dArrivalDate;
+	private DateTime m_dDepartureDate;
+	private string m_strReservationStatus;
+
+	private bool hasRoomReservation;
+	private bool hasTourReservation;
+	private bool hasTransferReservation;
+
+    #endregion
+
+    protected void Page_Load(object sender, EventArgs e) {
+        if (!IsPostBack) {
+            
+            GetSessionData();       // Sessiondaki Bilgileri Al        
+
+            RemoveTempSession();    // Geçici session verilerini sil   
+
+            BindToSession();        // Genel Session Verisini Oluþtur  
+
+            //Initialize();           // Açýlýþ Bilgilerinin Yükle       
+
+        }
+    }
+
+    #region ÝÞLEMLER
+    #endregion
+
+    private void GetSessionData() {
+        //Hotel bilgilerini al.		
+        this.m_intHotelID = this.SessRoot.CurrentHotelID;
+        this.m_strHotelName = this.SessRoot.CurrentHotelName;
+
+        //TODO: [m_strHotelClass] sessiondan alýnacak, o zaman gerçek deðeriyle deðiþtir
+        this.m_strHotelClass = "3";
+        this.m_dArrivalDate = this.SessRoot.ArrivalDate;
+        this.m_dDepartureDate = this.SessRoot.DepartureDate;
+
+        //TODO: [m_strReservationStatus] sessiondan alýnacak, o zaman gerçek deðeriyle deðiþtir
+        this.m_strReservationStatus = "On Request";
+
+        this.m_dtGuests = (DataTable)Session["Guest"];
+
+        this.hasRoomReservation = Session["Room"] != null && ((DataTable)Session["Room"]).Rows.Count > 0;
+        if (this.hasRoomReservation)
+            this.m_dtRooms = (DataTable)Session["Room"];
+
+        this.hasTourReservation = Session["Tour"] != null && ((DataTable)Session["Tour"]).Rows.Count > 0;
+        if (this.hasTourReservation)
+            this.m_dtTours = (DataTable)Session["Tour"];
+
+        this.hasTransferReservation = Session["Transfer"] != null && ((DataTable)Session["Transfer"]).Rows.Count > 0;
+        if (this.hasTransferReservation)
+            this.m_dtTransfers = (DataTable)Session["Transfer"];        
+    }
+
+    private void RemoveTempSession() {
+        Session.Remove("Room");
+        Session.Remove("Tour");
+        Session.Remove("Transfer");
+        Session.Remove("Guest");
+    }
+
+    private void BindToSession() {
+        //Genel session verisini oluþtur.
+        ArrayList arrReservations;
+        if (Session != null && Session["Reservations"] != null)
+            arrReservations = ((ArrayList)Session["Reservations"]);
+        else
+            arrReservations = new ArrayList();
+
+        Dictionary<string, object> resDetails = new Dictionary<string, object>();
+        resDetails.Add("HotelID", this.m_intHotelID);
+        resDetails.Add("HotelName", this.m_strHotelName);
+        resDetails.Add("HotelClass", this.m_strHotelClass);
+        resDetails.Add("ArrivalDate", this.m_dArrivalDate);
+        resDetails.Add("DepartureDate", this.m_dDepartureDate);
+        resDetails.Add("BookingStatus", this.m_strReservationStatus);
+        resDetails.Add("Guests", this.m_dtGuests);
+        resDetails.Add("Room", this.m_dtRooms);
+        resDetails.Add("Tour", this.m_dtTours);
+        resDetails.Add("Transfer", this.m_dtTransfers);
+
+        arrReservations.Add(resDetails);
+
+        Session.Add("Reservations", arrReservations);
+    }
+
+    protected void btnCheckOut_Click(object sender, EventArgs e) {
+    }
+
+/*
+
+
+
+	private void Initialize() {
+		pnlHotelInfo.Visible = hasRoomReservation;
+		if(hasRoomReservation) {
+			ltlHotelName.Text = this.m_strHotelName;
+			ltlHotelStars.Text = HOTOMOTO.COM.ReturnClasses.GetHotelClassFormat(this.m_strHotelClass);
+			ltlArrivalDate.Text = this.m_dArrivalDate.ToShortDateString();
+			ltlDepartureDate.Text = this.m_dDepartureDate.ToShortDateString();
+			ltlNights.Text = (this.m_dDepartureDate - this.m_dArrivalDate).Days.ToString();
+			ltlReservationStatus.Text = this.m_strReservationStatus;
+
+			rptReservedRooms.DataSource = GenerateRoomDataSource();
+			rptReservedRooms.DataBind();
+		}
+
+		pnlTour.Visible = hasTourReservation;
+		if(hasTourReservation) {
+			rptTours.DataSource = GenerateTourDataSource();
+			rptTours.DataBind();
+		}
+
+		pnlTransfer.Visible = hasTransferReservation;
+		if(hasTransferReservation) {
+			rptTransfers.DataSource = GenerateTransferDataSource();
+			rptTransfers.DataBind();
+		}
+	}
+
+	private DataView GenerateRoomDataSource() {
+		float m_fHotelTotalPrice = 0.0F;
+
+		DataTable dtReservedRooms = new DataTable("ReservedRooms");
+		dtReservedRooms.Columns.AddRange(new DataColumn[] { 
+	        new DataColumn("RoomNumber"), new DataColumn("RoomID"), new DataColumn("RoomName"), new DataColumn("BedType"),
+	        new DataColumn("Adults"), new DataColumn("Children"), new DataColumn("GuestName"), new DataColumn("PricePP"), 
+	        new DataColumn("RoomTotalPrice")
+	    });
+
+		foreach(DataRow dr in this.m_dtRooms.Rows) {
+
+			//Get guest name from guests datatable
+			string roomOwner = string.Empty;
+			string roomRowID = string.Empty;
+			foreach(DataRow drGuest in this.m_dtGuests.Rows) {
+
+				if(roomRowID == drGuest["RoomRowID"].ToString())
+					continue;
+				roomRowID = drGuest["RoomRowID"].ToString();
+
+				if(dr["RowID"].ToString() == drGuest["RoomRowID"].ToString()) {
+					roomOwner = drGuest["GuestName"].ToString();
+				}
+			}
+
+			//Get adult and children count and childrens' ages from reservation.
+			int adultCount = 0;
+			int childCount = 0;
+			foreach(DataRow drRoom in this.SessRoot.RoomsDetail.Rows) {
+				if(dr["RowID"].ToString() == drRoom["RoomIndex"].ToString()) {
+					adultCount = int.Parse(drRoom["AdultCount"].ToString());
+					childCount = int.Parse(drRoom["ChildCount"].ToString());
+					break;
+				}
+			}
+
+			m_fHotelTotalPrice += float.Parse(dr["RoomTotalPrice"].ToString());
+
+			dtReservedRooms.Rows.Add(dr["RowID"], dr["RoomID"], dr["RoomName"], dr["BedTypeName"], adultCount, childCount, roomOwner, dr["PricePerson"], dr["RoomTotalPrice"]);
+		}
+
+		this.ltlHotelTotalPrice.Text = m_fHotelTotalPrice.ToString("$ 0.00");
+
+		return dtReservedRooms.DefaultView;
+	}
+	private DataView GenerateTourDataSource() {
+		DataTable dtTourReservations = new DataTable("ReservedTours");
+		dtTourReservations.Columns.AddRange(new DataColumn[] { 
+	        new DataColumn("TourNumber"), new DataColumn("TourID"), new DataColumn("TourType"), new DataColumn("GuestCount"), 
+	        new DataColumn("TourName"), new DataColumn("TourDate"), new DataColumn("TourPrice"), new DataColumn("TourTotalPrice")
+	    });
+
+		int i = 1;
+		foreach(DataRow dr in this.m_dtTours.Rows) {
+
+			string tourRowID = string.Empty;
+
+			int visitorCount = 0;
+
+			foreach(DataRow drGuest in this.m_dtGuests.Rows) {
+				if(drGuest["T" + i].ToString() != "false")
+					visitorCount++;
+			}
+
+			float tourPricePP = float.Parse(dr["TourPrice"].ToString());
+			float tourPriceAll = tourPricePP * visitorCount;
+
+			dtTourReservations.Rows.Add(dr["RowID"], dr["TourID"], dr["TourType"], visitorCount, dr["TourName"], dr["TourDate"], tourPricePP, tourPriceAll);
+		}
+
+		return dtTourReservations.DefaultView;
+	}
+	private DataView GenerateTransferDataSource() {
+		DataTable dtTransfers = new DataTable("ReservedTransfers");
+		dtTransfers.Columns.AddRange(new DataColumn[] {
+	        new DataColumn("TransferDirection"), new DataColumn("TransferType"), new DataColumn("GuidancePrice"), new DataColumn("Price"),
+	        new DataColumn("PortID"), new DataColumn("PortName"), new DataColumn("Notes"), new DataColumn("Date")
+	    });
+
+		foreach(DataRow dr in this.m_dtTransfers.Rows) {
+			dtTransfers.Rows.Add(dr["TransferDirection"], dr["TransferType"], dr["GuidancePrice"], dr["Price"], dr["PortID"],
+				dr["PortName"], dr["Notes"], dr["Date"]);
+		}
+
+		return dtTransfers.DefaultView;
+	}
+
+	protected void btnCheckOut_Click(object sender, EventArgs e) {
+
+		//HOTOMOTO.BUS.Enumerations.ReservationTypes resType;
+		//resType = HOTOMOTO.BUS.Enumerations.ReservationTypes.Hotel & HOTOMOTO.BUS.Enumerations.ReservationTypes.Tour;
+
+		//HOTOMOTO.APEX.Reservations res = new HOTOMOTO.APEX.Reservations();
+		//res.BookingDate = DateTime.Now;
+		//res.BookingStateID = 1;
+		//res.ReservationType = (int)resType;
+		//res.CustomerID = this.SessRoot.CustomerID;
+		//res.UserID = this.SessRoot.UserID;
+		//res.TotalPriceEUR = 400.0;
+		//res.TotalPriceUSD = 500.0;
+		//res.TotalPriceYTL = 700.0;
+		//res.TaxRatio = 18.0;
+		//res.TaxYTL = (res.TotalPriceYTL / 100.0) * res.TaxRatio;
+		//int reservationID = res.Save();
+
+		//foreach(DataRow dr in this.m_dtRooms.Rows) {
+		//    HOTOMOTO.APEX.RoomReservations rroom = new HOTOMOTO.APEX.RoomReservations();
+		//    rroom.RoomID = Convert.ToInt32(dr["RoomID"]);
+		//    rroom.HotelID = this.SessRoot.CurrentHotelID;
+		//    rroom.CustomerID = this.SessRoot.CustomerID;ReservationFinish.aspx
+		//    rroom.CurrencyID = (int)this.SessRoot.CurrencyID;
+		//    rroom.BookingStateID = res.BookingStateID;
+		//    rroom.BookingDate = res.BookingDate;
+		//    rroom.ReservationStartDate = this.SessRoot.ArrivalDate;
+		//    rroom.ReservationEndDate = this.SessRoot.DepartureDate;
+		//    rroom.ReservationID = reservationID;
+		//    rroom.Save();
+		//}
+
+		//foreach(DataRow dr in this.m_dtTours.Rows) {
+		//    HOTOMOTO.APEX.TourReservations rtour = new HOTOMOTO.APEX.TourReservations();
+		//    rtour.TourID = Convert.ToInt32(dr["TourID"]);
+		//    rtour.BookingStateID = res.BookingStateID;
+		//    rtour.BookingDate = res.BookingDate;
+		//    rtour.ReservationStartDate = this.SessRoot.ArrivalDate;
+		//    rtour.ReservationEndDate = this.SessRoot.DepartureDate;
+		//    rtour.ReservationID = reservationID;
+		//    rtour.PerGuestPrice = 90.0;
+		//    rtour.hasFlight = false;
+		//    rtour.FlightPrice = 1;
+		//    rtour.hasAccomodation = false;
+		//    rtour.AccomodationPrice = 1;
+		//    rtour.Save();
+		//}
+
+		//Session.Add("ReservationID", reservationID);
+
+		Session.Add("ReservationID", 3);
+		Response.Redirect("ReservationFinish.aspx");
+	}
+*/
+
+}

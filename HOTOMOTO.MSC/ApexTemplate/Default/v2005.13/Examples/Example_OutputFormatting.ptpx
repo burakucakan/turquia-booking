@@ -1,0 +1,79 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>OutputFormatting</name>
+    <description>Demonstrates the output formatting.</description>
+    <author>ApexSQL</author>
+    <legal>Copyright (C) 1999-2007 ApexSQL LLC. All rights reserved.</legal>
+    <ExpectedObjectTypes>Any</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>Documentation</output>
+    <scripting>CSharp</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>MultiFile</Mode>
+    <Encoding>20127</Encoding>
+  </outputfile>
+  <Import>
+    <includes />
+    <Namespaces />
+    <Assemblies />
+    <Templates />
+  </Import>
+  <templatecode><![CDATA[<%
+//------------------------------------------------------------ 
+//	TEMPLATE : Output Formatting example
+//	PURPOSE  : Demonstrate the output formatting
+//	EXPECTS  : TABLES
+//	OUTPUT   : .txt
+//	AUTHOR   : ApexSQL 
+//	MODIFIED : February 2007
+//	NOTES
+//------------------------------------------------------------
+%>
+
+Database: <%= Code.Database.Name%>
+
+Tables ( <%= Code.Database.Tables.Count%> item(s) )
+<%
+
+// increase the indent
+Out.Indent();
+
+foreach(Table table in Code.Database.Tables)
+{
+	// print a formatting row to output (name of table)
+	Out.WriteLine("{0}: {1}", table.ObjectType, table.QualifiedName);
+	
+	// another way to increase the indent
+	Out.IndentLevel += 1;
+	
+	// print all fields from table in single line
+	for(int i = 0; i<table.Columns.Count; i++)
+	{		
+		Out.Write(table.Columns[i].Name);
+		if(i != table.Columns.Count-1)
+		{
+			Out.Write(", ");
+		}		
+	}
+	
+	// another way to decrease the indent
+	Out.IndentLevel -= 1;
+	
+	Out.WriteLine("");
+}
+
+// decrease the indent
+Out.Unindent();
+
+%>
+
+]]></templatecode>
+</template>

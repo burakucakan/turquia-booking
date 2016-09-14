@@ -1,0 +1,114 @@
+using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+using System.Text;
+using System.Data.SqlClient;
+
+public partial class uTabMenu : BaseUserControl
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack) {
+            PopulateTabMenu(this.SessRoot.UserPermissionList);
+        }
+    }
+
+    private void PopulateTabMenu(DataTable dtTabs)
+    {
+        StringBuilder sbTabs = new StringBuilder();
+        StringBuilder sbSub = new StringBuilder();
+        int TabNo = -1;
+
+        sbTabs.Append("<table style='border-collapse: collapse;'>");
+        sbTabs.Append("<tr>");
+
+        if (dtTabs.Rows.Count > 0) {
+
+            for (int i = 0; i < dtTabs.Rows.Count; i++)
+            {
+                if (Convert.ToInt32(dtTabs.Rows[i]["isHidden"]) == 0) {
+
+                    if (dtTabs.Rows[i]["ParentID"].ToString() == "0") {
+                        TabNo++;
+
+                        sbTabs.Append("<td id=Tab");
+                        sbTabs.Append(TabNo.ToString());
+                        sbTabs.Append(" onmouseover='TabMenu(");
+                        sbTabs.Append(TabNo.ToString());
+                        //sbTabs.Append(", 1)' onmouseout='TabMenu(");
+                        //sbTabs.Append(TabNo.ToString());
+                        //sbTabs.Append(", 0)'>");
+                        
+                        sbTabs.Append(")'>");
+
+                        sbTabs.Append("<table>");
+                        sbTabs.Append("<tr>");
+                        sbTabs.Append("<td rowspan='3' class='TabLeft'></td>");
+                        sbTabs.Append("<td id='TabTop");
+                        sbTabs.Append(TabNo.ToString());
+                        sbTabs.Append("' class='TabTop'></td>");
+                        sbTabs.Append("<td rowspan='3' class='TabRight'></td>");
+                        sbTabs.Append("</tr>");
+                        sbTabs.Append("<tr>");
+                        sbTabs.Append("<td id='TabBack");
+                        sbTabs.Append(TabNo.ToString());
+                        sbTabs.Append("' class='Tab clBlack'>");
+                        sbTabs.Append(dtTabs.Rows[i]["Title"].ToString());
+                        sbTabs.Append("</td>");
+                        sbTabs.Append("</tr>");
+                        sbTabs.Append("<tr>");
+                        sbTabs.Append("<td id='TabBottom");
+                        sbTabs.Append(TabNo.ToString());
+                        sbTabs.Append("' class='TabBottom'></td>");
+                        sbTabs.Append("</tr>");
+                        sbTabs.Append("</table>");
+                        sbTabs.Append("</td>");
+                    }//ParentID = 0
+                    else {
+
+                        sbSub.Append("<div id='SubMenu");
+                        sbSub.Append(TabNo.ToString());
+                        sbSub.Append("' class='divSubMenu'><table><tr>");
+
+                        while ((dtTabs.Rows[i]["ParentID"].ToString() != "0") && (Convert.ToInt32(dtTabs.Rows[i]["isHidden"]) == 0)) {
+                            sbSub.Append("<td>");
+                            sbSub.Append("<a class='SubMenuItem' href='");
+                            sbSub.Append(dtTabs.Rows[i]["Value"].ToString());
+                            sbSub.Append("'>");
+                            sbSub.Append(dtTabs.Rows[i]["Title"].ToString());
+                            sbSub.Append("</a>");
+                            sbSub.Append("</td>");
+                            sbSub.Append("<td class='Seperator'></td>");
+                            i++;
+                            if (dtTabs.Rows.Count == i) {
+                                break;
+                            }
+                        }
+
+                        sbSub.Append("</tr></table></div>");
+                        i--;
+                    }//ParentID = 0 else
+
+                }//isHidden false ise
+            }
+
+        }
+        else {
+            sbTabs.Append("<td>Menu Not Found!..</td>");
+        }
+
+        sbTabs.Append("</tr>");
+        sbTabs.Append("</table>");
+        dvServTab.InnerHtml = sbTabs.ToString();
+
+        dvSubMenu.InnerHtml = sbSub.ToString();
+    }
+
+}

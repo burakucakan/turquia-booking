@@ -1,0 +1,91 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>Example_Index</name>
+    <description>Illustrates Index Object</description>
+    <author>ApexSQL</author>
+    <legal>Copyright (C) 1999-2007 ApexSQL LLC. All rights reserved.</legal>
+    <ExpectedObjectTypes>Table</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>Documentation</output>
+    <scripting>VB_NET</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>MultiFile</Mode>
+    <Encoding>20127</Encoding>
+  </outputfile>
+  <Import>
+    <includes />
+    <Namespaces />
+    <Assemblies />
+    <Templates />
+  </Import>
+  <templatecode><![CDATA[<%
+'------------------------------------------------------------ 
+'	TEMPLATE : Example_Index.ptpx
+'	PURPOSE  : Illustrates properties of Index object
+'	MODEL    : objCode.Database.ActiveTable.Indexes
+
+'	EXPECTS  : TABLE
+'	OUTPUT   : Generic Text Output
+'	AUTHOR   : ApexSQL
+'	SCRIPT	 : VB.NET
+'	LANGUAGE : Documentation
+'	MODIFIED : Feb 2007
+'	NOTES    :
+' ------------------------------------------------------------ 
+
+Dim objTable As Table = Code.Database.ActiveTable ' this is the currently selected table from the user interface
+
+' is table selected?
+If objTable Is Nothing Then
+
+	Out.WriteLine("There's no selected table.")
+	Return
+
+End If
+
+Out.WriteLine("TABLE INFORMATION")
+Out.WriteLine("============================")
+
+With objTable
+
+	Out.WriteLine("Table Name:	{0}", .Name)
+	Out.WriteLine("Table Owner: {0}", .Owner)
+	Out.WriteLine()  
+
+	Out.WriteLine("INDEX INFORMATION")
+	Out.WriteLine("============================")
+	Out.WriteLine()
+
+	For Each objIndex As Index In .Indexes
+
+		With objIndex			
+			Out.WriteLine("Name:			{0}", .Name)
+			Out.WriteLine("Fill Factor:		{0}", .FillFactor)
+			Out.WriteLine("IsFullTextKey:	{0}", .IsFullTextKey)
+			Out.WriteLine("NoRecompute:		{0}", .NoRecompute)
+			Out.WriteLine("ParentName:		{0}", .ParentName)
+			Out.WriteLine("ParentOwner:		{0}", .ParentOwner)
+			Out.WriteLine("Script:")
+			Out.WriteLine(.Script)
+			Out.WriteLine("------------------------------")
+		End With
+
+		For n As Integer = 0 To objIndex.IndexedColumns.Count-1
+			Out.WriteLine("Indexed Field({0}): {1}", n+1, objIndex.IndexedColumns(n).Name)
+		Next
+		
+		Out.WriteLine()
+
+	Next
+
+End With
+%>]]></templatecode>
+</template>

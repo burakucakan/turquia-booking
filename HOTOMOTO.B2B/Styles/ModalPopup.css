@@ -1,0 +1,57 @@
+﻿#dvDeActive {
+	display: none;
+	background-color: #aaa6a6; 
+	position: absolute; 
+	width: 100%; 
+	height: 200%; 
+	z-index: 10;
+	left: 0px;
+	top: 0px;
+	filter: alpha(opacity: 45);
+	-moz-opacity: 0.45;
+}
+
+.Opacity {
+	filter: alpha(opacity: 35);
+	-moz-opacity: 0.35;
+}
+
+#TableBack {
+    width: 365px;
+    border-collapse: collapse;
+    background-color: #f2f1f7;
+    border: 1px solid #BFEAF1;
+    border-spacing: 0px 0px;   
+}
+
+#Header {
+    height: 24px;
+    background-color: #aca5cb;
+    cursor: pointer;
+}
+
+.HeaderText {
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
+
+.MessageText {
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #000000;
+}
+
+.btnOK {
+	font-family: Trebuchet MS;
+	font-size: 8pt;
+	color: #2B6E9D;
+	border: 1px solid #BDD2E4;
+	padding: 3px 4px 1px 4px;
+	background-image: url('../Images/Backgrounds/ButtonBack.gif');
+	background-repeat: repeat-x;
+	cursor: pointer;
+	padding: 0px 18px;
+}

@@ -1,0 +1,114 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>Example_Database</name>
+    <description>Illustrates use of Database Object</description>
+    <author>ApexSQL</author>
+    <legal>Copyright (C) 1999-2007 ApexSQL LLC. All rights reserved.</legal>
+    <ExpectedObjectTypes>Any</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>Documentation</output>
+    <scripting>CSharp</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>MultiFile</Mode>
+    <Encoding>20127</Encoding>
+  </outputfile>
+  <Import>
+    <includes />
+    <Namespaces />
+    <Assemblies />
+    <Templates />
+  </Import>
+  <templatecode><![CDATA[<%
+//------------------------------------------------------------ 
+//	TEMPLATE : Example_Database.ptpx
+//	PURPOSE  : Illustrates properties of Database object
+//	MODEL    : Database
+//	EXPECTS  : N/A - this returns data directly from Database
+//	OUTPUT   : Generic Text Output
+//	AUTHOR   : ApexSQL
+//	SCRIPT	 : C#
+//	LANGUAGE : Documentation                                        
+//	MODIFIED : April 2007
+// ------------------------------------------------------------ 
+
+Database db = Code.Database;
+
+Out.WriteLine("Connection String:{0}{1}", '\t', db.ConnectionString);
+Out.WriteLine("Database Name:" + "\t" + db.Name);
+Out.WriteLine("Database Owner:" + "\t" + db.Owner);
+Out.WriteLine("Database Collation:" + "\t" + db.Collation);
+Out.WriteLine("User:" + "\t" + db.User);
+
+Out.WriteLine("");
+Out.WriteLine("");
+		
+Out.Write("ActiveTable:\t");
+if(null != db.ActiveTable)
+{
+	Out.Write(db.ActiveTable);
+}
+Out.WriteLine("");
+
+Out.Write("ActiveProcedure:\t");
+if(null != db.ActiveProcedure)
+{
+	Out.Write(db.ActiveProcedure);
+}
+Out.WriteLine("");
+		
+Out.Write("ActiveView:\t");
+if(null != db.ActiveView)
+{
+	Out.Write(db.ActiveView);
+}
+
+Out.WriteLine("");
+Out.WriteLine("");
+
+Out.WriteLine("TABLES");
+foreach(Table table in db.Tables)
+{
+	Out.WriteLine("Table Name:" + "\t" + table.Name);
+}
+Out.WriteLine("");
+
+Out.WriteLine("VEIWS");
+foreach(View view in db.Views)
+{
+    Out.WriteLine("View Name:" + "\t" + view.Name);
+}
+
+Out.WriteLine("");
+%>
+PROCEDURES
+<%
+foreach(Procedure proc in db.Procedures)
+{
+    Out.WriteLine("Procedure Name:" + "\t" + proc.Name);
+}
+Out.WriteLine("");
+%>
+SCHEMAS
+<%
+foreach(Schema schema in db.Schemas)
+{
+    Out.WriteLine("Schema Name:" + "\t" + schema.Name);
+}
+Out.WriteLine("");
+%>
+USERS
+<%
+foreach(User user in db.Users)
+{
+	Out.WriteLine("User:" + "\t" + user.Name);
+}
+%>]]></templatecode>
+</template>

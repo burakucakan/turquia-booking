@@ -1,0 +1,44 @@
+.Tbl0 {
+	width: 100%;
+	border-collapse: collapse;;
+	border-spacing: 0px 0px;
+}
+
+.VSpace {
+	height: 14px;
+}
+
+.HSpace {
+	height: 18px;
+}
+
+.BottomBorder {
+	height: 1px;
+	background-color: #cad6e5;
+}
+
+.Bottom {	
+	height: 57px;
+	background-color: #FFFFFF;
+	background-image: url('../Images/Backgrounds/BottomBack.gif');
+	background-repeat: repeat-x;
+	padding: 12px 12px 12px 12px; 	
+}
+
+.CursorHand {
+	cursor: pointer;	
+}
+
+.HrTd {
+	background-color: #C8D7EA;
+	height: 10px;
+}
+
+.Scroll {
+	SCROLLBAR-HIGHLIGHT-COLOR: #D9D6CA;
+	SCROLLBAR-SHADOW-COLOR: #D9D6CA;
+	SCROLLBAR-ARROW-COLOR: #FFFFFF;
+ 	SCROLLBAR-TRACK-COLOR: #EBEBEB;
+	SCROLLBAR-DARKSHADOW-COLOR: #DFDFD5;
+  	SCROLLBAR-BASE-COLOR: #DFDFD5;
+}

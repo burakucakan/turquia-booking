@@ -1,0 +1,125 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>Example_Keys</name>
+    <description>This demonstrates the use of the KEY property which is a property of the Table Object.</description>
+    <author>ApexSQL</author>
+    <legal>Copyright (C) 1999-2007 ApexSQL LLC. All rights reserved.</legal>
+    <ExpectedObjectTypes>Table</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>Documentation</output>
+    <scripting>VB_NET</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>MultiFile</Mode>
+    <Encoding>20127</Encoding>
+  </outputfile>
+  <Import>
+    <includes />
+    <Namespaces />
+    <Assemblies />
+    <Templates />
+  </Import>
+  <templatecode><![CDATA[<%
+'------------------------------------------------------------ 
+'	TEMPLATE : Example_Keys.ptpx
+'	PURPOSE  : This demonstrates the use of the KEY property which is a property of the Table Object  
+'	MODEL    : Code.Database.ActiveTable.Keys
+'	EXPECTS  : TABLES
+'	OUTPUT   : Generic Text Output
+'	AUTHOR   : ApexSQL
+'	SCRIPT	 : VB.NET 
+'	LANGUAGE : Documentation                                        
+'	MODIFIED : Feb 2007
+' ------------------------------------------------------------ 
+
+' this is the currently selected table from the user interface
+Dim objTable As Table = Code.Database.ActiveTable
+
+If Nothing Is objTable Then
+	Out.WriteLine("There's no selected table.")
+	Return
+End If
+
+%>
+"TABLE INFORMATION"
+============================
+<%
+With objTable
+    
+	Out.WriteLine("Table Name:  {0}", .Name)
+    Out.WriteLine("Table Owner: {0}", .Owner)	
+
+	For Each objKey As Key In objTable.Keys
+        
+		With objKey
+		
+			Out.WriteLine
+			Out.WriteLine("KEY INFORMATION for {0}", .Name)
+			Out.WriteLine("============================")
+			Out.WriteLine
+			Out.WriteLine("Name:        {0}", .Name)
+			Out.WriteLine("Object Type: {0}", .ObjectType)
+			Out.WriteLine
+			Out.WriteLine("Script: ")
+			Out.WriteLine
+			Out.WriteLine( .Script )
+			
+			If Not .ReferencedKey Is Nothing  Then
+
+				Out.WriteLine("Referenced Table:            {0}", .ReferencedTable)
+				Out.WriteLine("Referenced Constraint:       {0}", .ReferencedKey)
+				Out.WriteLine("Referenced Constraint Type:  {0}", .ReferencedKey.ObjectType)
+				
+				Out.Indent
+				
+				For Each column As Column In .KeyColumns
+					' this is a key field
+					Out.WriteLine("Key Field:     {0}", column.Name)
+					' this is a referenced field from referenced table
+					Out.WriteLine("Ref Key Field: {0}", column.ReferencedColumn(.Name).Name)
+				Next
+			
+				Out.Unindent				
+				Out.WriteLine
+				
+			End If 
+			
+			Out.WriteLine
+			
+			Out.WriteLine("Enabled:     {0}", .IsEnabled)
+			Out.WriteLine("Clustered:   {0}", .Clustered)
+			Out.WriteLine("ExcludeReplication: {0}", .ExcludeReplication)
+			Out.WriteLine("FillFactor:  {0}", .FillFactor)
+			Out.WriteLine("ParentName:  {0}", .ParentName)
+			Out.WriteLine("ParentOwner: {0}", .ParentOwner)
+			Out.WriteLine("KeyType:     {0}", .KeyType)
+					
+		End With
+				
+		Out.WriteLine
+		Out.Indent
+		Out.WriteLine("KEY FIELDS")
+		Out.WriteLine("============================")
+		
+		For n As Integer = 0 To objKey.KeyColumns.Count-1
+			Out.WriteLine("Key Column({0}): {1}", n+1, objKey.KeyColumns(n).Name)			
+		Next
+
+		Out.Unindent
+		Out.WriteLine
+				
+		Out.WriteLine("------------------------------------------------------------")
+		Out.WriteLine
+		Out.WriteLine                
+    Next
+    
+End With
+%>]]></templatecode>
+</template>

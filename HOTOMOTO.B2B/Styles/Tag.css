@@ -1,0 +1,67 @@
+body {
+	margin: 0px 0px 0px 0px;
+	background-color: #f4f5f3;
+	color: #323c1b;
+}
+
+table {
+	font-family: Tahoma;
+	font-size: 11px;
+	border-collapse: collapse;
+	border-spacing: 0px 0px;
+}
+
+textarea {
+	font-family: Tahoma;
+	font-size: 8pt;
+	border: 1px solid #C0C0C0; 
+	padding: 2px 4px 2px 4px;
+}
+
+a {
+	font-family: Tahoma;
+	font-size: 11px;
+	text-decoration: none;
+	color: #de0808;
+}
+
+a:hover, a:active {
+	text-decoration: underline;
+}
+
+a.TBlue {
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #4e7fc2;
+}
+
+a.TBlue:hover {
+	color: #395a88;
+}
+
+a.RptItem {
+	color: #395a88;
+	text-decoration: underline;
+}
+
+a.RptItem:hover {
+	color: #800000;
+	text-decoration: none;
+}
+
+a.SubMenuItem {
+	display: block;
+	color: #627998;
+	padding: 6px 11px;
+	font-family: Tahoma;
+	font-size: 11px;
+}
+
+a.SubMenuItem:hover {
+	color: #405e86;
+	border: 1px solid #c9c9c9;
+	padding: 5px 10px 5px 10px;
+	text-decoration: none;
+	background-image: url('../Images/Backgrounds/TopMenu/SubMenuBack.gif');
+	background-repeat: repeat-x;	
+}

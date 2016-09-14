@@ -1,0 +1,61 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>Users</name>
+    <description>Illustrates properties of Users object.</description>
+    <author>ApexSQL</author>
+    <legal>Copyright (C) 1999-2007 ApexSQL LLC. All rights reserved.</legal>
+    <ExpectedObjectTypes>Any</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>Documentation</output>
+    <scripting>VB_NET</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>MultiFile</Mode>
+    <Encoding>20127</Encoding>
+  </outputfile>
+  <Import>
+    <includes />
+    <Namespaces />
+    <Assemblies />
+    <Templates />
+  </Import>
+  <templatecode><![CDATA[<%
+'------------------------------------------------------------ 
+'	TEMPLATE : Example_User.ptpx
+'	PURPOSE  : Illustrates properties of Users object
+'
+'	EXPECTS  : any
+'	OUTPUT   : Generic Text Output
+'	AUTHOR   : ApexSQL
+'	SCRIPT	 : VB.NET
+'	LANGUAGE : Documentation
+'	MODIFIED : March 2007
+'	NOTES    : 
+' ------------------------------------------------------------ 
+%>
+Database: <%= Code.Database	%>
+<%
+For Each objUser As User In Code.Database.Users
+
+	Out.WriteLine("User INFORMATION")
+	Out.WriteLine("============================")
+	Out.WriteLine("Name:           {0}", objUser.Name)
+	Out.WriteLine("Login:          {0}", objUser.Login)
+	Out.WriteLine("Default schema: {0}", objUser.DefaultSchemaName)
+	Out.WriteLine("IsSystem:       {0}", objUser.IsSystemObject)
+	Out.WriteLine("User type:      {0}", objUser.UserType)
+	Out.WriteLine
+	Out.WriteLine("Script:")
+	Out.WriteLine(objUser.Script)
+	Out.WriteLine
+
+Next
+%>]]></templatecode>
+</template>

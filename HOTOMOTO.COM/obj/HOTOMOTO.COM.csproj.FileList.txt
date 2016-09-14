@@ -1,0 +1,11 @@
+obj\Debug\ResolveAssemblyReference.cache
+bin\Debug\HOTOMOTO.COM.dll
+bin\Debug\HOTOMOTO.COM.pdb
+bin\Debug\CARETTA.COM.dll
+bin\Debug\HOTOMOTO.BUS.dll
+bin\Debug\HOTOMOTO.APEX.dll
+bin\Debug\CARETTA.COM.pdb
+bin\Debug\HOTOMOTO.BUS.pdb
+bin\Debug\HOTOMOTO.APEX.pdb
+obj\Debug\HOTOMOTO.COM.dll
+obj\Debug\HOTOMOTO.COM.pdb

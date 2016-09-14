@@ -1,0 +1,95 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>Example_Tables</name>
+    <description>Demonstrates how to use the Table Object</description>
+    <author>ApexSQL</author>
+    <legal>Copyright (C) 1999-2007 ApexSQL LLC. All rights reserved.</legal>
+    <ExpectedObjectTypes>Table</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>Documentation</output>
+    <scripting>VB_NET</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>MultiFile</Mode>
+    <Encoding>20127</Encoding>
+  </outputfile>
+  <Import>
+    <includes />
+    <Namespaces />
+    <Assemblies />
+    <Templates />
+  </Import>
+  <templatecode><![CDATA[<%
+'------------------------------------------------------------ 
+'	TEMPLATE : Example_Tables.ptpx
+'	PURPOSE  : This template illustrates use of Table Object
+'	MODEL    : Database.ActiveTable  
+'	EXPECTS  : TABLES
+'	OUTPUT   : Generic Text Output
+'	AUTHOR   : ApexSQL
+'	SCRIPT	 : VB.NET
+'	LANGUAGE : Documentation
+'	MODIFIED : February 2007
+' ------------------------------------------------------------ 
+
+Dim objTable As Table
+
+Out.WriteLine("TABLE INFORMATION")
+Out.WriteLine("============================")
+
+objTable = Code.Database.ActiveTable ' this is the currently selected table from the user interface
+
+If objTable Is Nothing Then
+	Out.WriteLine("There's no selected table.")
+	Return
+End If
+
+With objTable
+	Out.WriteLine("Table Name:		{0}", .Name)
+	Out.WriteLine("Table Owner:	{0}", .Owner)
+	Out.WriteLine("CreateDate:		{0}", .CreateDate)
+	Out.WriteLine("FileGroup:		{0}", .FileGroup)
+	Out.WriteLine("FileGroupImage:	{0}", .FileGroupImage)
+
+	If Not .Schema Is Nothing Then
+		Out.WriteLine("Schema:			{0}", .Schema.ToString)
+	End If 
+
+	Out.WriteLine("")
+
+	If .ExtendedProperties.Count > 0 Then
+
+		Out.WriteLine("Extended properties:")
+		Out.Indent
+		
+		For Each prop As ExtendedProperty In .ExtendedProperties
+
+			Out.WriteLine("{0}: {1}", prop.Name, prop.Value)
+		Next
+
+		Out.UnIndent
+		Out.WriteLine()
+
+	End If
+
+	Out.WriteLine("IsActive:				{0}", .IsActive)
+	Out.WriteLine("IsChecked:				{0}", .IsChecked)
+	Out.WriteLine("IsFirstProcessedObject:	{0}", .IsFirstProcessedObject)
+	Out.WriteLine("IsLastProcessedObject:	{0}", .IsLastProcessedObject)
+	Out.WriteLine()
+	Out.WriteLine("Script:")
+	Out.WriteLine()
+	Out.WriteLine(.Script)
+
+	Out.WriteLine("------------------------------------------------------")
+End With
+
+%>]]></templatecode>
+</template>

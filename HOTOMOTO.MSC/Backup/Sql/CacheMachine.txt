@@ -1,0 +1,202 @@
+using System;
+using System.Collections;
+using System.Data;
+
+public class CacheMachine {
+
+    private Hashtable m_htCache;
+    private DataTable dtLanguages;
+
+    public struct CacheTypes
+    {
+        public int Code;
+        public int Period;
+        public string Description;
+    }
+
+#region Cache Tiplerini Tanýmla
+    public CacheTypes s_Countries;
+    public CacheTypes s_Cities;
+#endregion
+
+    public CacheMachine()
+    {
+        #region Cache Tiplerinin Deðerlerini Ata
+        s_Countries.Code = 1;
+        s_Countries.Period = 100;
+        s_Countries.Description = "Ülkeler";
+
+        s_Cities.Code = 2;
+        s_Cities.Period = 100;
+        s_Cities.Description = "Þehirler";
+        #endregion
+
+        m_htCache = new Hashtable();
+        
+        HOTOMOTO.BUS.Language objLanguages = new HOTOMOTO.BUS.Language();
+        this.dtLanguages = objLanguages.GetAllLanguages();
+    }
+
+#region Class CachedData
+    private class CachedData
+    {
+        DateTime m_dateTimeStamp;
+        object m_objData;
+        int m_intCustomerID;
+        int m_intLanguageID;
+
+        public DateTime TimeStamp
+        {
+            get { return m_dateTimeStamp; }
+            set { m_dateTimeStamp = value; }
+        }
+
+        public object Data
+        {
+            get { return m_objData; }
+            set { m_objData = value; }
+        }
+
+        public int CustomerID
+        {
+            get { return m_intCustomerID; }
+            set { m_intCustomerID = value; }
+        }
+
+        public int LanguageID
+        {
+            get { return m_intLanguageID; }
+            set { m_intLanguageID = value; }
+        }
+
+        public CachedData(object objData, int LanguageID)
+        {
+            SetDefaultValue(objData, LanguageID, 0);
+        }
+
+        public CachedData(object objData, int LanguageID, int customerID)
+        {
+            SetDefaultValue(objData, LanguageID, customerID);
+        }
+
+        void SetDefaultValue(object objData, int LanguageID, int CustomerID) 
+        {
+            m_dateTimeStamp = DateTime.Now;
+            m_objData = objData;
+            m_intLanguageID = LanguageID;
+            m_intCustomerID = CustomerID;
+        }
+    }
+#endregion
+
+#region Add/Remove/Clear
+
+    private string ReturnStrKey(CacheTypes CacheType, int CustomerID)
+    {
+        string Key = CacheType.Code.ToString();
+
+        if (CustomerID != 0)
+        {
+            Key = Key + "-" + CustomerID;
+        }
+
+        return Key;
+    }
+
+    private void AddToCache(object objData, CacheTypes CacheType, int LanguageID, int CustomerID)
+    {
+        string Key = ReturnStrKey(CacheType, CustomerID);
+
+        if (m_htCache[Key]!=null)
+        {
+            ((CachedData)m_htCache[Key]).Data = objData;
+            ((CachedData)m_htCache[Key]).TimeStamp = DateTime.Now;
+            ((CachedData)m_htCache[Key]).LanguageID = LanguageID;
+            ((CachedData)m_htCache[Key]).CustomerID = CustomerID;
+        }
+        else
+        {
+            CachedData objCachedData = new CachedData(objData, LanguageID, CustomerID);
+            m_htCache.Add(Key, objCachedData);
+        }
+    }
+
+    private void Add(object objData, CacheTypes CacheType, int LanguageID)
+    {
+        AddToCache(objData, CacheType, LanguageID, 0);
+    }
+
+    private void Add(object objData, CacheTypes CacheType, int LanguageID, int CustomerID)
+    {
+        AddToCache(objData, CacheType, LanguageID, CustomerID);
+    }
+
+    public void RemoveItem(CacheTypes CacheType, int CustomerID)
+    {
+        if (this.m_htCache.Contains(ReturnStrKey(CacheType, CustomerID)))
+        {
+            this.m_htCache.Remove(ReturnStrKey(CacheType, CustomerID));
+        }
+    }
+
+    public void Clear()
+    {
+        if ((m_htCache != null))
+        {
+            m_htCache.Clear();
+        }
+    }
+
+#endregion
+
+    public object Item(CacheTypes CacheType, int LanguageID, int CustomerID)
+    {
+        string Key = ReturnStrKey(CacheType, CustomerID);
+        if ((m_htCache[Key] != null))
+        {
+            if (((CachedData)m_htCache[Key]).TimeStamp.AddMinutes(CacheType.Period) > DateTime.Now)
+            {
+                //Cache expire etmemiþtir
+                return ((CachedData)m_htCache[Key]).Data;
+            }
+        }
+
+        //Cache Expire etmiþ Datayý tazele
+
+        if (CacheType.Code == s_Countries.Code) { FillCountries(); }
+        if (CacheType.Code == s_Countries.Code) { FillCities(); }
+
+        return ((CachedData)m_htCache[Key]).Data;
+    }
+
+#region Items
+
+    private void FillCountries()
+    {
+        HOTOMOTO.BUS.CountriesAndCities objCountries;
+
+        foreach (DataRow dr in dtLanguages.Rows)
+        {
+            objCountries = new HOTOMOTO.BUS.CountriesAndCities((int)dr["LanguageID"]);
+            this.Add(objCountries.GetCountries(), s_Countries, (int)dr["LanguageID"]);
+        }
+
+        objCountries = null;
+    }
+
+    private void FillCities()
+    {
+        HOTOMOTO.BUS.CountriesAndCities objCities;
+
+        foreach (DataRow dr in dtLanguages.Rows)
+        {
+            objCities = new HOTOMOTO.BUS.CountriesAndCities((int)dr["LanguageID"]);
+    		this.Add(objCities.GetCities(), s_Cities, (int)dr["LanguageID"]);
+        }
+
+        objCities = null;
+    }
+
+#endregion
+
+}

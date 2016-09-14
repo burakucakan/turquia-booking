@@ -1,0 +1,94 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>Example_Trigger</name>
+    <description>Illustrates how to use Trigger Object</description>
+    <author>ApexSQL</author>
+    <legal>Copyright (C) 1999-2007 ApexSQL LLC. All rights reserved.</legal>
+    <ExpectedObjectTypes>Table</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>Documentation</output>
+    <scripting>VB_NET</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>MultiFile</Mode>
+    <Encoding>20127</Encoding>
+  </outputfile>
+  <Import>
+    <includes />
+    <Namespaces />
+    <Assemblies />
+    <Templates />
+  </Import>
+  <templatecode><![CDATA[<%
+'------------------------------------------------------------
+'	TEMPLATE : Example_Trigger.ptpx
+'	PURPOSE  : This template illustrates use of Trigger Object
+'	MODEL    : Code.ActiveTable.Triggers
+'	EXPECTS  : TABLE
+'	OUTPUT   : Generic Text Output
+'	AUTHOR   : ApexSQL
+'	SCRIPT	 : VB.NET
+'	LANGUAGE : Documentation
+'	MODIFIED : Feb 2007
+'	NOTES    : 
+' ------------------------------------------------------------
+
+%>
+DATABASE INFORMATION
+============================
+Database Name:		<%= Code.Database.Name %>
+
+TABLE INFORMATION
+============================
+<%
+Dim objTable As Table = Code.Database.ActiveTable ' this is the currently selected table from the user interface
+
+If Nothing Is objTable Then
+	Out.WriteLine("There's no selected table.")
+	Return
+End If
+
+With objTable
+	Out.WriteLine("Table Name:  {0}", .Name)
+	Out.WriteLine("Table Owner: {0}", .Owner)
+	Out.WriteLine
+	
+	Out.WriteLine("Trigger INFORMATION")
+	Out.WriteLine("============================")
+
+	' Notice use of object enumeration.
+	' Here the trigger collection of the Table object is being enumerated
+
+	For Each objTrig As Trigger In .Triggers
+
+		With objTrig
+
+			Out.WriteLine("Name:                      " & .Name)
+			Out.WriteLine("ParentName:                " & .ParentName)
+			Out.WriteLine("ParentOwner:               " & .ParentOwner)
+			Out.WriteLine
+			Out.WriteLine("AnsiNULLsStatus:           " & .AnsiNULLsStatus)
+			Out.WriteLine("CreateDate:                " & .CreateDate)
+			Out.WriteLine("Enabled:                   " & .Enabled)
+			Out.WriteLine("IsDelete:                  " & .IsDelete)
+			Out.WriteLine("IsInsert:                  " & .IsInsert)
+			Out.WriteLine("IsUpdate:                  " & .IsUpdate)
+			Out.WriteLine("QuotedIdentifierStatus:    " & .QuotedIdentifierStatus)
+			Out.WriteLine("TriggerType:             " & .TriggerType)
+			Out.WriteLine("------------------------------")
+			Out.WriteLine
+
+		End With
+
+	Next
+
+End With
+%>]]></templatecode>
+</template>

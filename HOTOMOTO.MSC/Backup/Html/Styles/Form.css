@@ -1,0 +1,32 @@
+.TextBox {
+	font-family: Tahoma; 
+	font-size: 8pt; 
+	height: 20px; 
+	border: 1px solid #C0C0C0; 
+	padding: 2px 4px 2px 4px;
+}
+
+.TextBoxActive {
+	font-family: Tahoma; 
+	font-size: 8pt; 
+	height: 20px; 
+	border: 1px solid #c1e4f1;
+	padding: 2px 4px 2px 4px;
+	background-color: #eaf8fd;
+}
+
+.Button {
+	font-family: Trebuchet MS; 
+	font-size: 8pt; 
+	color: #A3C1DA;
+	border: 1px solid #BDD2E4;
+	padding: 2px 2px 2px 2px;
+	background-image: url('../Images/Backgrounds/ButtonBack.gif');
+	background-repeat: repeat-x;
+}
+
+.Button:hover {
+	color: #FFFFFF;
+	border: 2px solid #f1fecb; 
+	background-image: url('../Images/Backgrounds/ButtonBackHover.gif');
+}

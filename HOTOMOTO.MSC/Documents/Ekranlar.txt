@@ -1,0 +1,146 @@
+LOGIN
+................................................................
+- Login Ekraný
+- Þifremi Unuttum
+
+ANA SAYFA (MasterPage)
+................................................................
+- Ana Sayfa (MasterPage)
+- Menu
+- User Info
+- Hýzlý Eriþim 
+- Ýpucu 
+- IP ve Baðlý Olma Süresi
+- Footer 
+
+
+ANA SAYFA
+................................................................
+- Default.aspx
+- Hýzlý Arama
+- Tavsiyeler
+- Arama
+- Transfer
+- Hava Durumu
+- Favori Ýþlemler
+- Banner Alt,Orta(Advertorial), Sag
+
+
+MESAJ KUTUSU
+................................................................
+- Mesaj Baþlýklarý
+- Mesaj Detayý
+- Mesaj Sil
+
+
+OTEL
+................................................................
+- Detaylý Arama Paneli
+- Arama Sonuçlarý 
+- Oda Listesi
+- Sayfalama Kontrolü
+- Oda Popup
+
+- Otel Detay
+- Otel Detay Sayfasý
+- Otele Yakýn Yerlerin Listesi
+- Otele Ait Odalarýn Listesi
+
+- Otel Rezervasyon
+- Rezervasyon Formu
+- Kiþilerin Listesi, Yeni Kayýt ve Arama Kontrolü
+- Tavsiyelerin Listesi
+
+- Otel Transfer Bilgileri
+- Otel Transfer Detay Formu
+
+
+
+TUR
+................................................................
+- Detaylý Arama Paneli
+- Arama Sonuçlarý 
+- Sayfalama Kontrolü
+
+- Tur Detay
+- Tur Detay Sayfasý
+- Turda gidilecek yerlerin listesi
+- Gidilecek Yerin Detaylý Bilgisi
+- Tur Yakýn Yerlerin Listesi
+- Tur Ait Odalarýn Listesi
+
+- Tur Rezervasyon
+- Rezervasyon Formu
+- Kiþilerin Listesi, Yeni Kayýt ve Arama Kontrolü
+- Tavsiyelerin Listesi
+
+- Tur Transfer Bilgileri
+- Tur Transfer Detay Formu
+
+
+REZERVASYON SONUÇ
+................................................................
+- Rezervasyona ait özet bilgi
+- Transfere ait özet bilgi
+- Tavsiyeye ait özet bilgi
+
+
+FAVORÝ ÝÞLEMLER
+................................................................
+- Rezervasyonu Kaydetmek Ýçin Tanýtýcý Bilgiler
+- Daha Önceki Kaydedilenlerin Listesi
+- Daha Önceki Kaydedilenlerin Güncelle ve Silinmesi
+
+
+ÖDEME
+................................................................
+- Ödenecek Rezervasyon Bilgileri
+- Ödeme Bigisi
+- Pos Ýþlemleri
+- Ödeme Sonuç Sayfasý
+
+
+ÝÞLEMLERÝM
+................................................................
+- Detaylý Arama
+- Ödeme Bekleyenler
+- Daha Önce Ödenmiþ Olanlar
+- Tüm Liste 
+- Ödeme Ýptal
+
+KULLANICI YÖNETÝMÝ
+................................................................
+- Detaylý Arama
+- Tüm Kullanýcýlar
+- Yeni Kullanýcý
+- Kullanýcý Güncelleme
+- Kullanýcý Silme
+
+
+ARAMA 
+................................................................
+- Detaylý Arama Paneli
+- Arama Sonuc Listesi
+- Sonuc Detayý
+
+
+YARDIM 
+................................................................
+- Yardým Konularý
+- Yardým Detayý
+
+
+ÝLETÝÞÝM 
+................................................................
+- Ýletiþim Bilgieri
+
+
+DESTEK 
+................................................................
+- Destek Formu
+- Form Sonuç Sayfasý
+
+
+GÜVENLÝ ÇIKIÞ 
+................................................................
+- Çýkýþ Sayfasý

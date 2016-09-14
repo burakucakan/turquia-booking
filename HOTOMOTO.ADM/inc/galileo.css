@@ -1,0 +1,190 @@
+* { margin:0; padding:0; outline:0; }
+img { border:0; }
+ul { list-style:none; }
+a { text-decoration:none; color:#09f; font-weight:bold; font-family:"Lucida Sans Unicode", Arial, Helvetica, sans-serif; }
+a:hover { text-decoration:underline; }
+strong { font-family:"Lucida Sans Unicode", Arial, Helvetica, sans-serif; }
+
+body { background:url(../img/mb.gif) repeat-x #e6e6d2; }
+
+#hb { height:119px; background:url(../img/hb.gif) repeat-x; }
+#head { width:950px; margin:0 auto; }
+#logo { width:230px; height:119px; float:left; }
+#hb1 { width:710px; height:40px; margin-left:10px; float:left; }
+#hb-title { width:470px; height:40px; float:left; font:bold 14px/35px "Lucida Sans Unicode", Arial, Helvetica, sans-serif; color:#a4b3bd; }
+#hb-login { width:230px; height:40px; margin-left:10px; float:left; font:bold 12px/35px "Lucida Sans Unicode", Arial, Helvetica, sans-serif; color:#a4b3bd; }
+#hb-name { width:150px; height:40px; float:left; text-align:right; }
+#hb-logout { width:70px; height:20px; margin-left:10px; float:left; padding-top:9px; }
+#hb2 { width:480px; height:78px; float:left; }
+#hb2 ul li { width:70px; height:71px; display:block; float:left; font:bold 11px "Lucida Sans Unicode", Arial, Helvetica, sans-serif; color:#d7d7d7; padding-top:5px; border-left:solid 1px #666; padding-left:10px; }
+#hb2 ul li a { color:#d7d7d7; text-decoration:none; display:block; width:70px; height:71px; }
+#hb2 ul li.first { border:none; }
+#hb2 ul li.hot, #hb2 ul li.hot a { color:#f56406; }
+#hb2 ul li:hover { background:#00CC00; }
+#hb2 ul li:hover a { color:#333; }
+#hb3 { width:230px; float:left; margin-left:10px; }
+#hb-search { width:150px; padding-top:13px; float:left; }
+#hb-search input { border:solid 1px #d0d0d0; height:15px; width:148px; font:11px/14px "Lucida Sans Unicode", Arial, Helvetica, sans-serif; color:#333; }
+#hb-searchbtn { float:left; margin-left:10px; padding-top:14px; }
+
+#main { width:950px; margin:0 auto; }
+#page-title { height:33px; padding:15px 0 0 10px; font:bold 22px/33px "Lucida Sans Unicode", Arial, Helvetica, sans-serif; color:#333; }
+#cap-seperator { height:24px; background:url(../img/sepCap.gif) repeat-x; }
+.c { clear:both; }
+
+#sol-taraf { width:230px; float:left; }
+#bsol-taraf { width:710px; float:left; }
+#orta-taraf { width:470px; float:left; margin-left:10px; }
+#sag-taraf { width:230px; float:left; margin-left:10px; }
+
+.title, .stitle { height:30px; font:bold 12px/30px "Lucida Sans Unicode", Arial, Helvetica, sans-serif; color:#ececbe; padding-left:10px; }
+.stitle { color:#666; border-bottom:solid 1px #ccc; }
+.top, .bottom, .infobottom { height:2px; font-size:1px; }
+.bottom, .infobottom { margin-bottom:10px; }
+.infotop { height:2px; font-size:1px; }
+.message { background:#ffffcd; padding:8px 10px; font:11px/14px "Lucida Sans Unicode", Arial, Helvetica, sans-serif; }
+.error { color:#f00; }
+.warning { color:#cc0; }
+.information { color:#666; }
+.hotlinks { margin-top:10px; color:#09f; }
+.main { background:#fff; font:11px/16px "Lucida Sans Unicode", Arial, Helvetica, sans-serif; color:#666; }
+.info { height:30px; padding-left:10px; font:11px/30px "Lucida Sans Unicode", Arial, Helvetica, sans-serif; color:#666; border-bottom:solid 2px #ccc; margin-bottom:10px; }
+.label { padding:0 10px; font:11px/24px "Lucida Sans Unicode", Arial, Helvetica, sans-serif; color:#666; }
+
+.mail, .links { padding:5px 10px; font:11px/14px "Lucida Sans Unicode", Arial, Helvetica, sans-serif; color:#666; border-bottom:dotted 1px #ccc; }
+.links ul { list-style:inside; }
+.txtarea { padding:0 10px; }
+.txtarea textarea { height:111px; font:11px/14px "Lucida Sans Unicode", Arial, Helvetica, sans-serif; color:#333; }
+.combobox { padding:0 10px; }
+select, .paging { font:11px/14px "Lucida Sans Unicode", Arial, Helvetica, sans-serif; color:#333; }
+.option { float:left; margin-left:10px; height:34px; }
+.option input { vertical-align:middle; margin:0; padding:0; }
+.option label { font:11px/34px "Lucida Sans Unicode", Arial, Helvetica, sans-serif; color:#666; vertical-align:middle; padding:1px 0 0 3px; }
+.action { float: right; margin:7px 10px 0 0; }
+.actions { font:11px/24px "Lucida Sans Unicode", Arial, Helvetica, sans-serif; color:#09f; padding:0 10px; border-top:solid 2px #ccc; }
+.info-panel { background:#ffc; border-top:dotted 1px #ccc; }
+.info-title { height:30px; padding-left:10px; font:bold 12px/30px "Lucida Sans Unicode", Arial, Helvetica, sans-serif; color:#333; border-bottom:solid 2px #ccc; }
+.info-message, .info-options { font:11px/14px "Lucida Sans Unicode", Arial, Helvetica, sans-serif; }
+.info-message { margin:6px 0 8px 10px; color:#666; float:left; }
+.info-options { width:67px; margin:6px 5px 8px 0; float:right; color:#f56406; text-align:right; }
+.textBox { font:11px/14px "Lucida Sans Unicode", Arial, Helvetica, sans-serif; color:#333; }
+
+.b470 .label, .b710 .label { float:left; text-align:right; }
+.b470 .label { width:100px; }
+.b710 .label { width:150px; }
+
+.b230 .title { background:url(../img/t230.gif) no-repeat; }
+.b470 .title { background:url(../img/t470.gif) no-repeat; }
+.b710 .title { background:url(../img/t710.gif) no-repeat; }
+.b230 .top { background:url(../img/tw230.gif) no-repeat; }
+.b470 .top { background:url(../img/tw470.gif) no-repeat; }
+.b710 .top { background:url(../img/tw710.gif) no-repeat; }
+.b230 .bottom { background:url(../img/b230.gif) no-repeat; }
+.b470 .bottom { background:url(../img/b470.gif) no-repeat; }
+.b710 .bottom { background:url(../img/b710.gif) no-repeat; }
+.b230 textarea { width:206px; }
+
+.b230 select { width:210px; }
+.b470 .s100 { width:350px; }
+.b710 .s100 { width:540px; }
+.b470 .s75 { width:263px; }
+.b710 .s75 { width:405px; }
+.b470 .s50 { width:175px; }
+.b710 .s50 { width:270px; }
+.b470 .s25 { width:88px; }
+.b710 .s25 { width:135px; }
+
+.b230 .textBox { width:206px; }
+.b470 .p100 { width:346px; }
+.b710 .p100 { width:536px; }
+.b470 .p75 { width:259px; }
+.b710 .p75 { width:402px; }
+.b470 .p50 { width:173px; }
+.b710 .p50 { width:268px; }
+.b470 .p25 { width:86px; }
+.b710 .p25 { width:134px; }
+
+.b230 .infotop { background:url(../img/it230.gif) no-repeat; }
+.b470 .infotop { background:url(../img/it470.gif) no-repeat; }
+.b710 .infotop { background:url(../img/it710.gif) no-repeat; }
+.b230 .infobottom { background:url(../img/ib230.gif) no-repeat; }
+.b470 .infobottom { background:url(../img/ib470.gif) no-repeat; }
+.b710 .infobottom { background:url(../img/ib710.gif) no-repeat; }
+.b230 .info-message { width:140px; }
+.b470 .info-message { width:380px; }
+.b710 .info-message { width:620px; }
+
+#itemlist table { border-collapse:collapse; border-spacing:0; width:100%; }
+#itemlist td, #itemlist th { padding:8px 0; vertical-align:top; text-align:left; }
+#itemlist th { border-bottom:solid 2px #ccc; height:16px; font:bold 11px/14px "Lucida Sans Unicode", Arial, Helvetica, sans-serif; color:#666; }
+#itemlist td.first { border-top:solid 2px #eee; }
+#itemlist td { border-bottom:dotted 1px #ccc; font:11px/14px "Lucida Sans Unicode", Arial, Helvetica, sans-serif; color:#666; }
+#itemlist td input, #itemlist th input { margin:1px 0 0 9px; padding:0; }
+.c1 { width:28px; padding-left:9px; }
+.c2 { width:42px; }
+.c3 { width:330px; }
+.group-actions { font:bold 11px/26px "Lucida Sans Unicode", Arial, Helvetica, sans-serif; color:#666; padding:0 10px; }
+.main-actions { font:11px/24px "Lucida Sans Unicode", Arial, Helvetica, sans-serif; color:#09f; padding:0 10px; border-top:solid 2px #ccc; }
+
+#footer { background:#33393c; text-align:center; }
+#footer-title { padding-top:14px; font:bold 12px/20px "Lucida Sans Unicode", Arial, Helvetica, sans-serif; color:#f1f1f1; }
+.footer-links { font:11px/14px "Lucida Sans Unicode", Arial, Helvetica, sans-serif; color:#09f; padding-bottom:12px; border-bottom:solid 2px #3b4246; }
+.footer-copyright { font:11px/18px "Lucida Sans Unicode", Arial, Helvetica, sans-serif; color:#777; padding-top:10px; }
+.footer-terms, .footer-terms a { font:normal 11px/14px "Lucida Sans Unicode", Arial, Helvetica, sans-serif; color:#09f; padding-bottom:15px; }
+#dvDeActive {
+	display: none;
+	background-color: #aaa6a6; 
+	position: absolute; 
+	width: 100%; 
+	height: 200%; 
+	z-index: 10;
+	left: 0px;
+	top: 0px;
+	filter: alpha(opacity: 45);
+	-moz-opacity: 0.45;
+}
+
+.Opacity {
+	filter: alpha(opacity: 35);
+	-moz-opacity: 0.35;
+}
+
+#TableBack {
+    width: 365px;
+    border-collapse: collapse;
+    background-color: #f2f1f7;
+    border: 1px solid #BFEAF1;
+    border-spacing: 0px 0px;   
+}
+
+#Header {
+    height: 24px;
+    background-color: #aca5cb;
+    cursor: pointer;
+}
+
+.HeaderText {
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
+
+.MessageText {
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #000000;
+}
+
+.btnOK {
+	font-family: Trebuchet MS;
+	font-size: 8pt;
+	color: #2B6E9D;
+	border: 1px solid #BDD2E4;
+	padding: 3px 4px 1px 4px;
+	background-image: url('../Images/Backgrounds/ButtonBack.gif');
+	background-repeat: repeat-x;
+	cursor: pointer;
+	padding: 0px 18px;
+}

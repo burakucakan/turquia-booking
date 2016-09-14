@@ -1,0 +1,163 @@
+using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+
+public partial class UserControls_Hotel_uctHotelDetail : BaseUserControl {
+
+    private float RoomsTotalPrice = 0;
+	
+    protected void Page_Load(object sender, EventArgs e) {
+        
+        if (!IsPostBack) {
+
+            if (CARETTA.COM.Util.IsNumeric(Request.QueryString["HotelID"])) {
+                this.SessRoot.CurrentHotelID = int.Parse(Request.QueryString["HotelID"]);
+            }
+            else { Response.Redirect("Default.aspx"); }
+            
+            FillData();         //Hotel Detayýný Getir ve Bilgileri Ekrana Yaz
+
+            FillRooms();        //Müsait Olan Odalarý Getir
+
+            FillPlaces();       //Yakýn Yerleri Getir
+
+        }//IsPostBack
+    }
+
+
+    protected void ddlQuantity_SelectedIndexChanged(object sender, EventArgs e) {
+        WriteTotalPrice();      //Toplam Fiyatý Yaz
+    }
+
+    protected void btnQuickCheckOut_Click(object sender, EventArgs e) {
+        DataTable dtRoomAndQuantity = new DataTable();
+        dtRoomAndQuantity.Columns.Add(new DataColumn("RoomID"));
+        dtRoomAndQuantity.Columns.Add(new DataColumn("Quantity"));
+
+        string RoomID = string.Empty;
+        string Quantity = string.Empty;
+        foreach (RepeaterItem rpItem in rptRoomList.Items) {
+            RoomID = ((Literal)rpItem.FindControl("ltlRoomID")).Text;
+            Quantity = ((DropDownList)rpItem.FindControl("ddlQuantity")).SelectedValue;
+            if (Quantity != "0") {
+                DataRow drRoomAndQuantity = dtRoomAndQuantity.NewRow();
+                drRoomAndQuantity["RoomID"] = RoomID;
+                drRoomAndQuantity["Quantity"] = Quantity;
+                dtRoomAndQuantity.Rows.Add(drRoomAndQuantity);
+            }
+        }//foreach
+
+    }
+
+    protected void FillPlaces() {
+        DataTable dtPlaces = HOTOMOTO.BUS.Hotels.GetHotelPlacesAndDistances(this.SessRoot.LanguageID, this.SessRoot.CurrentHotelID);
+        if (dtPlaces.Rows.Count > 0) {
+            rptPlaces.DataSource = dtPlaces;
+            rptPlaces.DataBind();
+        }
+        else {
+            pnlPlaces.Visible = false;
+        }
+    }
+
+#region ÝÞLEMLER
+
+    void FillData() {
+
+        DataTable dtHotelDetail = HOTOMOTO.BUS.Hotels.GetHotelDetail(this.SessRoot.LanguageID, this.SessRoot.CurrentHotelID);
+
+        ltlChainName.Text = dtHotelDetail.Rows[0]["ChainName"].ToString();
+        ltlCityName.Text = dtHotelDetail.Rows[0]["CityName"].ToString();
+        ltlCountryName.Text = dtHotelDetail.Rows[0]["CountryName"].ToString();
+        ltlHotelName.Text = dtHotelDetail.Rows[0]["HotelName"].ToString();
+        ltlDescription.Text = dtHotelDetail.Rows[0]["Description"].ToString();
+        imgHotelBig.ImageUrl = imgHotelBig.ImageUrl.Replace("HotelDefault.jpg", dtHotelDetail.Rows[0]["ImageFileName"].ToString());
+
+        dvStars.InnerHtml = HOTOMOTO.COM.ReturnClasses.GetHotelClassFormat(dtHotelDetail.Rows[0]["Star"].ToString()).ToString();
+        dvHotelProperties.InnerHtml = HOTOMOTO.COM.ReturnProperties.GetProperties(this.SessRoot.LanguageID, this.SessRoot.CurrentHotelID, HOTOMOTO.BUS.Enumerations.PropertyTypes.Hotel).ToString();
+
+        if (dtHotelDetail.Rows[0]["ImageFileName"].ToString() != "HotelDefault.jpg") {
+            dvAllPicturesLink.InnerHtml = ltlAllPicture.Text.Replace("||", dtHotelDetail.Rows[0]["HotelID"].ToString());
+        }
+        else {
+            ltlAllPicture.Visible = false;
+        }
+
+    }
+
+    void FillRooms() {
+
+        DataTable dtRooms;
+        dtRooms = HOTOMOTO.BUS.Rooms.GetRoomAvailability(this.SessRoot.LanguageID, this.SessRoot.CurrentHotelID, this.SessRoot.ArrivalDate, this.SessRoot.DepartureDate);
+        rptRoomList.DataSource = dtRooms;
+        rptRoomList.DataBind();
+    
+    }
+
+    protected void rptRoomList_ItemDataBound(object sender, RepeaterItemEventArgs e) {
+        if ((e.Item.ItemType == ListItemType.Item) || (e.Item.ItemType == ListItemType.AlternatingItem)) {
+
+            DropDownList ddlQuantity = ((DropDownList)e.Item.FindControl("ddlQuantity"));
+            int Quantity = int.Parse(((Literal)e.Item.FindControl("ltlItemQuantity")).Text);
+
+            //DropDownlarý Adede Kadar Doldur
+            CARETTA.COM.DDLHelper.LoadNumberDDL(ref ddlQuantity, Quantity, 1, 0);
+
+            //Fiyatý Al ve Popup Linkini Oluþtur
+            //SetRoomTotalPrice(e);
+        }
+    }
+
+    //private void SetRoomTotalPrice(RepeaterItemEventArgs e) {
+    //    int RoomID = int.Parse(((Literal)e.Item.FindControl("ltlRoomID")).Text);
+    //    DataTable dtRoomPrices = HOTOMOTO.BUS.Rooms.GetRoomPriceAndAvailability(RoomID, this.SessRoot.CustomerID, this.SessRoot.ArrivalDate, this.SessRoot.DepartureDate);
+    //    float TotalPrice = 0;
+    //    foreach (DataRow dr in dtRoomPrices.Rows) {
+    //        if (this.SessRoot.CurrencyID == HOTOMOTO.BUS.Enumerations.CurrencyTypes.EUR) {
+    //            TotalPrice += float.Parse(dr["EURPrice"].ToString());
+    //        }
+    //        else if (this.SessRoot.CurrencyID == HOTOMOTO.BUS.Enumerations.CurrencyTypes.USD) {
+    //            TotalPrice += float.Parse(dr["USDPrice"].ToString());
+    //        }
+    //    }
+    //    ((Literal)e.Item.FindControl("ltlPrice")).Text = TotalPrice.ToString();
+
+    //    ((Literal)e.Item.FindControl("ltlPriceCurrencyLeft")).Text = this.SessRoot.CurrencySymbolLeft;
+    //    ((Literal)e.Item.FindControl("ltlPriceCurrencyRight")).Text = this.SessRoot.CurrencySymbolRight;
+
+    //    string strLink = ((Literal)e.Item.FindControl("ltlRoomAndPriceDetail")).Text;
+    //    ((Literal)e.Item.FindControl("ltlRoomAndPriceDetail")).Text = strLink.Replace("||", RoomID.ToString()).ToString();
+    //}
+
+    protected void rptRoomList_PreRender(object sender, EventArgs e) {
+        WriteTotalPrice();
+    }
+
+    void WriteTotalPrice() {
+        lblTotalPrice.Text = String.Format("{0:c}", RoomsTotalPrice).Replace("TL", "");
+        lblPriceCurrencyLeft.Text = this.SessRoot.CurrencySymbolLeft;
+        lblPriceCurrencyRight.Text = this.SessRoot.CurrencySymbolRight;
+    }
+
+#endregion
+
+    protected void rptPlaces_ItemDataBound(object sender, RepeaterItemEventArgs e) {
+        if ((e.Item.ItemType == ListItemType.Item) || (e.Item.ItemType == ListItemType.AlternatingItem)) {
+            Label lblDesc = (Label)e.Item.FindControl("lblPlacesDescription");
+            Panel pnlToolTip = (Panel)e.Item.FindControl("pnlToolTip");
+            string ClrStr = lblDesc.Text.Replace("'", "");
+            lblDesc.Attributes.Add("onmouseover", "ShowToolTip(this, '" + pnlToolTip.ClientID + "', '" + ClrStr + "');");
+            pnlToolTip.Attributes.Add("onmouseout", "HideToolTip('" + pnlToolTip.ClientID + "');");
+            lblDesc.Text = lblDesc.Text.Replace("<br>", "");
+            lblDesc.Text = CARETTA.COM.Util.Left(lblDesc.Text, 170) + "...";
+            lblDesc.Visible = true;
+        }
+    }//rptPlaces_ItemDataBound
+}

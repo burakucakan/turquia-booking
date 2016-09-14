@@ -1,0 +1,140 @@
+using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+
+public partial class UserControls_Transfer_uctTransfer : BaseUserControl {
+
+    protected void Page_Load(object sender, EventArgs e) {
+        if (!IsPostBack) {
+
+            CtrlReservation();      //Rezervasyon yapmadan direk sayfaya girmeye çalýþmýþsa 
+            FillPorts();            //Portlarý Getir
+            SetDefaultValue();      //Baþlangýç Deðerlerini Gir
+
+        }
+    }
+
+
+    private void SetDefaultValue() {
+
+        SetArrivalAndDepartureDate();   //Arrival ve Departure Tarihlerini Yaz
+        LoadVipAndGuidePrices();        //Vip ve Rehber Fiyatlarýný Yaz
+        LoadRegularAndPrivatePrices();  //Regular ve Private Fiyatlarý Yaz
+
+    }
+
+#region ÝÞLEMLER
+
+    private void CtrlReservation() {
+        if ((this.SessRoot.RezervationGuests == null) || (this.SessRoot.RezervationGuests.Rows.Count < 1)) {
+            Response.Redirect("Default.aspx");
+        }
+    }
+
+    private void FillPorts() {
+        DataTable dtPorts = HOTOMOTO.BUS.Transfer.GetPortsByCountry(this.SessRoot.LanguageID, this.SessRoot.SearchCountryID);
+        if (dtPorts.Rows.Count > 0) {
+            CARETTA.COM.DDLHelper.BindDDL(ref ddlArrivalPorts, dtPorts, "Title", "PortID", "");
+            CARETTA.COM.DDLHelper.BindDDL(ref ddlDeparturePorts, dtPorts, "Title", "PortID", "");
+        }
+        else {
+            pnlArrival.Enabled = false;
+            pnlDeparture.Enabled = false;
+            chArrival.Enabled = false;
+            chDeparture.Enabled = false;
+            //Resxlerden alýnmasý gerek mesajýn 
+            ModalPopup1.Show(UserControls_ModalPopup_ModalPopup.Icons.alert, "Transfer Hatasý", "Rezervasyonunuza uygun port bulunamadý");
+        }
+    }
+
+    protected void chArrival_CheckedChanged(object sender, EventArgs e) {
+        pnlArrival.Enabled = chArrival.Checked;
+    }
+
+    protected void chDeparture_CheckedChanged(object sender, EventArgs e) {
+        pnlDeparture.Enabled = chDeparture.Checked;
+    }
+
+    private void LoadVipAndGuidePrices() {
+        DataTable dtOptionPrices = HOTOMOTO.BUS.Transfer.GetTransferOptionPrices();
+        string CurrencyType = "";
+        if (this.SessRoot.CurrencyID == HOTOMOTO.BUS.Enumerations.CurrencyTypes.USD) {
+            CurrencyType = "USDPrice";
+        }
+        else if (this.SessRoot.CurrencyID == HOTOMOTO.BUS.Enumerations.CurrencyTypes.EUR) {
+            CurrencyType = "EURPrice";
+        }
+
+        foreach (DataRow drOption in dtOptionPrices.Rows) {
+            if ((int)drOption["TransferOptionID"] == (int)HOTOMOTO.BUS.Enumerations.TransferOptions.Guide) {
+                lttGuidePrice.Text = drOption[CurrencyType].ToString();
+            }
+            else if ((int)drOption["TransferOptionID"] == (int)HOTOMOTO.BUS.Enumerations.TransferOptions.VIP) {
+                ltlVipPrice.Text = drOption[CurrencyType].ToString();
+            }
+        }//foreach
+
+        ltlGuideCurrencyLeft.Text = this.SessRoot.CurrencySymbolLeft;
+        ltlVipCurrencyLeft.Text = this.SessRoot.CurrencySymbolLeft;
+
+        ltlGuideCurrencyRight.Text = this.SessRoot.CurrencySymbolRight;
+        ltlVipCurrencyRight.Text = this.SessRoot.CurrencySymbolRight;
+    }
+
+    private void SetArrivalAndDepartureDate() {
+        txtArrivalDate.Date = this.SessRoot.ArrivalDate.ToShortDateString();
+        txtDepartureDate.Date = this.SessRoot.DepartureDate.ToShortDateString();
+    }
+
+    private void LoadRegularAndPrivatePrices() {
+        
+        ltlArrivalRegularCurrencyLeft.Text = this.SessRoot.CurrencySymbolLeft;
+        ltlArrivalRegularCurrencyRight.Text = this.SessRoot.CurrencySymbolRight;
+
+        ltlArrivalPrivateCurrencyLeft.Text = this.SessRoot.CurrencySymbolLeft;
+        ltlArrivalPrivateCurrencyRight.Text = this.SessRoot.CurrencySymbolRight;
+
+        DataTable dtArrivalRegular = GetRegularAndPrivatePrices(this.SessRoot.ArrivalDate);
+
+        float Price = 0;
+        if (Convert.ToInt32(dtArrivalRegular.Rows[0]["PRICERegularSpecial"])!=0) 
+            { Price = (float)dtArrivalRegular.Rows[0]["PRICERegularSpecial"]; } 
+
+        else if(Convert.ToInt32(dtArrivalRegular.Rows[0]["PRICERegularList"])!=0)
+            { Price = (float)dtArrivalRegular.Rows[0]["PRICERegularList"]; }
+        
+        else if(Convert.ToInt32(dtArrivalRegular.Rows[0]["PRICERegularDefault"])!=0) 
+            { Price = (float)dtArrivalRegular.Rows[0]["PRICERegularDefault"]; }
+
+            ltlArrivalRegularPrice.Text = (((float)dtArrivalRegular.Rows[0]["Quantity"]) * Price).ToString();
+
+        if (Convert.ToInt32(dtArrivalRegular.Rows[0]["PRICEPrivateSpecial"])!= 0) {
+            Price = (float)dtArrivalRegular.Rows[0]["PRICEPrivateSpecial"];
+        }
+
+        else if (Convert.ToInt32(dtArrivalRegular.Rows[0]["PRICEPrivateList"])!= 0) {
+            Price = (float)dtArrivalRegular.Rows[0]["PRICEPrivateList"];
+        }
+
+        else if (Convert.ToInt32(dtArrivalRegular.Rows[0]["PRICEPrivateDefault"]) != 0) {
+            Price = (float)dtArrivalRegular.Rows[0]["PRICEPrivateDefault"];
+        }
+
+        ltlArrivalPrivatePrice.Text = (((float)dtArrivalRegular.Rows[0]["Quantity"]) * Price).ToString();
+
+    }
+
+    private DataTable GetRegularAndPrivatePrices(DateTime TransferDate) {
+        return HOTOMOTO.BUS.Transfer.GetTransferRegularPrivatePrices(this.SessRoot.RezervationGuests.Rows.Count, this.SessRoot.CustomerID, (int)this.SessRoot.CurrencyID, TransferDate);
+    }
+
+#endregion ÝÞLEMLER
+
+}

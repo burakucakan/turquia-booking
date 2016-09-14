@@ -1,0 +1,773 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>CSharpClass</name>
+    <description>Generates C# business class</description>
+    <author>ApexSQL</author>
+    <legal>Copyright (C) 1999-2007 ApexSQL LLC. All rights reserved.</legal>
+    <ExpectedObjectTypes>Table</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>C#</output>
+    <scripting>CSharp</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>MultiFile</Mode>
+    <Encoding>20127</Encoding>
+  </outputfile>
+  <Import>
+    <includes>
+      <filename>CSharpHelper.cs</filename>
+    </includes>
+    <Namespaces />
+    <Assemblies />
+    <Templates />
+  </Import>
+  <templatecode><![CDATA[<%
+//------------------------------------------------------------ 
+// TEMPLATE : C#_Class
+// PURPOSE  : Generates C# business class
+// EXPECTS  : TABLES
+// OUTPUT   : C#
+// AUTHOR   : ApexSQL
+// MODIFIED : March 2007
+// NOTES
+//------------------------------------------------------------
+
+Table objTable = Code.Database.ActiveTable;
+	
+%>
+using System;
+using System.Collections;
+using System.Data;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
+
+class <%=objTable.Name%>
+{
+	/// <summary>
+	/// Gets all00 <%=objTable.Name%> from the database, using the passed connection string, into a SQLDataReader
+	/// </summary>
+	/// <param name="ConnectionString">The connection string</param>
+	/// <returns>The SQLDataReader With the <%=objTable.Name%></returns>
+	public static SqlDataReader GetAll<%=objTable.Name%>Reader(string ConnectionString)
+	{
+		SqlConnection conn = new SqlConnection(ConnectionString);
+		SqlCommand cmd = getSprocCmd("prc_<%=objTable.Name%>_sel_all", conn);
+		conn.Open();
+		SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+		return reader;
+	}
+	
+	/// <summary>
+	/// Gets all <%=objTable.Name%> from the database, using the default connection string, into a SQLDataReader
+	/// </summary>
+	/// <returns>The SQLDataReader With the <%=objTable.Name%></returns>
+	public static SqlDataReader GetAll<%=objTable.Name%>Reader()
+	{
+		return GetAll<%=objTable.Name%>Reader(DefaultConnectionString);
+	}
+
+	/// <summary>
+	/// Gets all <%=objTable.Name%> from the database, using the passed connection string, into a hashtable SQLReader
+	/// </summary>
+	/// <param name="ConnectionString">The connection string</param>
+	/// <returns></returns>
+	public static Hashtable GetAll<%=objTable.Name%>(string ConnectionString)
+	{
+		SqlDataReader dr = GetAll<%=objTable.Name%>Reader(ConnectionString);
+		return ConvertReaderToHashTable(dr, ConnectionString);
+	}
+	
+	/// <summary>
+	/// Gets all <%=objTable.Name%> from the database, using the default connection string, into a hashtable SQLReader
+	/// </summary>
+	/// <returns></returns>
+	public static Hashtable GetAll<%=objTable.Name%>()
+	{
+		return GetAll<%=objTable.Name%>(DefaultConnectionString);
+	}
+
+	/// <summary>
+	/// Creates <%=objTable.Name%> for records In the prefilled DataReader, And puts them into a HashTable
+	/// </summary>
+	/// <param name="dr">The DataReader prefilled With the <%=objTable.Name%> records</param>
+	/// <param name="ConnectionString">The connection string</param>
+	/// <returns>The Hashtable containing <%=objTable.Name%> objects And their ID As key.</returns>
+	public static Hashtable ConvertReaderToHashTable(SqlDataReader dr, string ConnectionString)
+	{
+		Hashtable result = new Hashtable();
+		while (dr.Read())
+		{
+<%		Out.IndentLevel = 3;
+		Out.WriteLine("{0} my{0} = new {0}();", objTable.Name);
+		Out.WriteLine("");
+		int i = 0;
+		foreach(Column objColumn in objTable.Columns)
+		{
+			Out.WriteLine("my{0}.m_{1}{2} = dr.{3}({4});",
+				objTable.Name, objColumn.GetPrefix("C#"), objColumn.Name, objColumn.AdoNetMapping.SqlAccessor, i);
+			i++;
+		}
+		
+		if(objTable.PrimaryKeyColumns.Count > 0)
+		{
+			Out.WriteLine("");
+
+			Out.WriteLine("result.Add(my{0}.{1}, my{2});", objTable.Name, objTable.PrimaryKeyColumns[0], objTable.Name);
+		}
+		Out.IndentLevel = 0;
+%>		}
+
+		return result;
+	}
+	
+	/// <summary>
+	/// Creates <%=objTable.Name%> for records In the prefilled DataReader, And puts them into a HashTable
+	/// </summary>
+	/// <param name="dr">The DataReader prefilled With the <%=objTable.Name%> records</param>
+	/// <returns>The Hashtable containing <%=objTable.Name%> objects And their ID As key.</returns>
+	public static Hashtable ConvertReaderToHashTable(SqlDataReader dr)
+	{
+		return ConvertReaderToHashTable(dr, DefaultConnectionString);
+	}
+
+	//	enum types
+	enum Action { Insert, Update, Delete };
+
+<%if(objTable.PrimaryKeyColumns.Count > 0)
+{
+%>	//	Sub-types
+	public struct PK
+	{
+<%	
+	foreach(Column column in objTable.PrimaryKeyColumns)
+	{
+%>		public <%Out.WriteLine("{0} {1};", column.AdoNetMapping.NetSqlType, column.Name);
+	}			
+%>	}	
+<%
+}
+%>	//	static members
+	private static string m_strDefaultConnection = @"<%= Code.Database.ConnectionString %>";	//	default connection 
+
+	//	members
+	private string m_strConnection;
+	private Action m_aAction;
+	private bool m_bIsDirty;
+
+	//	members from table
+<%	if(objTable.Columns.Count > 0)
+	{
+		for(i = 0; i<objTable.Columns.Count; i++)
+		{
+			Column column = objTable.Columns[i];
+%>	private <%	
+			Out.WriteLine("{0} m_{1}{2};", column.AdoNetMapping.NetSqlType, column.GetPrefix("C#"), column.Name);
+		}
+	}
+%>
+	/// <summary>
+	/// Default constructor.
+	/// </summary>
+	public <%=objTable.Name%>()
+	{
+		Init();	//	init Object
+		ConnectionString = DefaultConnectionString;
+	}
+
+	/// <summary>
+	/// Constructor With database connection string.
+	/// </summary>
+	public <%=objTable.Name%>(string strConnection)
+	{
+		Init();	//	init Object
+		ConnectionString = strConnection;
+	}
+
+	//	static properties
+	/// <summary>
+	/// The default static DB connection string for the Class.
+	/// </summary>
+	public static string DefaultConnectionString
+	{
+		get
+		{
+			return m_strDefaultConnection;
+		}
+		set
+		{
+			m_strDefaultConnection = value;
+		}
+	}
+
+	/// <summary>
+	/// Custom, Not static DB connection string
+	/// </summary>
+	public string ConnectionString
+	{
+		get
+		{
+			return m_strConnection;
+		}
+		set
+		{
+			m_strConnection = value;
+		}
+	}
+	
+<%if(objTable.PrimaryKeyColumns.Count > 0)
+{
+%>	/// <summary>
+	/// The primary key column In the DB
+	/// </summary>
+	public PK PrimaryKey
+	{
+		get
+		{
+			PK pk;
+<%				
+			for(int j = 0; j<objTable.PrimaryKeyColumns.Count; j++)
+			{
+				Column column = objTable.PrimaryKeyColumns[j];
+%>			<%	Out.WriteLine("pk.{0} = m_{1}{2};", column.Name, column.GetPrefix("C#"), column.Name);
+			}				
+%>
+			return pk;
+		}
+	}
+<%
+}	
+%>
+<%
+foreach(Column column in objTable.Columns)
+{
+%>
+	/// <summary>
+	/// The <%=column.Name%> column in the DB
+	/// </summary>
+	public <%Out.Write("{0} {1}", column.GetMappedType("C#"), column.Name);%> 
+	{
+		get
+		{
+			return <%Out.Write("({0})m_{1}{2};", column.GetMappedType("C#"), column.GetPrefix("C#"), column.Name);%>
+		}
+		set
+		{
+			<%Out.Write("m_{0}{1}", column.GetPrefix("C#"), column.Name);%> = value;
+			m_bIsDirty = true;
+		}
+	}
+<%
+}	
+
+if(objTable.PrimaryKeyColumns.Count > 0) 
+{
+%>
+	/// <summary>
+	/// Fills the member variables of the Object from the DB based On the primary key, returns true if success.
+	/// </summary>
+	/// <param name="pk">PK struct</param>
+	/// <returns>true member variables filled.</returns>
+	public bool Find(PK pk)
+	{
+		return Find(<%
+		
+		for(i = 0; i<objTable.PrimaryKeyColumns.Count; i++)
+		{
+			Column column = objTable.PrimaryKeyColumns[i];
+
+			Out.Write("pk.{0}.Value", column.Name);
+
+			if(i != objTable.PrimaryKeyColumns.Count-1)
+			{
+				Out.Write(", ");
+			}
+			else
+			{
+				Out.Write(");");
+			}
+		}		
+%>
+	}
+
+	/// <summary>
+	/// Fills the member variables of the Object from the DB based on the primary key, returns true if success.
+	/// </summary>
+<%	
+foreach(Column column in objTable.PrimaryKeyColumns)
+{	
+%>	<%Out.WriteLine("/// <param name=\"{0}{1}\"> {1} key value</param>", column.GetPrefix("C#"), column.Name);	
+}
+%>	/// <returns>true if success</returns>
+	public bool Find(<%		
+	for(int j = 0; j<objTable.PrimaryKeyColumns.Count; j++)
+	{
+		Column column = objTable.PrimaryKeyColumns[j];
+
+		Out.Write("{0} {1}{2}", column.AdoNetMapping, column.GetPrefix("C#"), column.Name);
+
+		if(j != objTable.PrimaryKeyColumns.Count - 1)
+		{
+			Out.Write(", ");
+		}
+		else
+		{
+			Out.Write(")");
+		}
+	}	
+%>
+	{	
+		//	construct new connection and command objects
+		SqlConnection conn = getConn();
+		SqlCommand cmd = getSprocCmd("prc_<%=objTable.Name%>_sel", conn);
+
+		SqlParameter param;
+
+  		//	Add params
+<%		Out.IndentLevel = 2;
+		
+		foreach(Column column in objTable.PrimaryKeyColumns)
+		{
+			foreach(string s in CSharpHelper.MakeParameter(column, "param", "Input"))
+			{
+				Out.WriteLine(s);			
+			}
+			Out.WriteLine("cmd.Parameters.Add(param);");
+			Out.WriteLine("");
+		}
+		
+		Out.IndentLevel = 0;
+%>		//	open connection
+		conn.Open();
+		//	Execute command And get reader
+		SqlDataReader reader = cmd.ExecuteReader();
+
+		bool found = false;	//	false solution
+
+		//	check if  anything was found
+		if(reader.Read())
+		{
+			found = true;	//	corresponding row found
+			m_aAction = Action.Update;	//	future action
+
+			//	set member values
+<%	Out.IndentLevel = 3;
+
+	i = 0;
+	foreach(Column column in objTable.Columns)	
+	{
+		Out.WriteLine("m_{0}{1} = reader.{2}({3});", column.GetPrefix("C#"), column.Name, column.AdoNetMapping.SqlAccessor, i);
+		i++;
+	}
+	
+	Out.IndentLevel = 0;
+%>		}
+		else
+		{
+			//	set key values
+<%	Out.IndentLevel = 3;
+
+	for(int j = 0; j<objTable.PrimaryKeyColumns.Count; j++)
+	{
+		Column column = objTable.PrimaryKeyColumns[j];
+
+		Out.WriteLine("m_{0}{1} = {0}{1};", column.GetPrefix("C#"), column.Name);
+	}
+	
+	Out.IndentLevel = 0;
+%>		}
+
+		//	close connection
+		conn.Close();
+		//	set dirty flag To false
+		m_bIsDirty = false;
+		//	return true if  a row found, otherwise false
+		return found;		
+	}
+<%
+}
+%>
+
+	/// <summary>
+	/// Updates the DB.
+	/// </summary>
+	/// <returns>0 if success</returns>
+	public int Update()
+	{
+		int retValue;
+		switch(m_aAction)
+		{
+			case Action.Insert:
+				//	insert row
+				retValue = ins();
+				//	future action To be update
+				m_aAction = Action.Update;
+				//	return retValue from insert
+				return retValue;
+			case Action.Update:
+				//	check if  Objectstringdirty
+				if (m_bIsDirty)
+				{
+					//	update row And return retValue
+					return upd();
+				}
+				else
+				{
+					//	return 0 (all ok)
+					return 0;
+				}
+			case Action.Delete:
+				//	delete row
+				retValue = del();
+				//	future action To be insert
+				m_aAction = Action.Insert;
+				//	return retValue from delete
+				return retValue;
+		}
+
+		throw new System.Exception("Unknown action.");
+	}
+
+	/// <summary>
+	/// Deletes the Object from the DB.
+	/// </summary>
+	/// <returns>0 if success</returns>
+	public int Delete()
+	{
+		m_aAction = Action.Delete;	//	actionstringdelete
+		return Update();
+	}
+
+	//	private member functions
+
+	/// <summary>
+	/// Adds the Object To the DB.
+	/// </summary>
+	/// <returns>0 if success</returns>
+	private int ins()
+	{
+		//	construct new connection and command objects
+		SqlConnection conn = getConn();
+		SqlCommand cmd = getSprocCmd("prc_<%=objTable.Name%>_ins", conn);
+		
+		SqlParameter param;
+
+		//	Add return value param
+		param = new SqlParameter("@RETURN_VALUE",SqlDbType.Int);
+		param.Direction = ParameterDirection.ReturnValue;
+		cmd.Parameters.Add(param);
+  
+  		//	Add params
+<%	Out.IndentLevel = 2;
+
+	foreach(Column column in objTable.Columns)
+	{
+		foreach(string s in CSharpHelper.MakeParameter(column, "param", "Input", "m_"))
+		{
+			Out.WriteLine(s);
+		}
+		
+		Out.WriteLine("cmd.Parameters.Add(param);");
+		Out.WriteLine("");					
+	}
+	
+	Out.IndentLevel = 0;
+%>		
+		//	open connection
+		conn.Open();
+		//	Execute command
+		cmd.ExecuteNonQuery();
+		//	get return value
+		int retValue = 0;
+		try
+		{
+			//	get return value of the sproc
+			retValue = (int)cmd.Parameters["@RETURN_VALUE"].Value;
+		}
+		catch(System.Exception)	//	catch all possible exceptions
+		{
+			retValue = 0;	//	set retValue To 0 (all ok)
+		}
+		//	close connection
+		conn.Close();
+		
+		//	set dirty flag To false
+		m_bIsDirty = false;
+
+		return retValue;
+	}
+
+	/// <summary>
+	/// Updates the Object To the DB.
+	/// </summary>
+	/// <returns>0 if success</returns>
+	private int upd()
+	{
+		//	construct new connection and command objects
+		SqlConnection conn = getConn();
+		SqlCommand cmd = getSprocCmd("prc_<%=objTable.Name%>_upd", conn);
+
+		SqlParameter param;
+
+		//	add return value param
+		param = new SqlParameter("@RETURN_VALUE",SqlDbType.Int);
+		param.Direction = ParameterDirection.ReturnValue;
+		cmd.Parameters.Add(param);
+
+  		//	add params
+<%	Out.IndentLevel = 2;
+
+	if(objTable.PrimaryKeyColumns.Count > 0)
+	{
+		foreach(Column column in objTable.PrimaryKeyColumns)
+		{
+			foreach(string s in CSharpHelper.MakeParameter(column, "param", "Input", "m_"))
+			{
+				Out.WriteLine(s);
+			}
+			
+			Out.WriteLine("cmd.Parameters.Add(param);");
+			Out.WriteLine("");
+		}
+	}
+	
+	foreach(Column column in objTable.Columns)
+	{
+		// check if  columnstringnot a key
+		if(!column.IsInPrimaryKey)
+		{
+			foreach(string s in CSharpHelper.MakeParameter(column, "param", "Input", "m_"))
+			{
+				Out.WriteLine(s);
+			}
+			
+			Out.WriteLine("cmd.Parameters.Add(param);");
+			Out.WriteLine("");			
+		}
+	}
+	
+	Out.IndentLevel = 0;
+%>
+		//	open connection
+		conn.Open();
+		//	Execute command
+		cmd.ExecuteNonQuery();
+		//	get return value
+		int retValue = 0;
+		try
+		{
+			//	get return value of the sproc
+			retValue = (int)cmd.Parameters["@RETURN_VALUE"].Value;
+		}
+		catch(System.Exception)	//	catch all possible exceptions
+		{
+			retValue = 0;	//	set retValue To 0 (all ok)
+		}
+
+		//	close connection
+		conn.Close();
+
+		//	set dirty flag To false
+		m_bIsDirty = false;
+
+		return retValue;
+	}
+
+	/// <summary>
+	/// Deletes the Object from the DB.
+	/// </summary>
+	/// <returns>0 if success</returns>
+	private int del()
+	{
+		//	construct new connection and command objects
+		SqlConnection conn = getConn();
+		SqlCommand cmd = getSprocCmd("prc_<%=objTable.Name%>_del", conn);
+
+		SqlParameter param;
+
+		//	add return value param
+		param = new SqlParameter("@RETURN_VALUE",SqlDbType.Int);
+		param.Direction = ParameterDirection.ReturnValue;
+		cmd.Parameters.Add(param);
+
+  		//	Add params
+<%	Out.IndentLevel = 2;
+	
+	foreach(Column column in objTable.PrimaryKeyColumns)
+	{
+		foreach(string s in CSharpHelper.MakeParameter(column, "param", "Input", "m_"))
+		{
+			Out.WriteLine(s);
+		}
+		
+		Out.WriteLine("cmd.Parameters.Add(param);");
+		Out.WriteLine("");		
+	}	
+	
+	Out.IndentLevel = 0;
+%>
+		//	open connection
+		conn.Open();
+		//	Execute command
+		cmd.ExecuteNonQuery();
+		//	get return value
+		int retValue = 0;
+		try
+		{
+			//	get return value of the sproc
+			retValue = (int)cmd.Parameters["@RETURN_VALUE"].Value;
+		}
+		catch(System.Exception)	//	catch all possible exceptions
+		{
+			retValue = 0;	//	set retValue To 0 (all ok)
+		}
+		//	close connection
+		conn.Close();
+		
+		//	set dirty flag To false
+		m_bIsDirty = false;
+
+		return retValue;
+	}
+
+	//	operators
+	/// <summary>
+	/// Compares two objects
+	/// </summary>
+	/// <param name="t1">The first Object To compare</param>
+	/// <param name="t2">The Second Object To compare</param>
+	/// <returns>true if success</returns>
+	public static bool operator ==(
+		<%=objTable.Name%> t1,
+		<%=objTable.Name%> t2
+	)
+	{
+		//	compare values
+<%
+	foreach(Column objColumn in objTable.Columns)
+	{
+%>		if<%		
+		Out.WriteLine("(t1.m_{0}{1} != t2.m_{0}{1})", objColumn.GetPrefix("C#"), objColumn.Name);
+%>		{
+			return false;	//	because "<%=objColumn.Name%>" values are Not equal
+		}
+
+<%	}
+%>		return true;	//	because every Valuestringequal
+	}
+
+	/// <summary>
+	/// Compares two objects
+	/// </summary>
+	/// <param name="t1">The first Object To compare</param>
+	/// <param name="t2">The Second Object To compare</param>
+	/// <returns>true if success</returns>
+	public static bool operator !=(
+		<%=objTable.Name%> t1,
+		<%=objTable.Name%> t2
+	)
+	{
+		return !(t1 == t2);
+	}
+
+	//	Object methods
+	
+	/// <summary>
+	/// Overrides the ToString Function.
+	/// </summary>
+	/// <returns>The string representation of the Object</returns>
+	public override string ToString()
+	{
+		System.Text.StringBuilder retValue = new System.Text.StringBuilder("Keys:\n");		
+<%	
+	foreach(Column column in objTable.PrimaryKeyColumns)
+	{	
+%>
+		retValue.Append(" <%=column.Name%> = \"");
+		retValue.Append(m_<%Out.Write("{0}{1}", column.GetPrefix("C#"), column.Name);%>);
+		retValue.Append("\"\n");
+<%	}	
+%>		
+		retValue.Append("Columns:\n");
+<%
+	foreach(Column column in objTable.Columns)
+	{
+		if(!column.IsInPrimaryKey)
+		{
+%>
+		retValue.Append("    <%=column.Name%> = \"");
+		retValue.Append(m_<%=(column.GetPrefix("C#") + column.Name)%>);
+		retValue.Append("\"\n");
+<%		}
+	}	
+%>
+		return retValue.ToString();
+	}
+
+	/// <summary>
+	/// Overrides the Equals Function.
+	/// </summary>
+	/// <param name="o">The Object To compare With</param>
+	/// <returns>Bool if the two objects are identical.</returns>
+	public override bool Equals(System.Object o)
+	{
+		//	check the type of o
+		if (!(o is <%=objTable.Name%>))
+		{
+			//	types Not the same, return false
+			return false;
+		}
+
+		//	compare objects And return retValue
+		return this == (<%=objTable.Name%>)o;
+	}
+
+	/// <summary>
+	/// Overrides the GetHashCode Function.
+	/// </summary>
+	/// <returns>Bool if the two objects are identical.</returns>
+	public override int GetHashCode()
+	{
+		return this.ToString().GetHashCode();
+	}
+
+	//	private methods
+	/// <summary>
+	/// Returns a SQL command based On the name of an SP
+	/// </summary>
+	/// <param name="strSprocName">The name of the SP</param>
+	/// <param name="conn">The SQL conenction for the SP</param>
+	/// <returns>The SQL command</returns>
+	private static SqlCommand getSprocCmd(string strSprocName, SqlConnection conn)
+	{
+		SqlCommand cmd = new SqlCommand(strSprocName, conn);
+		cmd.CommandType = CommandType.StoredProcedure;
+		return cmd;
+	}
+
+	/// <summary>
+	/// Gets the SQL connection
+	/// </summary>
+	/// <returns>The SQL connection.</returns>
+	private SqlConnection getConn()
+	{
+		return new SqlConnection(ConnectionString);
+	}
+
+	/// <summary>
+	/// The init Function.
+	/// </summary>
+	private void Init()
+	{
+		m_aAction = Action.Insert;	//	initial action
+		m_bIsDirty = false;	//	Objectstring"clean" upon init
+	}
+}
+]]></templatecode>
+</template>

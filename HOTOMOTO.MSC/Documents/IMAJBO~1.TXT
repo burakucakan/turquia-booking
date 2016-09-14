@@ -1,0 +1,10 @@
+Oda Büyük: 192 * 145
+Oda Küçük: 92 * 69
+
+Hotel Küçük: 85 * 62
+Hotel Büyük: 236 * 178
+
+Tur Küçük: 85 * 62
+Tur Büyük: 236 * 178
+
+Places Küçük: 87 * 66

@@ -1,0 +1,843 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>CSharpClass</name>
+    <description>Generates C# business class</description>
+    <author>Caretta</author>
+    <legal>Copyright (C) 1999-2007 Caretta Yazılım. All rights reserved.</legal>
+    <ExpectedObjectTypes>Table</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>C#</output>
+    <scripting>CSharp</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>MultiFile</Mode>
+    <Encoding>1254</Encoding>
+  </outputfile>
+  <Import>
+    <includes>
+      <filename>CSharpHelper.cs</filename>
+    </includes>
+    <Namespaces />
+    <Assemblies />
+    <Templates />
+  </Import>
+  <templatecode><![CDATA[<%
+//------------------------------------------------------------ 
+// TEMPLATE : C#_Class
+// PURPOSE  : Generates C# business class
+// EXPECTS  : TABLES
+// OUTPUT   : C#
+// AUTHOR   : Caretta
+// MODIFIED : May 2007
+// NOTES
+//------------------------------------------------------------
+
+Table objTable = Code.Database.ActiveTable;
+
+string sprocPrefix = "proc_";
+bool hasMultiLingual = false;
+bool isMultiLingual = false;
+
+Table mlTable = null;
+
+if(objTable.Name.IndexOf("_ML") > -1) {
+	isMultiLingual = true;
+}
+
+for(int ctri = 0; ctri < Code.Database.Tables.Count; ctri++) {
+	if(Code.Database.Tables[ctri].Name == objTable.Name + "_ML") {
+		hasMultiLingual = true;
+		mlTable = Code.Database.Tables[ctri];
+	}
+}
+
+/*
+for(int ctri = 0; ctri < Code.Database.Tables.Count; ctri++) {
+	for(int ctrj = 0; ctrj < Code.Database.Tables[ctri].ForeignKeys.Count; ctrj++) {
+		string ckTable = Code.Database.Tables[ctri].ForeignKeys[ctrj].ReferencedTable.Name;
+		string ownerTable = Code.Database.Tables[ctri].Name;
+		
+		if(objTable.Name == Code.Database.Tables[ctri].ForeignKeys[ctrj].ReferencedTable.Name) {
+			Out.WriteLine(ownerTable);
+		}
+	}
+}
+*/
+
+%>
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
+
+namespace HOTOMOTO.APEX {
+
+	public class <%=objTable.Name%> {
+	
+		
+		//	members
+		private Action m_aAction;
+		private bool m_bIsDirty;
+		private bool m_bIsMLDirty;
+		
+		//	members from table
+<%	if(objTable.Columns.Count > 0) {
+			for(int ctr = 0; ctr<objTable.Columns.Count; ctr++) {
+				Column column = objTable.Columns[ctr];
+%>		private <%
+				Out.WriteLine("{0} m_{1}{2};", column.AdoNetMapping.NetSqlType, column.GetPrefix("C#"), column.Name);
+			}
+		}
+	
+		%>
+		
+		// members from ml table
+		<%
+		if(hasMultiLingual) {
+			Out.WriteLine("private int m_intLanguageID;");
+		
+			if(objTable.Columns.Count > 0 && mlTable.Columns.Count > 0) {
+				for(int ctr = 0; ctr < mlTable.Columns.Count; ctr++) {
+					Column column = mlTable.Columns[ctr];
+					for(int j = 0; j < objTable.Columns.Count; j++) {
+						if(column.Name != objTable.Columns[j].Name && column.Name != "LanguageID") {
+		%>		private <%	
+							Out.WriteLine("Dictionary<int, {0}> m_{1}{2};", column.AdoNetMapping.NetSqlType, column.GetPrefix("C#"), column.Name);
+						}
+						break;
+					}
+				}
+			}
+		}
+	%>
+	
+		/// <summary>
+		/// Default constructor.
+		/// </summary>
+		public <%=objTable.Name%>(<%if(hasMultiLingual) { Out.Write("int LanguageID"); }%>) {
+			Init();	//	init Object
+			
+<%
+		if(hasMultiLingual) {
+			%>
+			
+			this.m_intLanguageID = LanguageID;
+			
+			<%
+			if(objTable.Columns.Count > 0 && mlTable.Columns.Count > 0) {
+				for(int ctr = 0; ctr < mlTable.Columns.Count; ctr++) {
+					Column column = mlTable.Columns[ctr];
+					for(int j = 0; j < objTable.Columns.Count; j++) {
+						if(column.Name != objTable.Columns[j].Name && column.Name != "LanguageID") {
+				%>
+			
+			m_<%
+							Out.Write("{0}{1} = new Dictionary<int, {2}>();", column.GetPrefix("C#"), column.Name, column.AdoNetMapping.NetSqlType);
+						}
+						break;
+					}
+				}
+			}
+		}
+%>
+		
+		}
+	
+		/// <summary>
+		/// Gets all <%=objTable.Name%> from the database, using the default connection string, into a SQLDataReader
+		/// </summary>
+		/// <returns>The SQLDataReader With the <%=objTable.Name%></returns>
+		public static SqlDataReader GetAll<%=objTable.Name%>Reader(<%if(hasMultiLingual) { Out.Write("int LanguageID"); }%>) {
+			SqlConnection conn = DBHelper.getConnection();
+			SqlCommand cmd = DBHelper.getSprocCmd("<%=string.Concat(sprocPrefix, objTable.Name)%>__sel_all", conn);
+<%
+			if(hasMultiLingual) {
+%>
+
+			SqlParameter param;
+			// parameter for LanguageID column
+        	param = new SqlParameter("@LanguageID", SqlDbType.Int, 4);
+        	param.Direction = ParameterDirection.Input;
+        	param.Value = LanguageID;
+        	cmd.Parameters.Add(param);
+<%			}
+			
+%>
+
+			conn.Open();
+			SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+			return reader;
+		}
+		
+		public static DataSet GetAll<%=objTable.Name%>DataSet(<%if(hasMultiLingual) { Out.Write("int LanguageID"); }%>) {
+            SqlConnection conn = DBHelper.getConnection();
+            SqlCommand cmd = DBHelper.getSprocCmd("<%=string.Concat(sprocPrefix, objTable.Name)%>__sel_all", conn);
+
+<%
+			if(hasMultiLingual) {
+%>
+
+			SqlParameter param;
+			// parameter for LanguageID column
+        	param = new SqlParameter("@LanguageID", SqlDbType.Int, 4);
+        	param.Direction = ParameterDirection.Input;
+        	param.Value = LanguageID;
+        	cmd.Parameters.Add(param);
+<%			}
+			
+%>
+
+            conn.Open();
+            DataSet ds = new DataSet();
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(ds);
+
+            return ds;
+        }
+		
+		/// <summary>
+		/// Gets all <%=objTable.Name%> from the database, using the default connection string, into a hashtable SQLReader
+		/// </summary>
+		/// <returns></returns>
+		public static Hashtable GetAll<%=objTable.Name%>(<% if(hasMultiLingual) { Out.Write("int LanguageID"); } %>) {
+			SqlDataReader dr = GetAll<%=objTable.Name%>Reader(<% if(hasMultiLingual) { Out.Write("LanguageID"); } %>);
+			return ConvertReaderToHashTable(dr<% if(hasMultiLingual) { Out.Write(", LanguageID"); } %>);
+		}
+		
+		/// <summary>
+		/// Creates <%=objTable.Name%> for records In the prefilled DataReader, And puts them into a HashTable
+		/// </summary>
+		/// <param name="dr">The DataReader prefilled With the <%=objTable.Name%> records</param>
+		/// <returns>The Hashtable containing <%=objTable.Name%> objects And their ID As key.</returns>
+		private static Hashtable ConvertReaderToHashTable(SqlDataReader dr<% if(hasMultiLingual) { Out.Write(", int LanguageID"); } %>) {
+			Hashtable result = new Hashtable();
+			while (dr.Read()) {
+	<%		Out.IndentLevel = 3;
+			
+			string appendText = "";
+			if(hasMultiLingual)
+				appendText = "LanguageID";
+			Out.WriteLine("{0} my{0} = new {0}({1});", objTable.Name, appendText);
+			Out.WriteLine("");
+			int i = 0;
+			foreach(Column objColumn in objTable.Columns) {
+				Out.WriteLine("my{0}.m_{1}{2} = dr.{3}({4});",
+					objTable.Name, objColumn.GetPrefix("C#"), objColumn.Name, objColumn.AdoNetMapping.SqlAccessor, i);
+				i++;
+			}
+			
+			if(objTable.PrimaryKeyColumns.Count > 0) {
+				Out.WriteLine("");
+	
+				Out.WriteLine("result.Add(my{0}.{1}, my{2});", objTable.Name, objTable.PrimaryKeyColumns[0], objTable.Name);
+			}
+			Out.IndentLevel = 0;
+	%>		}
+	
+			return result;
+		}
+	
+		//	enum types
+		enum Action { Insert, Update, Delete };
+	
+	<%if(objTable.PrimaryKeyColumns.Count > 0) {
+	%>	//	Sub-types
+		public struct PK {
+	<%	
+		foreach(Column column in objTable.PrimaryKeyColumns) {
+	%>		public <%Out.WriteLine("{0} {1};", column.AdoNetMapping.NetSqlType, column.Name);
+		}			
+	%>	}	
+	<%
+	}
+	
+	
+	if(objTable.PrimaryKeyColumns.Count > 0) {
+	%>	/// <summary>
+		/// The primary key column In the DB
+		/// </summary>
+		public PK PrimaryKey {
+			get {
+				PK pk;
+	<%				
+				for(int j = 0; j<objTable.PrimaryKeyColumns.Count; j++)
+				{
+					Column column = objTable.PrimaryKeyColumns[j];
+	%>			<%	Out.WriteLine("pk.{0} = m_{1}{2};", column.Name, column.GetPrefix("C#"), column.Name);
+				}				
+	%>
+				return pk;
+			}
+		}
+	<%
+	}
+	
+	foreach(Column column in objTable.Columns) {
+	%>
+		/// <summary>
+		/// The <%=column.Name%> column in the DB
+		/// </summary>
+		public <%Out.Write("{0} {1}", column.GetMappedType("C#"), column.Name);%> {
+			get {
+				return <%Out.Write("({0})m_{1}{2};", column.GetMappedType("C#"), column.GetPrefix("C#"), column.Name);%>
+			}
+			set {
+				<%Out.Write("m_{0}{1}", column.GetPrefix("C#"), column.Name);%> = value;
+				m_bIsDirty = true;
+			}
+		}
+	<%
+	}
+	
+	if(hasMultiLingual) {
+		%>
+		
+		public int LanguageID {
+			get { 
+				return m_intLanguageID; 
+			}
+			set {
+				m_intLanguageID = value;
+			}
+		}
+		<%
+	
+		for(i = 0; i < mlTable.Columns.Count; i++) {
+			Column column = mlTable.Columns[i];
+			bool exists = false;
+			
+			for(int j = 0; j < objTable.Columns.Count; j++) {
+				if(column.Name == objTable.Columns[j].Name) {
+					exists = true;
+					break;
+				}
+			}
+			
+			if(!exists && column.Name != "LanguageID") {
+			%>
+					
+		/// <summary>
+		/// The <%=column.Name%> column from ML table
+		/// </summary>
+		public <%Out.Write("{0} {1}", column.GetMappedType("C#"), column.Name);%> {
+			get { 
+				return this.Get<%=column.Name%>(this.m_intLanguageID); 
+			}
+			set { 
+				this.Set<%=column.Name%>(value, this.m_intLanguageID);
+                this.m_bIsMLDirty = true;
+			}
+		}
+			<%
+			}
+		}
+
+		for(i = 0; i < mlTable.Columns.Count; i++) {
+			Column column = mlTable.Columns[i];
+			bool exists = false;
+			
+			for(int j = 0; j < objTable.Columns.Count; j++) {
+				if(column.Name == objTable.Columns[j].Name) {
+					exists = true;
+					break;
+				}
+			}
+			
+			if(!exists && column.Name != "LanguageID") {
+			%>
+					
+		/// <summary>
+		/// The <%=column.Name%> column from ML table
+		/// </summary>
+		public <%Out.Write("{0} Get{1}", column.GetMappedType("C#"), column.Name);%>(int LanguageID) {
+			return this.<%="m_" + column.GetPrefix("C#") + column.Name%>[LanguageID].Value;
+		}
+		
+		/// <summary>
+		/// The <%=column.Name%> column from ML table
+		/// </summary>
+		public void <%Out.Write("Set{0}", column.Name);%>(<%=column.GetMappedType("C#")%> <%=column.Name%>, int LanguageID) {
+			this.<%="m_" + column.GetPrefix("C#") + column.Name%>[LanguageID] = <%=column.Name%>;
+		}
+		
+			<%
+			}
+		}
+	}
+	
+	
+	if(objTable.PrimaryKeyColumns.Count > 0) {
+	%>
+		/// <summary>
+		/// Fills the member variables of the Object from the DB based On the primary key, returns true if success.
+		/// </summary>
+		/// <param name="pk">PK struct</param>
+		/// <returns>true member variables filled.</returns>
+		public bool Load(PK pk) {
+			return Load(<%
+			
+			for(i = 0; i<objTable.PrimaryKeyColumns.Count; i++) {
+				Column column = objTable.PrimaryKeyColumns[i];
+	
+				Out.Write("pk.{0}.Value", column.Name);
+	
+				if(i != objTable.PrimaryKeyColumns.Count-1) {
+					Out.Write(", ");
+				} else {
+					Out.Write(");");
+				}
+			}		
+	%>
+		}
+	
+		/// <summary>
+		/// Fills the member variables of the Object from the DB based on the primary key, returns true if success.
+		/// </summary>
+	<%	
+	foreach(Column column in objTable.PrimaryKeyColumns) {	
+	%>	<%Out.WriteLine("/// <param name=\"{0}{1}\"> {1} key value</param>", column.GetPrefix("C#"), column.Name);	
+	}
+	%>	/// <returns>true if success</returns>
+		public bool Load(<%
+		for(int j = 0; j<objTable.PrimaryKeyColumns.Count; j++) {
+			Column column = objTable.PrimaryKeyColumns[j];
+	
+			Out.Write("{0} {1}{2}", column.AdoNetMapping, column.GetPrefix("C#"), column.Name);
+	
+			if(j != objTable.PrimaryKeyColumns.Count - 1) {
+				Out.Write(", ");
+			} else {
+				Out.Write(")");
+			}
+		}	
+	%> {	
+			//	construct new connection and command objects
+			SqlConnection conn = DBHelper.getConnection();
+			SqlCommand cmd = DBHelper.getSprocCmd("<%=string.Concat(sprocPrefix, objTable.Name)%>__sel", conn);
+		
+			SqlParameter param;
+		
+				//	Add params
+	<%		Out.IndentLevel = 2;
+				
+				foreach(Column column in objTable.PrimaryKeyColumns) {
+					foreach(string s in CSharpHelper.MakeParameter(column, "param", "Input")) {
+						Out.WriteLine(s);			
+					}
+					Out.WriteLine("cmd.Parameters.Add(param);");
+					Out.WriteLine("");
+				}
+				
+				Out.IndentLevel = 0;
+	%>		//	open connection
+				conn.Open();
+				//	Execute command And get reader
+				SqlDataReader reader = cmd.ExecuteReader();
+		
+				bool found = false;	//	false solution
+		
+				//	check if  anything was found
+				if(reader.Read()) {
+					found = true;	//	corresponding row found
+					m_aAction = Action.Update;	//	future action
+		
+					//	set member values
+		<%	Out.IndentLevel = 3;
+		
+			i = 0;
+			foreach(Column column in objTable.Columns) {
+				Out.WriteLine("m_{0}{1} = reader.{2}({3});", column.GetPrefix("C#"), column.Name, column.AdoNetMapping.SqlAccessor, i);
+				i++;
+			}
+			
+			Out.IndentLevel = 0;
+			
+			if(hasMultiLingual) {
+		%>		
+			
+				cmd = DBHelper.getSprocCmd("<%=string.Concat(sprocPrefix, objTable.Name)%>__sel_ml_data", conn);
+				
+				<%		Out.IndentLevel = 3;
+				
+				foreach(Column column in objTable.PrimaryKeyColumns) {
+					foreach(string s in CSharpHelper.MakeParameter(column, "param", "Input")) {
+						Out.WriteLine(s);			
+					}
+					Out.WriteLine("cmd.Parameters.Add(param);");
+					Out.WriteLine("");
+				}
+				
+				Out.IndentLevel = 0;
+			%>
+			
+				reader.Close();
+				reader = null;
+				
+				if(conn.State == ConnectionState.Closed) conn.Open();
+				
+				reader = cmd.ExecuteReader();
+
+				//check if  anything was found
+				while(reader.Read()) { <%
+				for(int ctr = 0; ctr < mlTable.Columns.Count; ctr++) {
+					Column column = mlTable.Columns[ctr];
+					for(int j = 0; j < objTable.Columns.Count; j++) {
+						if(column.Name != objTable.Columns[j].Name && column.Name != "LanguageID") {
+				%>
+			
+			m_<%
+							Out.Write("{0}{1}.Add((int)reader.GetSqlInt32(1), ({2})reader.{3}({4}));", column.GetPrefix("C#"), column.Name, column.AdoNetMapping.NetSqlType, column.AdoNetMapping.SqlAccessor, ctr);
+						}
+						break;
+					}
+				}
+			%>
+				}
+		<%
+			}
+				%>
+		
+			} else {
+					//	set key values
+		<%	Out.IndentLevel = 3;
+		
+			for(int j = 0; j<objTable.PrimaryKeyColumns.Count; j++) {
+				Column column = objTable.PrimaryKeyColumns[j];
+		
+				Out.WriteLine("m_{0}{1} = {0}{1};", column.GetPrefix("C#"), column.Name);
+			}
+			
+			Out.IndentLevel = 0;
+		%>	}
+		
+			//	close connection
+			conn.Close();
+			//	set dirty flag To false
+			m_bIsDirty = false;
+			//	return true if  a row found, otherwise false
+			return found;
+			
+		}
+	<%
+	}
+	%>
+	
+		/// <summary>
+		/// Updates the DB.
+		/// </summary>
+		/// <returns>0 if success</returns>
+		public int Update() {
+			int retValue;
+			switch(m_aAction) {
+				case Action.Insert:
+					//	insert row
+					retValue = ins();
+					//	future action To be update
+					m_aAction = Action.Update;
+					//	return retValue from insert
+					return retValue;
+				case Action.Update:
+					//	check if  Objectstringdirty
+					if (m_bIsDirty)	{
+						//	update row And return retValue
+						return upd();
+					} else {
+						//	return 0 (all ok)
+						return 0;
+					}
+				case Action.Delete:
+					//	delete row
+					retValue = del();
+					//	future action To be insert
+					m_aAction = Action.Insert;
+					//	return retValue from delete
+					return retValue;
+			}
+	
+			throw new System.Exception("Unknown action.");
+		}
+	
+		/// <summary>
+		/// Deletes the Object from the DB.
+		/// </summary>
+		/// <returns>0 if success</returns>
+		public int Delete() {
+			m_aAction = Action.Delete;	//	actionstringdelete
+			return Update();
+		}
+	
+		//	private member functions
+	
+		/// <summary>
+		/// Adds the Object To the DB.
+		/// </summary>
+		/// <returns>0 if success</returns>
+		private int ins() {
+			//	construct new connection and command objects
+			SqlConnection conn = DBHelper.getConnection();
+			SqlCommand cmd = DBHelper.getSprocCmd("<%=string.Concat(sprocPrefix, objTable.Name)%>__ins", conn);
+			
+			SqlParameter param;
+		
+			//	Add return value param
+			param = new SqlParameter("@RETURN_VALUE",SqlDbType.Int);
+			param.Direction = ParameterDirection.ReturnValue;
+			cmd.Parameters.Add(param);
+		
+			//	Add params
+		<%	Out.IndentLevel = 2;
+		
+			foreach(Column column in objTable.Columns) {
+				foreach(string s in CSharpHelper.MakeParameter(column, "param", "Input", "m_")) {
+					Out.WriteLine(s);
+				}
+				
+				Out.WriteLine("cmd.Parameters.Add(param);");
+				Out.WriteLine("");					
+			}
+			
+			Out.IndentLevel = 0;
+		%>		
+			//	open connection
+			conn.Open();
+			//	Execute command
+			cmd.ExecuteNonQuery();
+			//	get return value
+			int retValue = 0;
+			try {
+				//	get return value of the sproc
+				retValue = (int)cmd.Parameters["@RETURN_VALUE"].Value;
+			} catch(System.Exception) {	//	catch all possible exceptions
+				retValue = 0;	//	set retValue To 0 (all ok)
+			}
+			//	close connection
+			conn.Close();
+		
+			//	set dirty flag To false
+			m_bIsDirty = false;
+		
+			return retValue;
+		}
+	
+		/// <summary>
+		/// Updates the Object To the DB.
+		/// </summary>
+		/// <returns>0 if success</returns>
+		private int upd() {
+			//	construct new connection and command objects
+			SqlConnection conn = DBHelper.getConnection();
+			SqlCommand cmd = DBHelper.getSprocCmd("<%=string.Concat(sprocPrefix, objTable.Name)%>__upd", conn);
+		
+			SqlParameter param;
+		
+			//	add return value param
+			param = new SqlParameter("@RETURN_VALUE",SqlDbType.Int);
+			param.Direction = ParameterDirection.ReturnValue;
+			cmd.Parameters.Add(param);
+		
+			//	add params
+		<%	Out.IndentLevel = 2;
+		
+			if(objTable.PrimaryKeyColumns.Count > 0) {
+				foreach(Column column in objTable.PrimaryKeyColumns) {
+					foreach(string s in CSharpHelper.MakeParameter(column, "param", "Input", "m_")) {
+						Out.WriteLine(s);
+					}
+					
+					Out.WriteLine("cmd.Parameters.Add(param);");
+					Out.WriteLine("");
+				}
+			}
+			
+			foreach(Column column in objTable.Columns) {
+				// check if  columnstringnot a key
+				if(!column.IsInPrimaryKey) {
+					foreach(string s in CSharpHelper.MakeParameter(column, "param", "Input", "m_")) {
+						Out.WriteLine(s);
+					}
+					
+					Out.WriteLine("cmd.Parameters.Add(param);");
+					Out.WriteLine("");			
+				}
+			}
+			
+			Out.IndentLevel = 0;
+		%>
+			//	open connection
+			conn.Open();
+			//	Execute command
+			cmd.ExecuteNonQuery();
+			//	get return value
+			int retValue = 0;
+			try {
+				//	get return value of the sproc
+				retValue = (int)cmd.Parameters["@RETURN_VALUE"].Value;
+			} catch(System.Exception) {	//	catch all possible exceptions
+				retValue = 0;	//	set retValue To 0 (all ok)
+			}
+			
+			//	close connection
+			conn.Close();
+		
+			//	set dirty flag To false
+			m_bIsDirty = false;
+		
+			return retValue;
+		}
+	
+		/// <summary>
+		/// Deletes the Object from the DB.
+		/// </summary>
+		/// <returns>0 if success</returns>
+		private int del() {
+			//	construct new connection and command objects
+			SqlConnection conn = DBHelper.getConnection();
+			SqlCommand cmd = DBHelper.getSprocCmd("<%=string.Concat(sprocPrefix, objTable.Name)%>__del", conn);
+		
+			SqlParameter param;
+		
+			//	add return value param
+			param = new SqlParameter("@RETURN_VALUE",SqlDbType.Int);
+			param.Direction = ParameterDirection.ReturnValue;
+			cmd.Parameters.Add(param);
+		
+			//	Add params
+		<%	Out.IndentLevel = 2;
+			
+			foreach(Column column in objTable.PrimaryKeyColumns) {
+				foreach(string s in CSharpHelper.MakeParameter(column, "param", "Input", "m_")) {
+					Out.WriteLine(s);
+				}
+				
+				Out.WriteLine("cmd.Parameters.Add(param);");
+				Out.WriteLine("");		
+			}	
+			
+			Out.IndentLevel = 0;
+		%>
+			//	open connection
+			conn.Open();
+			//	Execute command
+			cmd.ExecuteNonQuery();
+			//	get return value
+			int retValue = 0;
+			try {
+				//	get return value of the sproc
+				retValue = (int)cmd.Parameters["@RETURN_VALUE"].Value;
+			} catch(System.Exception) {	//	catch all possible exceptions
+				retValue = 0;	//	set retValue To 0 (all ok)
+			}
+			//	close connection
+			conn.Close();
+			
+			//	set dirty flag To false
+			m_bIsDirty = false;
+		
+			return retValue;
+		}
+	
+		//	operators
+		/// <summary>
+		/// Compares two objects
+		/// </summary>
+		/// <param name="t1">The first Object To compare</param>
+		/// <param name="t2">The Second Object To compare</param>
+		/// <returns>true if success</returns>
+		public static bool operator ==(<%=objTable.Name%> t1, <%=objTable.Name%> t2) {
+			//	compare values
+	<%
+		foreach(Column objColumn in objTable.Columns) {
+	%>		if(<%		
+			Out.Write("t1.m_{0}{1} != t2.m_{0}{1}", objColumn.GetPrefix("C#"), objColumn.Name); 
+	%>) {
+				return false;	//	because "<%=objColumn.Name%>" values are Not equal
+			}
+	
+	<%	}
+	%>		return true;	//	because every Valuestringequal
+		}
+	
+		/// <summary>
+		/// Compares two objects
+		/// </summary>
+		/// <param name="t1">The first Object To compare</param>
+		/// <param name="t2">The Second Object To compare</param>
+		/// <returns>true if success</returns>
+		public static bool operator !=(<%=objTable.Name%> t1, <%=objTable.Name%> t2) {
+			return !(t1 == t2);
+		}
+	
+		//	Object methods
+		
+		/// <summary>
+		/// Overrides the ToString Function.
+		/// </summary>
+		/// <returns>The string representation of the Object</returns>
+		public override string ToString() {
+			System.Text.StringBuilder retValue = new System.Text.StringBuilder("Keys:\n");		
+	<%	
+		foreach(Column column in objTable.PrimaryKeyColumns) {	
+	%>
+			retValue.Append(" <%=column.Name%> = \"");
+			retValue.Append(m_<%Out.Write("{0}{1}", column.GetPrefix("C#"), column.Name);%>);
+			retValue.Append("\"\n");
+	<%	}	
+	%>		
+			retValue.Append("Columns:\n");
+	<%
+		foreach(Column column in objTable.Columns) {
+			if(!column.IsInPrimaryKey) {
+	%>
+			retValue.Append("    <%=column.Name%> = \"");
+			retValue.Append(m_<%=(column.GetPrefix("C#") + column.Name)%>);
+			retValue.Append("\"\n");
+	<%		}
+		}	
+	%>
+			return retValue.ToString();
+		}
+	
+		/// <summary>
+		/// Overrides the Equals Function.
+		/// </summary>
+		/// <param name="o">The Object To compare With</param>
+		/// <returns>Bool if the two objects are identical.</returns>
+		public override bool Equals(System.Object o) {
+			//	check the type of o
+			if (!(o is <%=objTable.Name%>)) {
+				//	types Not the same, return false
+				return false;
+			}
+	
+			//	compare objects And return retValue
+			return this == (<%=objTable.Name%>)o;
+		}
+	
+		/// <summary>
+		/// Overrides the GetHashCode Function.
+		/// </summary>
+		/// <returns>Bool if the two objects are identical.</returns>
+		public override int GetHashCode() {
+			return this.ToString().GetHashCode();
+		}
+	
+		/// <summary>
+		/// The init Function.
+		/// </summary>
+		private void Init() {
+			m_aAction = Action.Insert;	//	initial action
+			m_bIsDirty = false;	//	Objectstring"clean" upon init
+		}
+	}
+
+}]]></templatecode>
+</template>

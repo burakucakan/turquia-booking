@@ -1,0 +1,391 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="btnCheckOutResource1.Text" xml:space="preserve">
+    <value>REZERVASYONU TAMAMLA</value>
+  </data>
+  <data name="btnCheckOutResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chAcceptSaveCardNOResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chAcceptSaveCardNOResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CreditCardlblReservationPriceResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CreditCardlblReservationPriceResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CreditCardltlResCurrLeftResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CreditCardltlResCurrLeftResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CreditCardltlResCurrRightResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CreditCardltlResCurrRightResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CreditCardTitleReservationTotalResource1.Text" xml:space="preserve">
+    <value>Rezervasyon Tutarı</value>
+  </data>
+  <data name="ddlExpireDateMonthResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlExpireDateYearResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlPaymentTypesResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlSavedCreditCardsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ErrCreditCardValidatorResource1.ErrorMessage" xml:space="preserve">
+    <value>Lütfen Kredi Kartı Numaranızı Doğru Giriniz</value>
+  </data>
+  <data name="ErrCreditCardValidatorResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ErrCreditCardValidatorResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="errRegExCreditCardResource1.ErrorMessage" xml:space="preserve">
+    <value>Lütfen Kredi Kartı Numaranızı Doğru Giriniz</value>
+  </data>
+  <data name="errRegExCreditCardResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="errRegExCreditCardResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="errReqCreditCardResource1.ErrorMessage" xml:space="preserve">
+    <value>Lütfen Kredi Kartı Numaranızı Giriniz</value>
+  </data>
+  <data name="errReqCreditCardResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="errReqCreditCardResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblCreditLimitResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblCreditLimitResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblReservationPriceResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblReservationPriceResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ltlAcceptSaveCardNOResource1.Text" xml:space="preserve">
+    <value> 
+                                                                    Kredi Kartı Bilgilerim Kaydedilsin </value>
+  </data>
+  <data name="ltlBankAccount1Resource1.Text" xml:space="preserve">
+    <value>
+                                                        Garanti Bankası&lt;br /&gt;
+                                                        87879879&lt;br /&gt;
+                                                        RETUR TOURISM&lt;br /&gt;
+                                                        </value>
+  </data>
+  <data name="ltlBankAccount2Resource1.Text" xml:space="preserve">
+    <value>
+                                                        Garanti Bankası&lt;br /&gt;
+                                                        87879879&lt;br /&gt;
+                                                        RETUR TOURISM&lt;br /&gt;
+                                                        &lt;br /&gt;&lt;br /&gt;
+                                                        </value>
+  </data>
+  <data name="ltlBankAccountTitleResource1.Text" xml:space="preserve">
+    <value>
+                                                        BANKA HESAP NUMARALARIMIZ
+                                                        </value>
+  </data>
+  <data name="ltlCardDescriptionResource1.Text" xml:space="preserve">
+    <value> 
+                                                                    Kart Tanımı </value>
+  </data>
+  <data name="ltlCredibilityDescriptionResource1.Text" xml:space="preserve">
+    <value>
+                                                    Rezervasyon Tutarı Kredinizden Düşecektir. &lt;br /&gt;&lt;br /&gt; Rezervasyonunuz Aktif Hale Gelecektir.
+                                                    </value>
+  </data>
+  <data name="ltlCreditCardNoResource1.Text" xml:space="preserve">
+    <value>Credit Card NO</value>
+  </data>
+  <data name="ltlCreditLeftResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ltlCreditRightResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ltlCVVResource1.Text" xml:space="preserve">
+    <value>CVV</value>
+  </data>
+  <data name="ltlErrorCardResource1.Text" xml:space="preserve">
+    <value>
+                                                            ! İŞLEM BAŞARISIZ &lt;br /&gt;
+                                                            Lütfen Bilgilerinizi Kontrol Ediniz.
+                                                        </value>
+  </data>
+  <data name="ltlErrorConnResource1.Text" xml:space="preserve">
+    <value>
+                                                            ! BAĞLANTI KURULAMADI &lt;br /&gt;
+                                                            Lütfen müşteri temsilciniz ile irtibata geçiniz.
+                                                        </value>
+  </data>
+  <data name="ltlExpireDateResource1.Text" xml:space="preserve">
+    <value>Son Kullanma Tarihi</value>
+  </data>
+  <data name="ltlMoneyOrderDescResource1.Text" xml:space="preserve">
+    <value>
+                                                    Aşağıdaki banka hesap numaralarına havale yaptığınız takdirde işleminiz aktifleşecektir.
+                                                        </value>
+  </data>
+  <data name="ltlNoSavedCreditCardResource1.Text" xml:space="preserve">
+    <value>Kayıtlı Kredi Kartı Bulunmamaktadır</value>
+  </data>
+  <data name="ltlResCurrLeftResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ltlResCurrLeftResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ltlResCurrRightResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ltlResCurrRightResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ltlSavedCreditCardsResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ltlTitlePaymentTypeResource1.Text" xml:space="preserve">
+    <value>
+                                                    ÖDEME TÜRÜ
+                                                </value>
+  </data>
+  <data name="MoneyOrderlblReservationPriceResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MoneyOrderlblReservationPriceResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MoneyOrderltlResCurrLeftResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MoneyOrderltlResCurrLeftResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MoneyOrderltlResCurrRightResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MoneyOrderltlResCurrRightResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MoneyOrderTitleReservationTotalResource1.Text" xml:space="preserve">
+    <value>Rezervasyon Tutarı</value>
+  </data>
+  <data name="pnlCredibilitiesResource1.GroupingText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlCredibilitiesResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlCreditCardResource1.GroupingText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlCreditCardResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlMoneyOrderResource1.GroupingText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlMoneyOrderResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlNoApprovedCardResource1.GroupingText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlNoApprovedCardResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlNoConnResource1.GroupingText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlNoConnResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlPaymentResource1.GroupingText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlPaymentResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RangeValidator1Resource1.ErrorMessage" xml:space="preserve">
+    <value>Lütfen CVV numarasını doğru giriniz</value>
+  </data>
+  <data name="RangeValidator1Resource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RangeValidator1Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RequiredFieldValidatorResource1.ErrorMessage" xml:space="preserve">
+    <value>Lütfen Kredi Kartınızın CVV Numarasını Giriniz</value>
+  </data>
+  <data name="RequiredFieldValidatorResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RequiredFieldValidatorResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TitleCreditLimitResource1.Text" xml:space="preserve">
+    <value>Kredi Sonrası Limitiniz</value>
+  </data>
+  <data name="TitleReservationTotalResource1.Text" xml:space="preserve">
+    <value>Rezervasyon Tutarı</value>
+  </data>
+  <data name="txtCardDescriptionResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtCardDescriptionResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtCreditCardNoResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtCreditCardNoResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtCVVResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtCVVResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+</root>

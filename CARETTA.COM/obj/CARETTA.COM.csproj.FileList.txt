@@ -1,0 +1,5 @@
+bin\Debug\CARETTA.COM.dll
+bin\Debug\CARETTA.COM.pdb
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\CARETTA.COM.dll
+obj\Debug\CARETTA.COM.pdb

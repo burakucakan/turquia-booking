@@ -1,0 +1,92 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>Example_CustomProperty</name>
+    <description>Illustrates how to use Custom property.
+</description>
+    <author>ApexSQL</author>
+    <legal>Copyright (C) 1999-2007 ApexSQL LLC. All rights reserved.</legal>
+    <ExpectedObjectTypes>Any</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>Documentation</output>
+    <scripting>VB_NET</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>MultiFile</Mode>
+    <Encoding>20127</Encoding>
+  </outputfile>
+  <CustomProperties>
+    <CustomProperty Name="StringProperty" Type="Text" Description="Sample string" DefaultValue="I'm a string" />
+    <CustomProperty Name="BooleanProperty" Type="Boolean" Description="Sample of boolean property" DefaultValue="False" />
+    <CustomProperty Name="NumberProperty" Type="Number" Description="Sample number property" DefaultValue="0" />
+    <CustomProperty Name="PrintTables" Type="Boolean" Description="Allows print tables to output " DefaultValue="False" />
+    <CustomProperty Name="PrintViews" Type="Boolean" Description="Allows print views to output " DefaultValue="False" />
+    <CustomProperty Name="PrintProcedures" Type="Boolean" Description="Allows print procedures to output " DefaultValue="False" />
+  </CustomProperties>
+  <Import>
+    <includes />
+    <Namespaces />
+    <Assemblies />
+    <Templates />
+  </Import>
+  <templatecode><![CDATA[<%
+'------------------------------------------------------------
+'	TEMPLATE : Example_CustomProperty.ptpx
+'	PURPOSE  : This template illustrates how to use Custom property
+'	EXPECTS  : Any
+'	OUTPUT   : Generic Text Output
+'	AUTHOR   : ApexSQL
+'	SCRIPT	 : VB.NET 
+'	LANGUAGE : Documentation
+'	MODIFIED : February 2007
+'	NOTES    :
+'------------------------------------------------------------
+
+' using the Custom Property 
+' To change the value of property, expand 'CustomProperties'
+' in 'Current Tempalte' panel and enter a value
+Out.WriteLine("Values of properties")
+Out.WriteLine("String property:	{0}", StringProperty)
+Out.WriteLine("Boolean property:	{0}", BooleanProperty)
+Out.WriteLine("Number property:	{0}", NumberProperty)
+
+Out.WriteLine("")
+
+
+' use a PrintTables property
+If PrintTables Then
+	Out.WriteLine("Tables:")
+	Dim table As Table
+	For Each table In Code.Database.Tables
+		Out.WriteLine(" {0}", table.Name)
+	Next
+	Out.WriteLine("")
+End If
+
+' use a PrintViews Property
+If PrintViews Then
+	Out.WriteLine("Views:")
+	Dim view As View
+	For Each view In Code.Database.Views
+		Out.WriteLine(" {0}", view.Name)
+	Next
+	Out.WriteLine("")
+End If
+
+' use a PrintProcedures property
+If PrintProcedures Then
+	Out.WriteLine("Procedures:")
+	Dim proc As Procedure
+	For Each proc In Code.Database.Procedures
+		Out.WriteLine(" {0}", proc.Name)
+	Next
+	Out.WriteLine("")
+End If
+%>]]></templatecode>
+</template>

@@ -1,0 +1,29 @@
+﻿/* BEGIN DIV */
+
+.divError {
+	position: absolute; 
+	left: 106px; 
+	top: 256px;
+	background-color: #FFFFFF;
+	z-index: 1;	
+}
+
+.divCopyright {
+	position: absolute;
+	top: 232px;
+	z-index: 1;
+	padding-right: 30px;
+}
+
+/*\///////// END DIV /////////\*/
+
+.LoginTop {
+	height: 256px;
+	background-color: #c5e6f8;
+}
+
+.Caretta {
+	text-align: right;
+	height: 50px;
+	padding-right: 30px;
+}

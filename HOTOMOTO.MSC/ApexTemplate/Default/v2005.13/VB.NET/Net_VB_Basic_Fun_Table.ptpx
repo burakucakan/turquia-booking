@@ -1,0 +1,461 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>NET_VB_Basic_Fun_Table</name>
+    <description>Generates VB class with shared functions that call all general purpose sprocs generated for the table by SQL_Basic_Sproc_Table.ptp</description>
+    <author>ApexSQL</author>
+    <legal>Copyright (C) 1999-2007 ApexSQL LLC. All rights reserved.</legal>
+    <ExpectedObjectTypes>Table</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>VB.NET</output>
+    <scripting>VB_NET</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>MultiFile</Mode>
+    <Encoding>20127</Encoding>
+  </outputfile>
+  <Import>
+    <includes>
+      <filename>VbNetHelper.vb</filename>
+    </includes>
+    <Namespaces />
+    <Assemblies />
+    <Templates />
+  </Import>
+  <templatecode><![CDATA[<%
+'------------------------------------------------------------ 
+'	TEMPLATE : NET_VB_Basic_Fun_Table
+'	PURPOSE  : Generates VB class with shared functions
+'              that call all general purpose sprocs generated for
+'              the table by SQL_Basic_Sproc_Table.ptp
+'	EXPECTS  : TABLES
+'	OUTPUT   : vb.net
+'	AUTHOR   : ApexSQL 
+'	MODIFIED : January 2007
+'	NOTES    :
+'------------------------------------------------------------
+
+	Dim table As Table = Code.Database.ActiveTable	
+	Dim counter As Integer
+
+%>
+Imports System.Data
+Imports System.Data.SqlClient
+
+Public Class ExecOn<%= table.Name %>
+
+	Private Shared m_strConnection As String = "<%= Code.Database.ConnectionString %>" ' default connection string
+
+	Private Shared Function GetSprocCmd(ByVal strSprocName As String, ByVal conn As SqlConnection) As SqlCommand
+
+		Dim cmd As New SqlCommand(strSprocName, conn)
+		cmd.CommandType = CommandType.StoredProcedure
+		Return Cmd
+
+	End Function 
+
+	Private Shared Function GetConn() As SqlConnection
+
+		Return New SqlConnection(Connectionstring)
+
+	End Function
+	
+    Private Shared Function GetSProcReturnValue(ByVal cmd As SqlCommand) As Integer
+
+        Dim result As Integer
+
+        Try
+            '	get return value of the sproc
+            result = cmd.Parameters("@RETURN_VALUE").Value
+        Catch ex As System.Exception '	catch all possible exceptions
+            result = 0 '	set result to 0
+        End Try
+
+        Return result
+
+    End Function
+    
+    Public Shared Property ConnectionString() As String
+
+        Get
+            Return m_strConnection
+        End Get
+
+        Set(ByVal Value As String)
+            m_strConnection = Value
+        End Set
+
+    End Property
+
+	Public Shared Function ins( _
+<%
+	Out.IndentLevel += 2
+	counter = 0
+	For Each column As Column In table.Columns
+	
+		If counter > 0 Then
+			Out.WriteLine(", _")		
+		End If 
+		
+		counter += 1
+		
+		Out.Write("ByVal {0}{1} As Object", column.GetPrefix("VB.NET"), column.Name)
+		
+	Next
+	Out.IndentLevel -= 2
+%> _
+	) As Integer
+	
+		'	construct new connection And command objects
+		Dim conn As SqlConnection = GetConn()
+		Dim cmd As SqlCommand = GetSprocCmd("prc_<%= table.Name %>_ins", conn)
+		
+		Dim param As SqlParameter
+
+		'	Add return value param
+		param = New SqlParameter("@RETURN_VALUE",SqlDbType.Int)
+		param.Direction = ParameterDirection.ReturnValue
+		cmd.Parameters.Add(param)
+  
+  		'	Add params
+<%
+	Out.IndentLevel += 2
+	For Each column As Column In table.Columns		
+		
+		VbNetHelper.MakeParameter(Out, column, "param", "Input")
+		Out.WriteLine()
+		Out.WriteLine("cmd.Parameters.Add(param)")
+		Out.WriteLine()
+		
+	Next
+	Out.IndentLevel -= 2
+%>		
+		'	open connection
+		conn.Open()
+		'	Execute command
+		cmd.ExecuteNonQuery()
+		'	get return value
+		Dim result As Integer = GetSProcReturnValue(cmd)
+		'	close connection
+		conn.Close()
+		
+		Return result
+		
+	End Function
+
+	Public Shared Function sel( _
+<%	Out.IndentLevel += 2
+	counter = 0
+	
+	For Each column As Column In table.PrimaryKeyColumns
+		
+		If counter > 0 Then
+			Out.WriteLine(", _")		
+		End If 
+		
+		counter += 1
+		
+		Out.Write("ByVal {0}{1} As Object", column.GetPrefix("VB.NET"), column.Name)
+		
+	Next
+	
+	Out.IndentLevel -= 2	
+%> _
+	) As SqlDataReader
+			
+		'	construct new connection And command objects
+		Dim conn As SqlConnection = GetConn()
+		Dim cmd As SqlCommand = GetSprocCmd("prc_<%= table.Name %>_sel", conn)
+
+		Dim param As SqlParameter
+
+  		'	Add params
+<%	Out.IndentLevel += 2
+			
+	For Each column As Column In table.PrimaryKeyColumns
+		VbNetHelper.MakeParameter(Out, column, "param", "Input")
+		Out.WriteLine()
+		Out.WriteLine("cmd.Parameters.Add(param)")
+		Out.WriteLine()
+	Next
+			
+	Out.IndentLevel -= 2
+%>
+		'	open connection
+		conn.Open()
+		'	Execute command And return reader
+		Return cmd.ExecuteReader()
+		
+	End Function
+
+	Public Shared Function sel_to_params( _
+<%
+	Out.IndentLevel += 2
+	counter = 0
+
+	For Each column As Column In table.PrimaryKeyColumns
+		
+		If counter > 0 Then
+			Out.WriteLine(", _")		
+		End If 
+		
+		counter += 1
+		
+		Out.Write("ByVal {0}{1} As Object", column.GetPrefix("VB.NET"), column.Name)
+		
+	Next
+	
+	For Each column As Column In table.Columns
+	
+		If Not column.IsInPrimaryKey Then
+			
+			If counter > 0 Then
+				Out.WriteLine(", _")			
+			End If 
+			
+			counter += 1
+			
+			Out.Write("ByVal {0}{1} As Object", column.GetPrefix("VB.NET"), column.Name)
+		
+		End If
+		
+	Next
+	
+	Out.IndentLevel -= 2
+%> _
+	) As Object
+
+		'	construct new connection And command objects
+		Dim conn As SqlConnection = GetConn()
+		Dim cmd As SqlCommand = GetSprocCmd("prc_<%= table.Name %>_sel_to_params", conn)
+
+		Dim param As SqlParameter
+
+		'	add return value param
+		param = New SqlParameter("@RETURN_VALUE",SqlDbType.Int)
+		param.Direction = ParameterDirection.ReturnValue
+		cmd.Parameters.Add(param)
+
+  		'	add params
+<%	Out.IndentLevel += 2
+			
+	For Each column As Column In table.PrimaryKeyColumns
+	
+		VbNetHelper.MakeParameter(Out, column, "param", "Input")
+		Out.WriteLine()
+		Out.WriteLine("cmd.Parameters.Add(param)")
+		Out.WriteLine()
+		
+	Next
+	
+	For Each column As Column In table.Columns		
+		
+		If Not column.IsInPrimaryKey Then	
+		
+			VbNetHelper.MakeParameter(Out, column, "param", "Output")
+			Out.WriteLine()
+			Out.WriteLine("cmd.Parameters.Add(param)")
+			Out.WriteLine()
+			
+		End If
+		
+	Next
+			
+	Out.IndentLevel -= 2
+	
+%>
+		'	open connection
+		conn.Open()
+		'	Execute command
+		cmd.ExecuteNonQuery()
+		'	get return value
+		Dim result As Integer = GetSProcReturnValue(cmd)
+		
+		'	get output values
+<%	Out.IndentLevel += 2
+
+	For Each column As Column In table.Columns		
+		
+		If Not column.IsInPrimaryKey Then	
+		
+			Out.WriteLine("{0}{1} = cmd.Parameters(""@{1}"").Value", column.GetPrefix("VB.NET"), column.Name)
+			
+		End If
+		
+	Next
+	
+	Out.IndentLevel -= 2		
+%>
+		'	close connection
+		conn.Close()
+		
+		Return result
+		
+	End Function
+
+	Public Shared Function sel_all() As SqlDataReader
+	
+		'	construct new connection And command objects
+		Dim conn As SqlConnection = GetConn()
+		Dim cmd As SqlCommand = GetSprocCmd("prc_<%= table.Name %>_sel_all", conn)
+		
+		'	open connection
+		conn.Open()
+		'	Execute command And return reader
+		Return cmd.ExecuteReader()
+		
+	End Function
+
+	Public Shared Function upd( _
+<%	Out.IndentLevel += 2
+	counter = 0
+
+	For Each column As Column In table.PrimaryKeyColumns
+		
+		If counter > 0 Then
+			Out.WriteLine(", _")
+		End If 
+		
+		counter += 1
+		
+		Out.Write("ByVal {0}{1} As Object", column.GetPrefix("VB.NET"), column.Name)
+		
+	Next
+	
+	For Each column As Column In table.Columns
+	
+		If Not column.IsInPrimaryKey Then
+			
+			If counter > 0 Then
+				Out.WriteLine(", _")
+			End If 
+			
+			counter += 1
+			
+			Out.Write("ByVal {0}{1} As Object", column.GetPrefix("VB.NET"), column.Name)
+		
+		End If
+		
+	Next
+	
+	Out.IndentLevel -= 2	
+%> _
+	) As Object
+
+		'	construct new connection And command objects
+		Dim conn As SqlConnection = GetConn()
+		Dim cmd As SqlCommand = GetSprocCmd("prc_<%= table.Name %>_upd", conn)
+
+		Dim param As SqlParameter
+
+		'	add return value param
+		param = New SqlParameter("@RETURN_VALUE",SqlDbType.Int)
+		param.Direction = ParameterDirection.ReturnValue
+		cmd.Parameters.Add(param)
+
+  		'	add params
+<%	Out.IndentLevel += 2	
+	
+	For Each column As Column In table.PrimaryKeyColumns
+
+		VbNetHelper.MakeParameter(Out, column, "param", "Input")
+		Out.WriteLine()
+		Out.WriteLine("cmd.Parameters.Add(param)")
+		Out.WriteLine()
+
+	Next
+	
+	For Each column As Column In table.Columns		
+		
+		If Not column.IsInPrimaryKey Then	
+		
+			VbNetHelper.MakeParameter(Out, column, "param", "Input")
+			Out.WriteLine()
+			Out.WriteLine("cmd.Parameters.Add(param)")
+			Out.WriteLine()
+
+		End If
+		
+	Next
+	
+	Out.IndentLevel -= 2
+%>
+		'	open connection
+		conn.Open()
+		'	Execute command
+		cmd.ExecuteNonQuery()
+		'	get return value
+		Dim result As Integer = GetSProcReturnValue(cmd)
+		'	close connection
+		conn.Close()
+		
+		Return result
+		
+	End Function
+
+	Public Shared Function del( _
+<%	Out.IndentLevel += 2
+	counter = 0
+	
+	For Each column As Column In table.PrimaryKeyColumns
+		
+		If counter > 0 Then
+			Out.WriteLine(", _")
+		End If 
+		
+		counter += 1
+		
+		Out.Write("ByVal {0}{1} As Object", column.GetPrefix("VB.NET"), column.Name)
+		
+	Next
+	
+	Out.IndentLevel -= 2
+%> _
+	) As Object
+		
+		'	construct new connection And command objects
+		Dim conn As SqlConnection = GetConn()
+		Dim cmd As SqlCommand = GetSprocCmd("prc_<%= table.Name %>_del", conn)
+
+		Dim param As SqlParameter
+
+		'	add return value param
+		param = New SqlParameter("@RETURN_VALUE",SqlDbType.Int)
+		param.Direction = ParameterDirection.ReturnValue
+		cmd.Parameters.Add(param)
+
+  		'	Add params
+<%	Out.IndentLevel += 2
+
+	For Each column As Column In table.PrimaryKeyColumns
+
+		VbNetHelper.MakeParameter(Out, column, "param", "Input")
+		Out.WriteLine()
+		Out.WriteLine("cmd.Parameters.Add(param)")
+		Out.WriteLine()
+
+	Next
+	
+	Out.IndentLevel -= 2
+%>
+		'	open connection
+		conn.Open()
+		'	Execute command
+		cmd.ExecuteNonQuery()
+		'	get return value
+		Dim result As Integer = GetSProcReturnValue(cmd)
+		'	close connection
+		conn.Close()
+		
+		Return result
+		
+	End Function
+	
+End Class]]></templatecode>
+</template>

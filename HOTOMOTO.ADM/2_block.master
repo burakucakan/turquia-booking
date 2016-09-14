@@ -1,0 +1,77 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="2_block.master.cs" Inherits="_2_block" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+	<title>Galileo v2</title>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<link href="inc/galileo.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<form id="form1" runat="server">
+		<asp:ScriptManager ID="ScriptManager1" runat="server">
+		</asp:ScriptManager>
+		<div id="hb">
+			<div id="head">
+				<div id="logo">
+					<div style="font: 48px/48px Impact, 'Lucida Sans', Arial, Helvetica, sans-serif;
+						color: #f60; padding-top: 30px;">
+						Galileo</div>
+					<div style="font: bold 12px/12px 'Lucida Sans', Arial, Helvetica, sans-serif; color: #f60;
+						padding-left: 130px;">
+						V2</div>
+				</div>
+				<div id="hb1">
+					<div id="hb-title">
+						SİTE YÖNETİM</div>
+					<div id="hb-login">
+						<asp:ContentPlaceHolder ID="cphUserInfo" runat="server">
+						</asp:ContentPlaceHolder>
+					</div>
+				</div>
+				<div id="hb2">
+					<ul>
+						<li class="first"><asp:HyperLink runat="server" ID="hlmainn" NavigateUrl="~/">YÖNETİM MERKEZİ</asp:HyperLink></li>
+						<li><a href="#">SİTE<br />
+							YÖNETİMİ</a></li>
+						<li><a href="#">İZİNLER</a></li>
+						<li class="hot"><a href="addhotel.aspx">OTEL<br />
+							EKLE</a></li>
+						<li class="hot"><a href="Tour.aspx">TUR<br />
+							EKLE</a></li>
+					</ul>
+				</div>
+				<%--<div id="hb3">
+						<div id="hb-search">
+							<input name="search" type="text" /></div>
+						<div id="hb-searchbtn">
+							<input alt="Ara" src="img/btnAra.gif" title="Ara" type="image" /></div>
+				</div>--%>
+			</div>
+		</div>
+		<div id="main">
+			<div id="page-title">
+				<asp:ContentPlaceHolder ID="cphTitle" runat="server">
+				</asp:ContentPlaceHolder>
+			</div>
+			<div id="cap-seperator">
+			</div>
+			<div>
+				<div id="bsol-taraf">
+					<asp:ContentPlaceHolder ID="cph710" runat="server">
+					</asp:ContentPlaceHolder>
+				</div>
+				<div id="sag-taraf">
+					<asp:ContentPlaceHolder ID="cphRightBlock" runat="server">
+					</asp:ContentPlaceHolder>
+				</div>
+				<div class="c">
+				</div>
+			</div>
+		</div>
+		<div id="footer">
+			<asp:ContentPlaceHolder ID="cphFooter" runat="server">
+			</asp:ContentPlaceHolder>
+		</div>
+	</form>
+</body>
+</html>

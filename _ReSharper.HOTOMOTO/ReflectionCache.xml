@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Assemblies Version="1073741833">
+  <Assembly Name="JetBrains.Annotations, Version=4.0.819.19, Culture=neutral, PublicKeyToken=1010a0d8d6380325" Image="4572fea9-67f5-45f2-8eeb-e4197996367e" Timestamp="633486383860000000" XmlDocIndexTimestamp="633486383860000000" />
+  <Assembly Name="System.WorkflowServices, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Image="eb1bb479-ddaa-4d90-8b91-783bcbe4bede" Timestamp="633529644480000000" XmlDocIndexTimestamp="633489967300000000" />
+  <Assembly Name="System.ServiceModel.Web, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Image="c1f886ff-9ec6-4716-8c37-03f7d654c249" Timestamp="633529644480000000" XmlDocIndexTimestamp="633480468880000000" />
+  <Assembly Name="System.ServiceModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Image="1f0525a8-4e0f-471f-98bb-127f7244e0ff" Timestamp="633640975320000000" XmlDocIndexTimestamp="633489096100000000" />
+  <Assembly Name="System.Runtime.Serialization, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Image="ab6c4c68-a523-4ab8-a24a-ad3359a8231e" Timestamp="633529485980000000" XmlDocIndexTimestamp="633489967300000000" />
+  <Assembly Name="System.Web.Extensions, Version=1.0.61025.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Image="24e05217-6b4c-4a96-b9b6-7b3a7c83d2f3" Timestamp="633049053920000000" />
+  <Assembly Name="System.IdentityModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Image="a2016d9f-cf8e-45b8-8a13-c8b9329dab3c" Timestamp="633529485980000000" XmlDocIndexTimestamp="633489967300000000" />
+  <Assembly Name="Interop.YKBPosnetActiveX, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Image="8f0bad3e-e1bd-4e03-8e88-90f6c1ae59d8" Timestamp="633271906740000000" />
+  <Assembly Name="CreditCardValidator, Version=1.0.966.22496, Culture=neutral, PublicKeyToken=null" Image="3abc6f04-c5e5-4864-abe3-4783ecdecba6" Timestamp="633269276440000000" />
+  <Assembly Name="System.Web.Extensions.Design, Version=1.0.61025.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Image="6e655383-26fb-47e4-934b-5b106f5bb047" Timestamp="633049053940000000" />
+  <Assembly Name="AJAXExtensionsToolbox, Version=1.0.61025.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Image="38349e7a-ba42-4987-a2e5-3ba6a6b5f148" Timestamp="633269276440000000" />
+  <Assembly Name="AjaxControlToolkit, Version=1.0.10301.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e" Image="d4d40152-70f5-4d37-942f-3e3ec9bd9a98" Timestamp="633269276440000000" />
+  <Assembly Name="HOTOMOTO.COM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Image="234d6c5d-0898-4867-841f-3a4b2cb3c80a" Timestamp="633329762140000000" />
+  <Assembly Name="HOTOMOTO.BUS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Image="ace45c95-c18c-4852-86df-bf30e19dc7c5" Timestamp="633329762120000000" />
+  <Assembly Name="HOTOMOTO.APEX, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Image="0f892727-c8a5-4ce1-9d69-4761e41e7b05" Timestamp="633329762100000000" />
+  <Assembly Name="CARETTA.COM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Image="373a0ebc-5e94-4ed9-b2d6-c9ad01d21f27" Timestamp="633323101320000000" />
+</Assemblies>

@@ -1,0 +1,858 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>SQL_Basic_Sproc_Table</name>
+    <description>Generates 6 all general purpose sprocs for table</description>
+    <author>Caretta</author>
+    <legal>Copyright (C) 1999-2007 ApexSQL LLC. All rights reserved.</legal>
+    <ExpectedObjectTypes>Table</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>SQL</output>
+    <scripting>CSharp</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>SingleFile</Mode>
+    <Encoding>20127</Encoding>
+  </outputfile>
+  <Import>
+    <includes />
+    <Namespaces />
+    <Assemblies />
+    <Templates />
+  </Import>
+  <templatecode><![CDATA[<%
+//------------------------------------------------------------ 
+//	TEMPLATE : SQL_Basic_Sproc_Table
+//	PURPOSE  : Generates 6 all general purpose sprocs for table
+//	EXPECTS  : TABLES
+//	OUTPUT   : .SQL
+//	AUTHOR   : by Caretta
+//	SCRIPT	 : C#
+//	LANGUAGE : SQL
+//	MODIFIED : March 2007
+//	NOTES    :
+//------------------------------------------------------------
+
+//---------------- TEMPLATE INFO -----------------------------
+	string Author = "Caretta";
+//------------------------------------------------------------
+
+string sprocPrefix = "proc_";
+
+Table table = Code.Database.ActiveTable;
+
+bool hasMultiLingual = false;
+bool isMultiLingual = false;
+Table mlTable = null;
+
+for(int ctri = 0; ctri < Code.Database.Tables.Count; ctri++) {
+	if(Code.Database.Tables[ctri].Name == table.Name + "_ML") {
+		hasMultiLingual = true;
+		mlTable = Code.Database.Tables[ctri];
+	}
+}
+
+if (table.Name.Substring(table.Name.Length -3, 3)=="_ML") {
+	isMultiLingual = true;
+}
+
+if(!Code.Operations.DoDelete && 
+	!Code.Operations.DoInsert &&
+	!Code.Operations.DoSelect &&
+	!Code.Operations.DoUpdate)
+{
+	Out.WriteLine("-- No operations have been selected i.e. Delete, Insert, Select, Update");
+}
+%>
+
+USE [<%= Code.Database.Name %>]
+
+/* ------------------------------------------------------------
+   Description:  Common stored procedures For table '<%= table.Name%>'
+   
+   AUTHOR:       <%= Author + " " + DateTime.Now %>
+   ------------------------------------------------------------ */
+   
+<%
+if(Code.Operations.DoInsert)
+{
+	string strProcName = string.Format("{0}{1}__ins", sprocPrefix, table.Name);
+%>
+
+If EXISTS (Select * FROM SYSOBJECTS WHERE ID = OBJECT_ID('<%= strProcName %>') AND sysstat & 0xf = 4)
+     DROP PROCEDURE <%= strProcName %>;
+GO
+
+/* ------------------------------------------------------------
+   PROCEDURE:    <%= strProcName %>
+   
+   Description:  Inserts a record into table '<%= table.Name %>'
+   
+   AUTHOR:       <%= Author + " " + DateTime.Now %>
+   ------------------------------------------------------------ */
+
+CREATE PROCEDURE <%= strProcName%>
+<%
+	int counter = 0;
+	
+	foreach(Column f in table.Columns)
+	{
+		if(counter == 0)
+		{
+			Out.WriteLine("(");
+			Out.Indent();
+		}
+		else
+			Out.WriteLine(",");
+		
+		counter++;
+		
+		if(f.IsInPrimaryKey || f.IsIdentity || f.IsTimeStamp)
+		{
+			Out.Write("@{0} {1} = null output", f.Name, f.SQLDatatypeAndLength);
+		}
+		else
+		{
+			Out.Write("@{0} {1}", f.Name, f.SQLDatatypeAndLength);
+			
+			if( f.IsNullable )
+			{
+				Out.Write(" = null");
+			}			
+		}			
+	}
+	
+	if(counter > 0)
+	{
+		Out.Unindent();
+		Out.WriteLine();
+		Out.WriteLine(")");	
+	}
+%>
+As
+BEGIN
+	DECLARE @Err Int
+
+<%
+	// generate code to initialize (if necessary) for all keys of uniqueidentifier type
+	foreach(Column k in table.PrimaryKeyColumns)
+	{
+		if( k.IsGUID )
+		{
+			Out.WriteLine( "IF @" + k.Name + " IS NULL");
+			Out.WriteLine( "	 SET @" + k.Name + " = NEWID()");
+			Out.WriteLine();
+			Out.WriteLine( "Set @Err = @@Error");
+			Out.WriteLine();
+			Out.WriteLine( "IF @Err <> 0" );
+			Out.WriteLine( "    RETURN @Err");
+			Out.WriteLine();
+		}
+	}
+%>
+	INSERT
+	INTO [<%= table.Name %>]
+	(
+<%	counter = 0;
+
+	Out.IndentLevel += 2;
+	// list all fields except identity (if one exists)
+	foreach(Column f in table.Columns)
+	{
+		// check if field is not an indentity in which case we won't include it into insert list
+		if( !f.IsIdentity && !f.IsTimeStamp)
+		{
+			if( counter > 0 )
+			{
+				Out.WriteLine(",");
+			}
+			
+			counter++;
+			
+			Out.Write("[{0}]", f.Name);
+		}
+	}
+	Out.IndentLevel -= 2;
+%>
+
+	)
+	VALUES
+	(
+<%	counter = 0;
+	
+	Out.IndentLevel += 2;
+	// list all parameters except the one for indetity (if one exists)
+	foreach(Column f in table.Columns)
+	{
+		// check if fields is not an identity
+		if(!f.IsIdentity && !f.IsTimeStamp)
+		{
+			if(counter > 0)
+			{
+				Out.WriteLine(",");
+			}
+			
+			counter++;
+			Out.Write("@{0}", f.Name);
+		}
+	}
+	Out.IndentLevel -= 2;
+%>
+
+	)
+
+	Set @Err = @@Error
+<%
+	// get output value for identity (if there is one)
+	foreach(Column f in table.Columns)
+	{
+		if(f.IsIdentity)
+			Out.WriteLine("\tSet @{0} = @@identity", f.Name);
+		else if(f.IsTimeStamp)
+			Out.WriteLine("\tSet @{0} = @@DBTS", f.Name);
+	}	
+%>
+
+	RETURN @Err
+End
+GO
+
+-- Display the status of Proc creation
+If @@Error = 0 PRINT 'Procedure Creation: <%= strProcName %> Succeeded'
+Else PRINT 'Procedure Creation: <%= strProcName %> Error on Creation'
+GO
+
+<%
+}
+
+if(Code.Operations.DoSelect)
+{
+	string strProcName = string.Format("{0}{1}__sel", sprocPrefix, table.Name);
+%>
+
+If EXISTS (Select * FROM SYSOBJECTS WHERE ID = OBJECT_ID('<%= strProcName %>') AND sysstat & 0xf = 4)
+     DROP PROCEDURE <%= strProcName%>;
+GO
+
+/* ------------------------------------------------------------
+   PROCEDURE:    <%= strProcName%>
+   
+   Description:  Selects record(s) from table '<%=table.Name%>'
+   
+   AUTHOR:       <%=Author + " " + DateTime.Now %>
+   ------------------------------------------------------------ */
+
+CREATE PROCEDURE <%= strProcName%>
+<%
+	int counter = 0;	
+	
+	if(isMultiLingual) {
+		Out.WriteLine("(");
+		Out.WriteLine("\t\t@{0} {1},", table.Columns[0].Name, table.Columns[0].SQLDatatypeAndLength);
+		Out.Write("\t\t@{0} {1}", table.Columns[1].Name, table.Columns[0].SQLDatatypeAndLength);
+		counter = 1;
+	} else {
+	
+		// list all keys as parameters
+		foreach(Column k in table.PrimaryKeyColumns)
+		{	
+			if( counter == 0 )
+			{			
+				Out.WriteLine("(");
+				Out.Indent();
+			}
+			else
+				Out.WriteLine(",");
+	
+			counter++;
+			
+			Out.Write("@{0} {1}", k.Name, k.SQLDatatypeAndLength);
+		}
+	}
+	
+	if( counter > 0 )
+	{
+		Out.Unindent();
+		Out.WriteLine();
+		Out.WriteLine(")");
+	}
+%>
+As
+BEGIN
+	DECLARE @Err Int
+	
+	Select
+<%
+	counter = 0;
+	Out.Unindent();
+	Out.Unindent();
+	
+	// list all fields	
+	foreach(Column f in table.Columns)
+	{
+		if(counter > 0)
+			Out.WriteLine(",");
+		
+		Out.Write("\t\t[{0}]", f.Name);		
+		
+		counter++;
+	}
+
+	Out.WriteLine();
+%>
+	FROM [<%= table.Name%>]	
+		
+<%
+	if (!isMultiLingual)
+	{
+		if(table.PrimaryKeyColumns.Count > 0)
+		{		
+			Out.WriteLine("\tWHERE "); 	
+			counter = 0;	
+			// compare keys with parameters
+			foreach(Column k in table.PrimaryKeyColumns)
+			{
+				if (counter > 0)
+					Out.WriteLine(" AND");
+				
+				Out.Write("\t\t([{0}] = @{0} OR @{0} IS NULL)", k.Name);			
+			}
+		}
+	}
+	else {
+		Out.WriteLine("\tWHERE ");
+		Out.WriteLine("\t\t[{0}] = @{0} AND", table.Columns[0].Name);
+		Out.WriteLine("\t\t[{0}] = @{0}", table.Columns[1].Name);
+	}
+	
+	Out.WriteLine();
+%>
+		
+	Set @Err = @@Error
+
+	RETURN @Err
+End
+GO
+
+-- Display the status of Proc creation
+If @@Error = 0 PRINT 'Procedure Creation: <%= strProcName%> Succeeded'
+Else PRINT 'Procedure Creation: <%= strProcName%> Error on Creation'
+GO
+
+<%
+}
+
+if( Code.Operations.DoSelect)
+{
+	string strProcName = string.Format("{0}{1}__sel_to_params", sprocPrefix, table.Name);
+%>
+
+If EXISTS (Select * FROM SYSOBJECTS WHERE ID = OBJECT_ID('<%= strProcName%>') AND sysstat & 0xf = 4)
+     DROP PROCEDURE <%= strProcName%>;
+GO
+
+/* ------------------------------------------------------------
+   PROCEDURE:    <%= strProcName%>
+   
+   Description:  Selects a record from table '<%=table.Name%>'
+   				 And puts values into parameters
+   
+   AUTHOR:       <%= Author + " " + DateTime.Now %>
+   ------------------------------------------------------------ */
+
+CREATE PROCEDURE <%= strProcName%>
+<%
+	int counter = 0;
+	
+	// list all keys as parameters
+	foreach(Column k in table.PrimaryKeyColumns)
+	{
+		if( counter == 0 )
+		{
+			Out.WriteLine("(");
+			Out.Indent();
+		}
+		else
+			Out.WriteLine(",");		
+		
+		counter++;
+
+		Out.Write("@{0} {1}", k.Name, k.SQLDatatypeAndLength);		
+	}
+
+	// list all non-keys as parameters
+	foreach(Column f in table.Columns)
+	{   
+   		// check if f is not a key
+		if( !f.IsInPrimaryKey )
+		{
+			if( counter == 0 )
+			{
+				Out.WriteLine("(");
+				Out.Indent();
+			}
+			else
+				Out.WriteLine(",");		
+			
+			counter++;
+			
+			Out.Write("@{0} {1} output", f.Name, f.SQLDatatypeAndLength);
+		}
+	}
+	
+	if( counter > 0 )
+	{
+		Out.Unindent();
+		Out.WriteLine();
+		Out.WriteLine(")");	
+	}
+%>
+As
+BEGIN
+	DECLARE @Err Int
+	
+	Select
+<%
+	counter = 0;
+	
+	Out.IndentLevel += 2;
+	// list all fields
+	foreach(Column f in table.Columns)
+	{
+		if( counter > 0 )
+			Out.WriteLine(",");
+
+		Out.Write("@{0} = [{0}]", f.Name);
+		counter++;
+	}
+	Out.IndentLevel -= 2;
+%>
+
+	FROM [<%= table.Name%>]
+<%
+	if (!isMultiLingual)
+	{
+		if(table.PrimaryKeyColumns.Count > 0)
+		{		
+			Out.WriteLine("\tWHERE "); 	
+			counter = 0;	
+			// compare keys with parameters
+			foreach(Column k in table.PrimaryKeyColumns)
+			{
+				if (counter > 0)
+					Out.WriteLine(" AND");
+				
+				Out.Write("\t\t([{0}] = @{0} OR @{0} IS NULL)", k.Name);			
+			}
+		}
+	}
+	else {
+		Out.WriteLine("\tWHERE ");
+		Out.WriteLine("\t\t[{0}] = @{0} AND", table.Columns[0].Name);
+		Out.WriteLine("\t\t[{0}] = @{0}", table.Columns[1].Name);
+	}
+	
+	Out.WriteLine();
+%>
+
+	Set @Err = @@Error
+
+	RETURN @Err
+End
+GO
+
+-- Display the status of Proc creation
+If @@Error = 0 PRINT 'Procedure Creation: <%= strProcName %> Succeeded'
+Else PRINT 'Procedure Creation: <%= strProcName %> Error on Creation'
+GO
+
+<%
+}
+
+if(Code.Operations.DoSelect)
+{
+	string strProcName = string.Format("{0}{1}__sel_all", sprocPrefix, table.Name);
+%>
+
+If EXISTS (Select * FROM SYSOBJECTS WHERE ID = OBJECT_ID('<%= strProcName%>') AND sysstat & 0xf = 4)
+     DROP PROCEDURE <%= strProcName%>;
+GO
+
+/* ------------------------------------------------------------
+   PROCEDURE:    <%= strProcName%>
+   
+   Description:  Selects all records from the table '<%= table.Name%>'
+   
+   AUTHOR:       <%= Author + " " + DateTime.Now %>
+   ------------------------------------------------------------ */
+
+CREATE PROCEDURE <%= strProcName%>
+<%
+	if(hasMultiLingual) {
+		Out.WriteLine("(");
+		Out.WriteLine("\t@LanguageID int");
+		Out.WriteLine(")");
+	}
+%>
+As
+BEGIN
+	DECLARE @Err Int
+	
+	Select
+<%
+	int counter = 0;	
+	Out.Unindent();
+	Out.Unindent();
+	// list all fields	
+	foreach(Column f in table.Columns)
+	{
+		if( counter > 0)
+			Out.WriteLine(",");		
+
+		Out.Write("\t\t[{0}].[{1}]", table.Name, f.Name);
+
+		counter++;
+	}
+	
+	if(hasMultiLingual) {
+		for(int i = 2; i < mlTable.Columns.Count; i++) {
+			if( counter > 0)
+			Out.WriteLine(",");		
+
+			Out.Write("\t\t[{0}].[{1}]", mlTable.Name, mlTable.Columns[i].Name);
+
+			counter++;
+		}
+	}
+	
+%>
+	
+	FROM [<%= table.Name%>]
+<%
+	if(hasMultiLingual) {
+		Out.WriteLine("\tINNER JOIN {0} ON [{1}].[{2}] = [{0}].[{2}]", mlTable.Name, table.Name, table.PrimaryKeyColumns[0].Name);
+		Out.WriteLine("\tWHERE [{0}].[LanguageID] = @LanguageID", mlTable.Name, table.PrimaryKeyColumns[0].Name);
+	}
+%>
+	Set @Err = @@Error
+
+	RETURN @Err
+End
+GO
+
+-- Display the status of Proc creation
+If @@Error = 0 PRINT 'Procedure Creation: <%= strProcName%> Succeeded'
+Else PRINT 'Procedure Creation: <%= strProcName%> Error on Creation'
+GO
+
+<%
+}
+
+if(Code.Operations.DoUpdate)
+{
+	string strProcName = string.Format("{0}{1}__upd", sprocPrefix, table.Name);
+%>
+
+If EXISTS (Select * FROM SYSOBJECTS WHERE ID = OBJECT_ID('<%= strProcName%>') AND sysstat & 0xf = 4)
+     DROP PROCEDURE <%= strProcName%>;
+GO
+
+/* ------------------------------------------------------------
+   PROCEDURE:    <%= strProcName%>
+   
+   Description:  Updates a record In table '<%= strProcName%>'
+   
+   AUTHOR:       <%= Author + " " + DateTime.Now %>
+   ------------------------------------------------------------ */
+
+CREATE PROCEDURE <%= strProcName%>
+<%
+	int counter = 0;
+	
+	// list all keys as parameters
+	foreach(Column k in table.PrimaryKeyColumns)
+	{		
+		if( counter == 0 )
+			Out.WriteLine("(");		
+		else
+			Out.WriteLine(",");		
+		
+		counter++;
+
+		Out.Write("\t@{0} {1}", k.Name, k.SQLDatatypeAndLength);
+	}
+	
+	// list all non-keys as parameters
+	foreach(Column f in table.Columns)
+	{
+		// check if field is not a key, identity or timestamp
+		if(!f.IsInPrimaryKey && !f.IsIdentity && !f.IsTimeStamp)
+		{		
+			if( counter == 0 )
+				Out.WriteLine("(");
+			else
+				Out.WriteLine(",");		
+		
+			counter++;
+			
+			Out.Write("\t@{0} {1}", f.Name, f.SQLDatatypeAndLength);		
+		}
+	}
+	
+	if(counter > 0 )
+	{
+		Out.WriteLine();
+		Out.WriteLine(")");	
+	}
+%>
+As
+BEGIN
+	DECLARE @Err Int
+
+	UPDATE [<%= table.Name%>]
+	Set
+<%
+		counter = 0;
+		// list all fields
+		foreach(Column f in table.Columns)
+		{	
+   			// check if field is not a key, identity or timestamp
+   			if(!f.IsInPrimaryKey && !f.IsIdentity && !f.IsTimeStamp)
+			{
+				if(counter > 0)
+					Out.WriteLine(",");				
+				
+				counter++;
+   				Out.Write("\t\t[{0}] = @{0}", f.Name);
+			}
+		}	
+		
+		Out.WriteLine();				
+
+		counter = 0;
+		
+	if (!isMultiLingual) {	
+		foreach(Column k in table.PrimaryKeyColumns)
+		{
+			if(counter == 0)
+				Out.WriteLine("\tWHERE ");
+			else
+				Out.WriteLine(" AND");	
+			
+			Out.Write("\t\t[{0}] = @{0}", k.Name);
+			
+			counter++;
+		}
+	}
+	else {
+		foreach(Column k in table.Columns)
+		{
+			if (counter<2) {
+				if(counter == 0)
+					Out.WriteLine("\tWHERE ");
+				else
+					Out.WriteLine(" AND");	
+				
+				Out.Write("\t\t[{0}] = @{0}", k.Name);
+				
+				counter++;
+			}
+		}	
+	}		Out.WriteLine();
+%>
+
+	Set @Err = @@Error
+
+	RETURN @Err
+End
+GO
+
+-- Display the status of Proc creation
+If @@Error = 0 PRINT 'Procedure Creation: <%= strProcName%> Succeeded'
+Else PRINT 'Procedure Creation: <%= strProcName%> Error on Creation'
+GO
+
+<%
+}
+
+if(Code.Operations.DoDelete)
+{
+	string strProcName = string.Format("{0}{1}__del", sprocPrefix, table.Name);
+%>
+
+If EXISTS (Select * FROM SYSOBJECTS WHERE ID = OBJECT_ID('<%= strProcName%>') AND sysstat & 0xf = 4)
+     DROP PROCEDURE <%= strProcName%>;
+GO
+
+/* ------------------------------------------------------------
+   PROCEDURE:    <%= strProcName%>
+   
+   Description:  Deletes a record from table '<%=table.Name%>'
+   
+   AUTHOR:       <%= Author + " " + DateTime.Now %>
+   ------------------------------------------------------------ */
+
+CREATE PROCEDURE <%= strProcName%>
+<%
+	int counter = 0;
+	
+	if(isMultiLingual) {
+		Out.WriteLine("(");
+		Out.WriteLine("\t\t@{0} {1},", table.Columns[0].Name, table.Columns[0].SQLDatatypeAndLength);
+		Out.Write("\t\t@{0} {1}", table.Columns[1].Name, table.Columns[0].SQLDatatypeAndLength);
+		counter = 1;
+	} else {
+		
+		// list all keys as parameters
+		foreach(Column k in table.PrimaryKeyColumns)
+		{		
+			if( counter == 0)
+				Out.WriteLine("(");
+			else
+				Out.WriteLine(",");
+					
+			counter++;
+	
+			Out.Write("\t@{0} {1}", k.Name, k.SQLDatatypeAndLength);
+		}
+	}
+	
+	if( counter > 0)
+	{
+		Out.WriteLine();
+		Out.WriteLine(")");
+	}
+%>
+As
+BEGIN
+	DECLARE @Err Int
+
+	DELETE
+	FROM [<%= table.Name%>]	
+
+<%
+	counter = 0;
+	
+	if (!isMultiLingual) {	
+		foreach(Column k in table.PrimaryKeyColumns)
+		{
+			if(counter == 0)
+				Out.WriteLine("\tWHERE ");
+			else
+				Out.WriteLine(" AND");	
+			
+			Out.Write("\t\t[{0}] = @{0}", k.Name);
+			
+			counter++;
+		}
+	}
+	else {
+		foreach(Column k in table.Columns)
+		{
+			if (counter<2) {
+				if(counter == 0)
+					Out.WriteLine("\tWHERE ");
+				else
+					Out.WriteLine(" AND");	
+				
+				Out.Write("\t\t[{0}] = @{0}", k.Name);
+				
+				counter++;
+			}
+		}	
+	}
+
+	Out.WriteLine();
+%>
+	
+	Set @Err = @@Error
+
+	RETURN @Err
+End
+GO
+
+-- Display the status of Proc creation
+If @@Error = 0 PRINT 'Procedure Creation: <%= strProcName%> Succeeded'
+Else PRINT 'Procedure Creation: <%= strProcName%> Error on Creation'
+GO
+
+<%
+}
+
+if(hasMultiLingual) {
+	string strProcName = string.Format("{0}{1}__sel_ml_data", sprocPrefix, table.Name);
+%>
+PRINT 'Procedure Info: <%=table.Name%> multi-lingual table detected.'
+
+If EXISTS (Select * FROM SYSOBJECTS WHERE ID = OBJECT_ID('<%= strProcName %>') AND sysstat & 0xf = 4)
+     DROP PROCEDURE <%= strProcName%>;
+GO
+
+/* ------------------------------------------------------------
+   PROCEDURE:    <%= strProcName%>
+   
+   Description:  Selects multi-lingual record(s) from table '<%=mlTable.Name%>'
+   
+   AUTHOR:       <%=Author + " " + DateTime.Now %>
+   ------------------------------------------------------------ */
+
+CREATE PROCEDURE <%= strProcName%> 
+(
+	@<%=mlTable.Columns[0].Name%> <%=mlTable.Columns[0].SQLDatatypeAndLength%>
+)
+AS
+BEGIN
+	DECLARE @Err Int
+	
+	Select
+<%
+	int counter = 0;
+	Out.Unindent();
+	Out.Unindent();
+	
+	// list all fields	
+	foreach(Column f in mlTable.Columns)
+	{
+		if(counter > 0)
+			Out.WriteLine(",");
+		
+		Out.Write("\t\t[{0}]", f.Name);		
+		
+		counter++;
+	}
+
+	Out.WriteLine();
+%>
+	FROM [<%=mlTable.Name%>]	
+<%	if(table.PrimaryKeyColumns.Count > 0)
+	{		
+		Out.WriteLine("\tWHERE "); 
+		
+		Out.Write("\t\t([{0}] = @{0})", mlTable.Columns[0].Name);
+	}
+	
+	Out.WriteLine();
+%>
+		
+	Set @Err = @@Error
+
+	RETURN @Err
+End
+GO
+
+-- Display the status of Proc creation
+If @@Error = 0 PRINT 'Procedure Creation: <%= strProcName%> Succeeded'
+Else PRINT 'Procedure Creation: <%= strProcName%> Error on Creation'
+GO
+<%
+}
+
+%>
+]]></templatecode>
+</template>

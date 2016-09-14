@@ -1,0 +1,5 @@
+bin\Debug\HOTOMOTO.MSC.dll
+bin\Debug\HOTOMOTO.MSC.pdb
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\HOTOMOTO.MSC.dll
+obj\Debug\HOTOMOTO.MSC.pdb

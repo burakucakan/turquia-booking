@@ -1,0 +1,258 @@
+<%@ Control Language="C#" AutoEventWireup="true" CodeFile="uctHotelDetail.ascx.cs" Inherits="UserControls_Hotel_uctHotelDetail" %>
+<%@ Register Src="~/UserControls/Common/uctPopupBottom.ascx" TagName="uctPopupBottom" TagPrefix="uc2" %>
+<%@ Register Src="~/UserControls/Common/uctPopupTop.ascx" TagName="uctPopupTop" TagPrefix="uc1" %>
+
+<uc1:uctPopupTop ID="UctPopupTop1" runat="server" />
+
+<br />
+
+<table class="PagesTable Box">
+    <tr>
+        <td>
+            <table width="100%">
+                <tr>
+                    <td class="ListHeader" style="padding-left: 14px; padding-top: 4px;" valign="top">
+                    
+                        <table>
+                        <tr>
+                            <td class="ListTitle">
+                                <asp:Literal runat="server" ID="ltlChainName" />&nbsp;
+                                <asp:Literal runat="server" ID="ltlCityName" />&nbsp;
+                                (<asp:Literal runat="server" ID="ltlCountryName" />)                           
+                            </td>
+                            <td>
+                                <div id="dvStars" runat="server"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="ListTitle">
+                                <asp:Literal runat="server" ID="ltlHotelName">
+                                
+                                </asp:Literal>
+                            </td>
+                        </tr>
+                        </table>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        
+                        <table width="100%">
+                            <tr>
+                                <td>
+                                    
+                                    <table width="92%">
+                                    <tr>
+                                        <td width="20%">
+                                            
+                                            <asp:Image runat="server" ID="imgHotelBig" Width="236" Height="178" ImageUrl="~/Images/HotelImages/Big/HotelDefault.jpg"/>
+                                            
+                                        </td>
+                                        <td style="padding-left: 10px; text-align: left;" width="72%">
+                                            
+                                            <b><asp:Literal ID="ltlDescTitle" runat="server">HOTEL AÇIKLAMASI</asp:Literal></b>
+                                            <br /><br />
+                                            <asp:Literal ID="ltlDescription" runat="server">
+                                                
+                                            </asp:Literal>
+                                            <br /><br />
+                                            
+                                            <div id="dvAllPicturesLink" runat="server">
+                                                <asp:Literal ID="ltlAllPicture" runat="server">
+                                                    <a href="javascript:void(0);" onclick="window.open('HotelBigImages.aspx?HotelID=||','HotelImages','toolbar=no,scrollbars,status,width=763,height=552, resizable')"> 
+                                                    Tüm Resimler Ýçin Týklayýnýz...</a>
+                                                </asp:Literal>
+                                            </div>
+                                            
+                                        </td>
+                                    </tr>
+                                    </table>
+                                    <br />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="HotelDetailPropertiesBack">
+                                
+                                    <div id="dvHotelProperties" runat="server"></div>
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" style="padding-left: 23px; padding-right: 23px;">
+                                <br /><br />
+                                
+                                    <asp:UpdatePanel ID="upRptRoomList" runat="server">
+                                        <ContentTemplate>
+                                            <table width="100%">
+                                            
+                                                <%-- BEGIN ODA LÝSTESÝ --%>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <asp:Repeater ID="rptRoomList" runat="server" OnItemDataBound="rptRoomList_ItemDataBound"
+                                                            OnPreRender="rptRoomList_PreRender">
+                                                            <HeaderTemplate>
+                                                                <table class="rptTable" border="1" cellpadding="5">
+                                                                    <tr class="rptHeader">
+                                                                        <td>                                                                            
+                                                                            <asp:Literal ID="ltlTitleRoomTotalQuantity" runat="server">Adedi</asp:Literal>
+                                                                        </td>
+                                                                        <td>
+                                                                            <asp:Literal ID="ltlTitleRoomName" runat="server">Oda Adý</asp:Literal>
+                                                                        </td>
+                                                                        <td>
+                                                                            <asp:Literal ID="ltlTitlePrice" runat="server">Oda Fiyatý</asp:Literal>
+                                                                        </td>
+                                                                        <td>
+                                                                            <asp:Literal ID="ltlTitleDetail" runat="server">Detay</asp:Literal>
+                                                                        </td>
+                                                                    </tr>
+                                                            </HeaderTemplate>
+                                                            <ItemTemplate>
+                                                                <tr class="rptItem">
+                                                                    <td>
+                                                                        <asp:Literal ID="ltlRoomID" runat="server" Visible="false" Text='<%# DataBinder.Eval(Container.DataItem, "RoomID") %>'></asp:Literal>
+                                                                        <asp:Literal ID="ltlItemQuantity" runat="server" Visible="false" Text='<%# DataBinder.Eval(Container.DataItem, "Quantity") %>'></asp:Literal>
+                                                                        <asp:DropDownList AutoPostBack="true" CssClass="DropDownList" runat="server" ID="ddlQuantity"
+                                                                            OnSelectedIndexChanged="ddlQuantity_SelectedIndexChanged">
+                                                                        </asp:DropDownList>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%# DataBinder.Eval(Container.DataItem, "RoomName") %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <asp:Literal ID="ltlPriceCurrencyLeft" runat="server"></asp:Literal>
+                                                                        <asp:Literal ID="ltlPrice" runat="server"></asp:Literal>&nbsp;
+                                                                        <asp:Literal ID="ltlPriceCurrencyRight" runat="server"></asp:Literal>
+                                                                    </td>
+                                                                    <td>
+                                                                        <asp:Literal ID="ltlRoomAndPriceDetail" runat="server">»&nbsp;
+                                                                <a href="javascript:void(0);" onclick="window.open('RoomDetail.aspx?RoomID=||','RoomDetail','toolbar=no,scrollbars,status,width=663,height=552, resizable')"> 
+                                                                Oda ve Fiyat Detaylarý</a>
+                                                                        </asp:Literal>
+                                                                    </td>
+                                                                </tr>
+                                                            </ItemTemplate>
+                                                            <FooterTemplate>
+                                                                </table>
+                                                            </FooterTemplate>
+                                                        </asp:Repeater>
+                                                    </td>
+                                                </tr>
+                                                <%-- //END ODA LÝSTESÝ --%>
+                                                
+                                                <tr>
+                                                    <td colspan="2" class="VSpace"></td>
+                                                </tr>
+                                                
+                                                <!-- BEGIN REZERVASYON ve TUTAR ALANI -->
+                                                <tr>
+                                                    <td class="clNavy" align="left">
+                                                        <asp:Literal ID="ltlTotal" runat="server" Text="Tutar: " />
+                                                        <asp:Label CssClass="Verd clBlack" ID="lblPriceCurrencyLeft" runat="server" />
+                                                        <asp:Label CssClass="Price" ID="lblTotalPrice" runat="server" />
+                                                        <asp:Label CssClass="Verd clBlack" ID="lblPriceCurrencyRight" runat="server" />&nbsp;&nbsp;
+                                                    </td>
+                                                    <td align="right">
+                                                    
+                                                        <asp:UpdatePanel ID="upModal" runat="server">
+                                                        <ContentTemplate>
+
+                                                        <asp:Button runat="server" ID="btnQuickCheckOut" CssClass="Button" CausesValidation="false"
+                                                            Text="REZERVASYONU YAP" OnClick="btnQuickCheckOut_Click" />
+                                                            
+                                                        <uc1:ModalPopup ID="ModalPopup1" runat="server" />
+
+                                                        </ContentTemplate>
+                                                        </asp:UpdatePanel>
+                                                        
+                                                    </td>
+                                                </tr>
+                                                <!--// END REZERVASYON ve TUTAR ALANI -->
+                                                
+                                            </table>
+                                        </ContentTemplate>
+                                    </asp:UpdatePanel>
+                                            
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                   <br /><br />
+                                   <!-- BEGIN YAKIN YERLER -->
+                                   
+                                   <asp:panel ID="pnlPlaces" runat="server">
+                                   
+                                   <table width="90%">
+                                    <tr>
+                                        <td align="left">
+                                            <b><asp:Label ID="ltlTitlePlaces" runat="server" Text="YAKIN YERLER" CssClass="T clNavy"></asp:Label></b></td>
+                                    </tr>
+                                    <tr>
+                                        <td bgcolor="#e9f7fa" align="center">
+                                            <br />
+                                            
+                                            <asp:Repeater ID="rptPlaces" runat="server" OnItemDataBound="rptPlaces_ItemDataBound">
+                                            <HeaderTemplate>
+                                                <table cellpadding="4" cellspacing="4" width="96%">
+                                            </HeaderTemplate>
+                                            <ItemTemplate>
+                                                <tr>
+                                                    <td>
+                                                    
+                                                        <table bgcolor="#f8fcfd" width="100%" cellpadding="4" cellspacing="4">
+                                                            <tr>
+                                                                <td width="8%">
+                                                                    <asp:Image runat="server" ID="imgPlaces1" ImageUrl=<%#DataBinder.Eval(Container.DataItem, "ImageFileName", "~/Images/Places/Small/{0}") %> /></td>
+                                                                <td width="5%"></td>
+                                                                <td width="82%" align="left" style="padding: 4px;">
+                                                                    <B><%#DataBinder.Eval(Container.DataItem, "Name") %></B>&nbsp;&nbsp;
+                                                                    <a href=<%#DataBinder.Eval(Container.DataItem, "Link") %> target="_blank">
+                                                                    » Detay</a>
+                                                                    <br /><br />
+                                                                    <asp:Panel runat="server" ID="pnlToolTip" CssClass="ToolTip"></asp:Panel>
+                                                                    <asp:Label ID="lblPlacesDescription" runat="server" Text=<%#DataBinder.Eval(Container.DataItem, "Description")%> Visible="false"></asp:Label>
+                                                                    <br /><br />
+                                                                    <b><asp:Literal runat="server" ID="ltlDistance" Text="Uzaklýk (km):"></asp:Literal></b>&nbsp;
+                                                                    <%#DataBinder.Eval(Container.DataItem, "Distance") %> &nbsp;- 
+                                                                    <%#DataBinder.Eval(Container.DataItem, "Time") %> &nbsp;
+                                                                    <asp:Literal runat="server" ID="ltlTime" Text="Dakika"></asp:Literal>
+                                                                    
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    
+                                                    </td>                                 
+                                                </tr>
+                                            </ItemTemplate>
+                                            <FooterTemplate>
+                                                </table>
+                                            </FooterTemplate>
+                                            </asp:Repeater>
+
+                                            <br />
+                                            
+                                        </td>
+                                    </tr>
+                                   </table>
+                                   
+                                   </asp:panel>
+                                   
+                                   <!-- //END YAKIN YERLER -->
+                                   
+                                   <br /><br />
+                                   
+                                </td>
+                            </tr>
+                        </table>
+                        
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<br />
+
+<uc2:uctPopupBottom ID="uctPopupBottom1" runat="server" />

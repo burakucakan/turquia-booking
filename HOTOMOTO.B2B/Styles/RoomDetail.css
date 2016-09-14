@@ -1,0 +1,58 @@
+﻿body {
+	margin: 0px 0px 0px 0px;
+}
+
+table {
+	font-family: Tahoma;
+	font-size: 11px;
+	border-collapse: collapse;
+	border-spacing: 0px 0px;
+}
+
+.RoomName {
+	font-family: Arial; 
+	font-size: 12pt;
+	color: #9292ab;
+}
+
+.RoomDescription {
+	font-family: Tahoma; 
+	font-size: 11px;
+	color: #6a6a8d;
+}
+
+.PriceHeader {
+	font-family: Trebuchet MS; 
+	font-size: 12pt;
+	color: #FFFFFF;
+	background-color: #768aa5;
+	height: 24px;
+	padding-left: 15px;
+}
+
+.rptHeader {
+	height: 21px;
+	background-image: url('../Images/Backgrounds/rptHeaderBack.gif');
+	background-repeat: repeat-x;
+	text-align: left;
+}
+
+.rptItem {
+	height: 20px;
+	text-align: left;
+	background-color: #fbf9fa;
+}
+
+.rptTable {
+	border: 1px solid #ced4e2;
+	width: 100%;
+	border-spacing: 2px 2px;
+}
+
+.Top {	
+	height: 84px;
+	background-color: #fffbf7;
+	background-image: url('../Images/Backgrounds/TopBack.gif');
+	background-repeat: repeat-x;
+	text-align: left;
+}

@@ -1,0 +1,91 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>Example_Parameter</name>
+    <description>Illustrates use of parameter object</description>
+    <author>ApexSQL</author>
+    <legal>Copyright (C) 1999-2007 ApexSQL LLC. All rights reserved.</legal>
+    <ExpectedObjectTypes>Procedure</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>Documentation</output>
+    <scripting>VB_NET</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>MultiFile</Mode>
+    <Encoding>20127</Encoding>
+  </outputfile>
+  <Import>
+    <includes />
+    <Namespaces />
+    <Assemblies />
+    <Templates />
+  </Import>
+  <templatecode><![CDATA[<%
+'------------------------------------------------------------ 
+'	TEMPLATE : Example_Parameter.ptpx
+'	PURPOSE  : This demonstrates the use of the Stored Procedure's Parameter object
+'	MODEL    : Code.Database.ActiveProcedure.Parameters
+
+'	EXPECTS  : PROCEDURE
+'	OUTPUT   : Generic Text Output
+'	AUTHOR   : ApexSQL
+'	SCRIPT	 : VB.NET 
+'	LANGUAGE : Documentation
+'	MODIFIED : April 2007
+'	NOTES    : 
+'------------------------------------------------------------ 
+
+Dim procedure As Procedure = Code.Database.ActiveProcedure
+
+If Nothing Is procedure Then
+	Out.WriteLine("There's no selected procedure.")
+	Return
+End If
+
+With procedure
+
+	Out.WriteLine("Procedure Name: {0}", .Name)
+
+	' Procedure IsRecordset
+	Out.WriteLine("Procedure IsRecordset: {0}", .IsRecordset)
+
+	Out.WriteLine("Parameters:")
+	Out.WriteLine("===============================================================")
+
+	For Each param As Parameter In .Parameters
+
+		Out.Indent
+
+		Out.WriteLine("Name:                {0}", param.Name)
+		Out.WriteLine("Definition:          {0}", param.Definition)
+		Out.WriteLine("IsChecked:           {0}", param.IsChecked)
+		Out.WriteLine("IsOutput             {0}", param.IsOutput)
+		Out.WriteLine("Parameter type:      {0}", param.ParamType)
+		Out.WriteLine("Parameter direction (ADO.NET): {0}", param.AdoNetDirection)
+		Out.WriteLine("Datatype:            {0}", param.Datatype)
+		Out.WriteLine("Native SQL Datatype: {0}", param.SQLDatatype)
+		Out.WriteLine("SQLDatatypeAndLength: {0}", param.SQLDatatypeAndLength)
+		Out.WriteLine("Length:              {0}", param.Length)
+		Out.WriteLine("Precision:           {0}", param.Precision)
+		Out.WriteLine("Scale:               {0}", param.Scale)
+		Out.WriteLine("Ordinal_Position:    {0}", param.OrdinalPosition)
+		Out.WriteLine("ParentName:          {0}", param.ParentName)
+		Out.WriteLine("ParentOwner:         {0}", param.ParentOwner)
+		Out.WriteLine("Prefix:              {0}", param.GetPrefix("VB.NET"))
+
+		Out.Unindent
+
+		Out.WriteLine
+		Out.WriteLine("===============================================================")
+
+	Next
+
+End With
+%>]]></templatecode>
+</template>

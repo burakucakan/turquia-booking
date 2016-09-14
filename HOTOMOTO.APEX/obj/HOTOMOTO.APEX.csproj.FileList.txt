@@ -1,0 +1,5 @@
+bin\Debug\HOTOMOTO.APEX.dll
+bin\Debug\HOTOMOTO.APEX.pdb
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\HOTOMOTO.APEX.dll
+obj\Debug\HOTOMOTO.APEX.pdb

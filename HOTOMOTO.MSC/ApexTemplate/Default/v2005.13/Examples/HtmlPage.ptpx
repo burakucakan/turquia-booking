@@ -1,0 +1,69 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>HtmlPage</name>
+    <description>Generates a HTML page. Demonstrates the using of imported template.</description>
+    <author>ApexSQL</author>
+    <legal>Copyright (C) 1999-2007 ApexSQL LLC. All rights reserved.</legal>
+    <ExpectedObjectTypes>Any</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>HTML</output>
+    <scripting>CSharp</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>MultiFile</Mode>
+    <Encoding>20127</Encoding>
+  </outputfile>
+  <CustomProperties>
+    <CustomProperty Name="Title" Type="Text" Description="" DefaultValue="Html page sample" />
+    <CustomProperty Name="PlaceHolder" Type="Text" Description="" DefaultValue="Sample text" />
+  </CustomProperties>
+  <Import>
+    <includes />
+    <Namespaces />
+    <Assemblies />
+    <Templates>
+      <Template FileName="HtmlHeader.ptpx" />
+    </Templates>
+  </Import>
+  <templatecode><![CDATA[<%
+//------------------------------------------------------------ 
+// TEMPLATE : HTML page
+// PURPOSE  : Generates a HTML page. Demonstrates the using of imported template.
+// EXPECTS  : ANY
+// OUTPUT   : .html
+// AUTHOR   : ApexSQL
+// MODIFIED : March 2007
+// NOTES	: this template imports a HtmlHeader.ptpx template.
+//				(see Templates in Import section)
+//------------------------------------------------------------
+%>
+<html>
+<% OutputHeader(); %>
+<body>
+
+<p><%= PlaceHolder%></p>
+
+</body>
+</html>
+<%# // tag # specifies: here's a template members
+
+// 
+private void OutputHeader()
+{
+	// this is imported template
+	HtmlHeader header = new HtmlHeader();
+		
+	header.Title = this.Title;
+	
+	// redirect the header output to output of this template
+	header.Render(this.Out);
+}
+%>]]></templatecode>
+</template>

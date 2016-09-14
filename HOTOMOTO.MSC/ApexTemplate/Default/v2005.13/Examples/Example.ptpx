@@ -1,0 +1,259 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>Example</name>
+    <description>Basic template that calls all properties of ApexSQL Code object model. This template also illustrates concepts of Templates.</description>
+    <author>ApexSQL</author>
+    <legal>Copyright (C) 1999-2007 ApexSQL LLC. All rights reserved.</legal>
+    <ExpectedObjectTypes>Table</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>Documentation</output>
+    <scripting>VB_NET</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>MultiFile</Mode>
+    <Encoding>20127</Encoding>
+  </outputfile>
+  <Import>
+    <includes />
+    <Namespaces />
+    <Assemblies />
+    <Templates />
+  </Import>
+  <templatecode><![CDATA[<%
+'------------------------------------------------------------ 
+'	TEMPLATE : Example.ptpx
+'	PURPOSE  : Basic template that calls many properties of ApexSQL Code object model.
+'
+'	EXPECTS  : TABLES
+'	OUTPUT   : Generic Text Output
+'	AUTHOR   : ApexSQL
+'	SCRIPT	 : VB.NET 
+'	LANGUAGE : Documentation
+'	MODIFIED : April 2007
+'	NOTES    :  
+' ------------------------------------------------------------ 
+%>
+APP INFORMATION
+============================
+<%
+With TemplateInfo
+%>
+Author: 	<%= .Author %>
+Legal: 		<%= .Legal %>
+Server: 	<%= Code.Server %>
+
+
+SETTINGS
+============================
+
+Language:		<%= .Language %>
+Output:			<%= .OutputLanguage %>
+Encoding:		<%= .OutputEncoding %>
+
+
+OUTPUT FILE INFORMATION
+============================
+
+File Name Only:		<%= Code.OutputFile.FileNameOnly %>
+Path Name Only:		<%= Code.OutputFile.PathNameOnly %>
+Path and File:		<%= Code.OutputFile.FilePathAndName %>
+
+
+TEMPLATE FILE INFORMATION
+============================
+	
+File Name Only:		<%= TemplateInfo.FileNameOnly %>
+Path Name Only:		<%= TemplateInfo.PathNameOnly %>
+Path and File:		<%= TemplateInfo.FilePathAndName %>
+
+<%
+End With
+
+With Code.Database
+%>
+
+DATABASE INFORMATION
+============================
+
+Connection String:	<%= .ConnectionString %>
+Database Name:		<%= .Name %>
+Database Owner:		<%= .Owner %>
+Database Collation:	<%= .Collation %>
+User:				<%= .User %>
+<%
+End With
+
+'	this is the currently selected table from the user interface
+With Code.Database.ActiveTable
+%>
+
+TABLE INFORMATION
+============================
+
+Table Name: 	<%= .Name %>
+Table Owner: 	<%= .Owner %>
+
+Column INFORMATION
+============================
+<%
+	'	Notice use of object enumeration.  
+	'	Here the column collection of the Table object is being enumerated
+	For Each column As Column In .Columns
+		With column
+%>		
+Column Name: 			<%= .Name %>
+IsNullable: 			<%= .IsNullable %>
+Length: 				<%= .Length %>
+OrdinalPosition:		<%= .OrdinalPosition %>
+Precision:				<%= .Precision %>
+Prefix: 				<%= .GetPrefix("VB.NET") %>
+Scale:					<%= .Scale %>
+Datatype:				<%= .Datatype %> 
+SQLDatatype:			<%= .SQLDatatype %> 
+SQLDatatypeAndLength:	<%= .SQLDatatypeAndLength %>
+ADO.NET mapping:		<%= .AdoNetMapping.CLRType %>
+IsKey:					<%= .IsInPrimaryKey %>
+IsBLOB:		 			<%= .IsBLOB %>
+IsIdentity: 			<%= .IsIdentity %>
+IsTimeStamp:			<%= .IsTimeStamp %>
+Default:				<%= .SQLDefault %>
+IsGUID: 				<%= .IsGUID %>
+IsChecked:				<%= .IsChecked %>
+ParentName: 			<%= .ParentName %>
+ParentOwner:			<%= .ParentOwner %>
+
+------------------------------
+
+
+<%
+		End With
+	Next
+%>
+
+PRIMARY KEY INFORMATION
+============================
+<%
+	For Each column As Column In .PrimaryKeyColumns
+		With column
+%>
+Key Name:				<%= .Name %>
+IsNullable: 			<%= .IsNullable %>
+Length: 				<%= .Length %>
+OrdinalPosition:		<%= .OrdinalPosition %>
+Precision:				<%= .Precision %>
+Prefix: 				<%= .GetPrefix("VB.NET") %>
+Scale:					<%= .Scale %>
+Datatype:				<%= .Datatype %>
+SQLDatatype:			<%= .SQLDatatype %>
+SQLDatatypeAndLength:	<%= .SQLDatatypeAndLength %>
+IsIdentity: 			<%= .IsIdentity %>
+IsTimeStamp:			<%= .IsTimeStamp %>
+Default:				<%= .SQLDefault %>
+IsGUID: 				<%= .IsGUID %>
+IsChecked:				<%= .IsChecked %>
+ParentName: 			<%= .ParentName %>
+ParentOwner:			<%= .ParentOwner %> 
+------------------------------
+<%
+		End With
+	Next
+%>
+
+KEY INFORMATION
+============================
+<%
+	For Each key As Key In .Keys
+		With key
+%>
+Name:				<%= .Name %>
+Key Type:			<%= .KeyType.ToString %>
+Script:  
+	<%= .Script %>
+					
+Enabled:			<%= .IsEnabled %>
+Clustered:			<%= .Clustered %>
+ExcludeReplication:	<%= .ExcludeReplication %>
+fillfactor:			<%= .FillFactor %>
+ParentName:			<%= .ParentName %>
+ParentOwner:		<%= .ParentOwner %>
+
+<%
+			If Not .ReferencedKey Is Nothing  Then
+%>
+ReferencedKey:		<%= .ReferencedKey %>
+ReferencedTable:	<%= .ReferencedTable %>
+<%				For n As Integer = 0 To .KeyColumns.Count - 1 %>
+	Key Column(<%= n+1 %>):	<%=	.KeyColumns(n).Name %>
+<%				Next %>
+					
+					
+------------------------------
+
+
+<%			End If
+		End With
+	Next
+%>
+
+
+CHECK INFORMATION
+============================
+<%
+	For Each objCheck As Check In .Checks
+		With objCheck
+%>
+Name:				<%= .Name %>
+Enabled:			<%= .IsEnabled %>
+ExcludeReplication:	<%= .ExcludeReplication %>
+ParentName:			<%= .ParentName %>
+ParentOwner:		<%= .ParentOwner %>
+
+Script:  
+	<%= .Script %>
+					
+------------------------------
+
+
+<%
+		End With
+	Next
+%>
+
+
+INDEX INFORMATION
+============================
+<%
+	For Each index As Index In .Indexes
+		With index
+%>
+Name:			<%= .Name %>
+fillfactor:		<%= .FillFactor %>
+IsFullTextKey:	<%= .IsFullTextKey %>
+NoRecompute:	<%= .NoRecompute %>
+
+ParentName:		<%= .ParentName %>
+ParentOwner:	<%= .ParentOwner %>
+Script:  
+	<%=  .Script %>
+					
+------------------------------
+<%		End With
+				
+		For n As Integer = 0 To index.IndexedColumns.Count - 1
+			Out.WriteLine("Indexed Column ({0}): {1}", n+1, index.IndexedColumns(n).Name)
+		Next
+%>
+
+
+<%	Next
+
+End With
+%>]]></templatecode>
+</template>

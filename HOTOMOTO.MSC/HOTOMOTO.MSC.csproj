@@ -1,0 +1,248 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AB657C3C-D1A3-4E00-8E27-8CD068B18F71}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HOTOMOTO.MSC</RootNamespace>
+    <AssemblyName>HOTOMOTO.MSC</AssemblyName>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Backup\Code\CacheMachine.txt" />
+    <Content Include="Backup\Code\uctPaging.ascx.txt" />
+    <Content Include="Backup\Code\uctHotel.ascx.cs.txt" />
+    <Content Include="Backup\Code\uctHotelReservation.ascx.cs.txt" />
+    <Content Include="Backup\Code\uctHotelDetail.ascx.cs.txt" />
+    <Content Include="Backup\Code\HotelBigImages.aspx.cs.txt" />
+    <Content Include="Backup\Code\uctTransfer.ascx.cs.txt" />
+    <Content Include="Backup\Code\uctTabMenu.ascx.cs.txt" />
+    <Content Include="Backup\Code\uctReservationSummary.ascx.cs.txt" />
+    <Compile Include="Documents\GenerateResources\source\translate\ResxTranslator\AssemblyInfo.cs" />
+    <Compile Include="Documents\GenerateResources\source\translate\ResxTranslator\Form1.cs" />
+    <Compile Include="Documents\GenerateResources\source\translate\WebWagon\AssemblyInfo.cs" />
+    <Compile Include="Documents\GenerateResources\source\translate\WebWagon\HTMLPage.cs" />
+    <Compile Include="Documents\GenerateResources\source\translate\WebWagon\TranslateUtil.cs" />
+    <Compile Include="Documents\GenerateResources\source\translate\WebWagon\WebWagon.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ApexTemplate\Current Templates\CSharp\CSharp_Class.ptpx" />
+    <None Include="ApexTemplate\Current Templates\SQL\SQL_Basic_Sproc_Table.ptpx" />
+    <None Include="ApexTemplate\Current Templates\SQL\SQL_Drop_Basic_Sproc_Table.ptpx" />
+    <None Include="ApexTemplate\Custom\CSharp\CSharp_Class.ptpx" />
+    <None Include="ApexTemplate\Custom\CSharp\Default_CSharp_Class.ptpx" />
+    <None Include="ApexTemplate\Custom\Sql\Default_SQL_Basic_Sproc_Table.ptpx" />
+    <None Include="ApexTemplate\Custom\Sql\SQL_Basic_Sproc_Table.ptpx" />
+    <None Include="ApexTemplate\Custom\Sql\SQL_Drop_Basic_Sproc_Table.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\CSharp\CSharp_Class.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\Examples\Example.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\Examples\ExampleTemplateInfo.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\Examples\Example_Alias.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\Examples\Example_Check.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\Examples\Example_Column.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\Examples\Example_CustomProperties.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\Examples\Example_Database.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\Examples\Example_FileWriting.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\Examples\Example_ForeignKeys.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\Examples\Example_Index.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\Examples\Example_Keys.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\Examples\Example_OutputFormatting.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\Examples\Example_Parameter.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\Examples\Example_Procedure.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\Examples\Example_ResultColumn.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\Examples\Example_Schemas.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\Examples\Example_Tables.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\Examples\Example_Tracing.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\Examples\Example_Trigger.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\Examples\Example_Users.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\Examples\Example_View.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\Examples\Example_XmlIndex.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\Examples\HtmlHeader.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\Examples\HtmlPage.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\SQL\SQL_Basic_Sproc_Table.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\SQL\SQL_Drop_Basic_Sproc_Table.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\VB.NET\Net_VB_Basic_Fun_Table.ptpx" />
+    <None Include="ApexTemplate\Default\v2005.13\VB.NET\VBNET_Sproc_Classes.ptpx" />
+    <None Include="Backup\Code\Erich_HOTOMOTO_20071203_Code_Backup.zip" />
+    <None Include="Backup\DB\TURQUIAerich.bak" />
+    <None Include="Backup\DB\TURQUIA_CARETTASERVER" />
+    <None Include="Backup\Html\Images\Backgrounds\Thumbs.db" />
+    <None Include="Backup\Html\Images\Icons\Thumbs.db" />
+    <None Include="Backup\Html\menu\Thumbs.db" />
+    <None Include="Backup\Sql\CountriesAndCities.sql" />
+    <None Include="Backup\Sql\DB Pemission Duzenle.sql" />
+    <None Include="Backup\Sql\HotelPropertyleriniGetir.sql" />
+    <None Include="Backup\Sql\Login.sql" />
+    <None Include="Backup\Sql\Menu.sql" />
+    <None Include="Backup\Sql\Paramsel.sql" />
+    <None Include="Backup\Sql\UlkerleriAktar.sql" />
+    <None Include="Backup\Sql\withdeneme.sql" />
+    <None Include="Design\1.psd" />
+    <None Include="Design\1_2.psd" />
+    <None Include="Design\1_3_HotelReservation.psd" />
+    <None Include="Design\1_3_Login.psd" />
+    <None Include="Design\1_3_Mesajlar.psd" />
+    <None Include="Design\1_3_Otel.psd" />
+    <None Include="Design\1_3_OtelDetail.psd" />
+    <None Include="Design\1_3_Tur.psd" />
+    <None Include="Design\1_3_Yardim.psd" />
+    <None Include="Design\ModalPopup.psd" />
+    <None Include="Documents\GenerateResources\source\translate\GoogleTranslationDemo.suo" />
+    <None Include="Documents\GenerateResources\source\translate\ResxTranslator\obj\Debug\ResxTranslator.projdata" />
+    <None Include="Documents\GenerateResources\source\translate\WebWagon\obj\Debug\WebWagon.dll.incr" />
+    <None Include="Documents\GenerateResources\source\translate\WebWagon\obj\Debug\WebWagon.projdata" />
+    <None Include="Documents\Hotomoto.mpp" />
+    <None Include="Documents\ONLINE ÇEVIRI.xls" />
+    <None Include="Documents\TASARIM NOTLARI.doc" />
+    <None Include="Documents\T_B2B_Rez_Analiz.doc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ApexTemplate\Default\v2005.13\VB.NET\VbNetHelper.vb" />
+    <Content Include="Backup\Code\AddAttributes.txt" />
+    <Content Include="Backup\Code\HotelBigImages.aspx.txt" />
+    <Content Include="Backup\Code\TabMenu.css.txt" />
+    <Content Include="Backup\Code\TopMenu.js.txt" />
+    <Content Include="Backup\Code\uctHotel.txt" />
+    <Content Include="Backup\Code\uctHotelDetail.ascx.txt" />
+    <Content Include="Backup\Code\uctHotelReservation.ascx.txt" />
+    <Content Include="Backup\Code\uctReservationSummary.ascx.txt" />
+    <Content Include="Backup\Code\uctTabMenu.ascx.txt" />
+    <Content Include="Backup\Code\uctTransfer.ascx.txt" />
+    <Content Include="Backup\Html\Default.aspx" />
+    <Content Include="Backup\Html\Images\Backgrounds\BottomBack.gif" />
+    <Content Include="Backup\Html\Images\Backgrounds\ButtonBack.gif" />
+    <Content Include="Backup\Html\Images\Backgrounds\ButtonBackHover.gif" />
+    <Content Include="Backup\Html\Images\Backgrounds\LoginInfoBack.gif" />
+    <Content Include="Backup\Html\Images\Backgrounds\MainSearchBack.jpg" />
+    <Content Include="Backup\Html\Images\Backgrounds\MainTopBack.jpg" />
+    <Content Include="Backup\Html\Images\Backgrounds\MenuTitleBack.gif" />
+    <Content Include="Backup\Html\Images\Backgrounds\RecommendTextBack.jpg" />
+    <Content Include="Backup\Html\Images\Backgrounds\RecommendTitleBack.jpg" />
+    <Content Include="Backup\Html\Images\Backgrounds\TitleBack.gif" />
+    <Content Include="Backup\Html\Images\Backgrounds\TopBack.gif" />
+    <Content Include="Backup\Html\Images\Icons\ArrowDown.gif" />
+    <Content Include="Backup\Html\Images\Icons\ArrowUp.gif" />
+    <Content Include="Backup\Html\Images\Icons\Contact.gif" />
+    <Content Include="Backup\Html\Images\Icons\Favorites.gif" />
+    <Content Include="Backup\Html\Images\Icons\Help.gif" />
+    <Content Include="Backup\Html\Images\Icons\HomePage.gif" />
+    <Content Include="Backup\Html\Images\Icons\Logout.gif" />
+    <Content Include="Backup\Html\Images\Icons\Main.gif" />
+    <Content Include="Backup\Html\Images\Icons\SiteMap.gif" />
+    <Content Include="Backup\Html\Images\Icons\support.gif" />
+    <Content Include="Backup\Html\Images\Util\Caretta.gif" />
+    <Content Include="Backup\Html\Images\Util\Logo.gif" />
+    <Content Include="Backup\Html\menu\Images\Backgrounds\TopMenu\Back.gif" />
+    <Content Include="Backup\Html\menu\Images\Backgrounds\TopMenu\SubMenuBack.gif" />
+    <Content Include="Backup\Html\menu\Images\Backgrounds\TopMenu\TabBack.gif" />
+    <Content Include="Backup\Html\menu\Images\Backgrounds\TopMenu\TabLeft.gif" />
+    <Content Include="Backup\Html\menu\Images\Backgrounds\TopMenu\TabRight.gif" />
+    <Content Include="Backup\Html\menu\Images\Backgrounds\TopMenu\TabTop.gif" />
+    <Content Include="Backup\Html\menu\Images\Backgrounds\TopMenu\TabTop2.gif" />
+    <Content Include="Backup\Html\menu\index.htm" />
+    <Content Include="Backup\Html\Styles\Form.css" />
+    <Content Include="Backup\Html\Styles\Format.css" />
+    <Content Include="Backup\Html\Styles\Tag.css" />
+    <Content Include="Backup\Html\Styles\Text.css" />
+    <Content Include="BankDlls\epayapi.dll" />
+    <Content Include="BankDlls\YKB POS Communication DLL.dll" />
+    <Content Include="BankDlls\YKBPosnetActiveX.dll" />
+    <Content Include="Design\1.jpg" />
+    <Content Include="Design\1_2.jpg" />
+    <Content Include="Design\1_3_Login.jpg" />
+    <Content Include="Design\1_3_Mesajlar.jpg" />
+    <Content Include="Design\1_3_Otel.jpg" />
+    <Content Include="Design\1_3_OtelDetail copy.jpg" />
+    <Content Include="Design\1_3_Tur.jpg" />
+    <Content Include="Design\1_3_Yardim.jpg" />
+    <Content Include="Documents\DBContentManagementNotes.txt" />
+    <Content Include="Documents\Ekranlar.txt" />
+    <Content Include="Documents\GenerateResources\exe\ResxTranslator.exe" />
+    <Content Include="Documents\GenerateResources\exe\ResxTranslator.pdb" />
+    <Content Include="Documents\GenerateResources\exe\WebWagon.dll" />
+    <Content Include="Documents\GenerateResources\exe\WebWagon.pdb" />
+    <Content Include="Documents\GenerateResources\source\translate\GoogleTranslationDemo.sln" />
+    <Content Include="Documents\GenerateResources\source\translate\ResxTranslator\App.ico" />
+    <Content Include="Documents\GenerateResources\source\translate\ResxTranslator\bin\Debug\ResxTranslator.exe" />
+    <Content Include="Documents\GenerateResources\source\translate\ResxTranslator\bin\Debug\ResxTranslator.pdb" />
+    <Content Include="Documents\GenerateResources\source\translate\ResxTranslator\bin\Debug\WebWagon.dll" />
+    <Content Include="Documents\GenerateResources\source\translate\ResxTranslator\bin\Debug\WebWagon.pdb" />
+    <Content Include="Documents\GenerateResources\source\translate\ResxTranslator\obj\Debug\ResxTranslator.exe" />
+    <Content Include="Documents\GenerateResources\source\translate\ResxTranslator\obj\Debug\ResxTranslator.pdb" />
+    <Content Include="Documents\GenerateResources\source\translate\ResxTranslator\ResxTranslator.csproj" />
+    <Content Include="Documents\GenerateResources\source\translate\ResxTranslator\ResxTranslator.csproj.user" />
+    <Content Include="Documents\GenerateResources\source\translate\WebWagon\bin\Debug\WebWagon.dll" />
+    <Content Include="Documents\GenerateResources\source\translate\WebWagon\bin\Debug\WebWagon.pdb" />
+    <Content Include="Documents\GenerateResources\source\translate\WebWagon\obj\Debug\WebWagon.dll" />
+    <Content Include="Documents\GenerateResources\source\translate\WebWagon\obj\Debug\WebWagon.pdb" />
+    <Content Include="Documents\GenerateResources\source\translate\WebWagon\WebWagon.csproj" />
+    <Content Include="Documents\GenerateResources\source\translate\WebWagon\WebWagon.csproj.user" />
+    <Content Include="Documents\Örnek Siteler.txt" />
+    <Content Include="Backup\Sql\Gereksiz Connectionlari Siler.sql" />
+    <Content Include="Passwords\FTP.txt" />
+    <Content Include="Passwords\MSSQL DB.txt" />
+    <Content Include="Passwords\Email.txt" />
+    <Content Include="Passwords\RadorePanel.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Documents\GenerateResources\source\translate\ResxTranslator\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Documents\GenerateResources\source\translate\ResxTranslator\obj\Debug\ResxTranslator.Form1.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DB\" />
+    <Folder Include="Documents\GenerateResources\source\translate\ResxTranslator\obj\Debug\TempPE\" />
+    <Folder Include="Documents\GenerateResources\source\translate\ResxTranslator\obj\Debug\temp\" />
+    <Folder Include="Documents\GenerateResources\source\translate\WebWagon\obj\Debug\TempPE\" />
+    <Folder Include="Documents\GenerateResources\source\translate\WebWagon\obj\Debug\temp\" />
+    <Folder Include="Notes\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

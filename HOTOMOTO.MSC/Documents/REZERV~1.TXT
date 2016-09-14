@@ -1,0 +1,16 @@
+24 Haneli Rezervasyon Kodu
+
+Karakterler Karþýlýklarý
+
+DD MM YY RRRR XXXXXXXXXX UUUU
+
+DD		MM		YY		XXXXXXXXXX		UUUU
+gün(2)	ay(2)	yýl(2)	reservation		user id(4)
+						code(10)
+						
+[01-02] > GÜN
+[03-04] > AY
+[05-06] > YIL (Son Ýki Karakteri)
+[07-10] > RESERVATION ID
+[11-20] > RESERVASYON CODE
+[21-24] > RESERVATION ID

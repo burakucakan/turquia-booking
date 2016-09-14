@@ -1,0 +1,133 @@
+<%@ Control Language="C#" AutoEventWireup="true" CodeFile="uctHotelReservation.ascx.cs" Inherits="UserControls_Hotel_uctHotelReservation" %>
+
+<table class="PagesTable Box">
+    <tr>
+        <td>
+        
+            <table width="100%">
+                <tr>
+                    <td class="ReservationHeaderBack MainTopHeader">
+                        HOTEL RESERVATION PAGE</td>
+                </tr>
+                <tr>
+                    <td align="center" bgcolor="#FFFFFF">
+                    
+                        <table width="96%" cellpadding="3" cellspacing="3" style="text-align: left;">
+                            <tr>
+                                <td class="T clNavy">
+                                    <asp:Literal ID="ltlTitleArrDepDate" runat="server">Arrival Date - Departure Date</asp:Literal> </td>
+                            </tr>
+                            <tr>
+                                <td class="ReservationInfoCell">
+                                    <asp:Literal ID="ltlArrDepDate" runat="server"></asp:Literal></td>
+                            </tr>
+                            <tr>
+                                <td class="VSpace"></td>
+                            </tr>
+                            <tr>
+                                <td class="T clNavy">
+                                    <asp:Literal ID="ltlTitleHotelInfo" runat="server">Hotel Bilgileri</asp:Literal></td>
+                            </tr>
+                            <tr>
+                                <td class="ReservationInfoCell">
+                                    <asp:Literal ID="ltlHotelInfo" runat="server"></asp:Literal></td>
+                            </tr>
+                            <tr>
+                                <td class="VSpace"></td>
+                            </tr>
+                            <tr>
+                                <td class="T clNavy">
+                                    <asp:Literal ID="ltlRoomInfo" runat="server">Oda Bilgileri</asp:Literal></td>
+                            </tr>
+                            <asp:Repeater ID="rptRooms" runat="server">
+								<ItemTemplate>
+									<tr>
+										<td class="ReservationInfoCell">
+											<table cellpadding="0" cellspacing="0" style="text-align: left;" width="100%">
+												<tr>
+													<td>
+														<asp:Literal ID="ltlItemNo" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "ItemNo") %>'></asp:Literal>) 
+														<asp:Literal ID="ltlRoomName" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "RoomName") %>'></asp:Literal></td>
+													<td style="text-align: right;">
+														<b><asp:Literal ID="ltlQuantity" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "Quantity") %>'></asp:Literal></b>
+														x
+														<b><asp:Literal ID="ltlRoomPrice" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "RoomPrice") %>'></asp:Literal></b></td>
+												</tr>
+												<tr>
+													<td colspan="2">
+														<asp:Literal ID="ltlSmoking" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "Smoking") %>'></asp:Literal>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</ItemTemplate>
+								<SeparatorTemplate>
+									<tr>
+										<td>
+										</td>
+									</tr>
+								</SeparatorTemplate>
+                            </asp:Repeater>
+                            <tr>
+                                <td class="VSpace"></td>
+                            </tr>
+							<tr>
+								<td class="T clNavy">
+									
+								</td>
+							</tr>
+                            <tr>
+                                <td class="VSpace"></td>
+                            </tr>                            
+                            <tr>
+                                <td class="T clNavy">
+                                    <asp:Literal ID="ltlTitleChildInfo" runat="server">Çocuk Bilgileri</asp:Literal></td>
+                            </tr>
+                            <tr>
+                                <td class="ReservationInfoCell">
+                                    <asp:Literal ID="ltlChildCount" runat="server">Çocuk Sayýsý</asp:Literal> &nbsp;
+                                    <asp:TextBox runat="server" id="txtChildCount" CssClass="TextBox" width="20"></asp:TextBox>&nbsp;&nbsp;
+                                    <asp:Literal ID="ltlChildAge" runat="server">Yaþlarý</asp:Literal> &nbsp;
+                                    <asp:TextBox runat="server" id="txtltlChildAge" CssClass="TextBox" width="50"></asp:TextBox>                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="VSpace"></td>
+                            </tr>
+                            <tr>
+                                <td class="T clNavy">
+                                    <asp:Literal ID="ltlTitleTotalPrice" runat="server">Ýþlem Tutarý</asp:Literal> </td>
+                            </tr>
+                            <tr>
+                                <td class="ReservationInfoCell">
+                                    <asp:Literal ID="ltlTotalPrice" runat="server">1233.543</asp:Literal>&nbsp;
+                                    <asp:Literal ID="ltlCurrency" runat="server">USD</asp:Literal>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="VSpace"></td>
+                            </tr>
+                            <tr>
+                                <td class="ReservationInfoCell">
+                                    <asp:CheckBox ID="chAcceptTransfer" runat="server" /> &nbsp;
+                                    <asp:Literal ID="ltlAcceptTransfer" runat="server">Transfer Ýstiyorum</asp:Literal>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="VSpace"></td>
+                            </tr>                            
+                            <tr>
+                                <td>
+                                    <asp:Button runat="server" ID="btnCheckOut" CssClass="Button" CausesValidation="false" Text="REZERVASYONU YAPTIR" OnClick="btnCheckOut_Click" />
+                                </td>
+                            </tr>                        
+                        </table>
+                        
+                    </td>
+                </tr>
+            </table>
+        
+        </td>
+    </tr>
+</table>

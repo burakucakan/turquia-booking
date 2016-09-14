@@ -1,0 +1,103 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>Example_View</name>
+    <description>Illustrates how to use View object</description>
+    <author>ApexSQL</author>
+    <legal>Copyright (C) 1999-2007 ApexSQL LLC. All rights reserved.</legal>
+    <ExpectedObjectTypes>View</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>Documentation</output>
+    <scripting>VB_NET</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>MultiFile</Mode>
+    <Encoding>20127</Encoding>
+  </outputfile>
+  <Import>
+    <includes />
+    <Namespaces />
+    <Assemblies />
+    <Templates />
+  </Import>
+  <templatecode><![CDATA[<%
+'------------------------------------------------------------ 
+'	TEMPLATE : Example_View.ptpx
+'	PURPOSE  : This template illustrates use of View Object
+
+'	MODEL    : Code.Database.ActiveView
+
+'	EXPECTS  : VIEW
+'	OUTPUT   : Generic Text Output
+'	AUTHOR   : ApexSQL
+'	SCRIPT   : VB.NET
+'	LANGUAGE : Documentation
+'	MODIFIED : Feb 2007
+'	NOTES    :
+' ------------------------------------------------------------ 
+
+Dim objView As View = Code.Database.ActiveView ' this is the currently selected view from the user interface
+
+If Nothing Is objView Then
+	Out.WriteLine("There's no selected view.")
+	Return
+End If
+
+Out.WriteLine("VIEW INFORMATION:	{0}", objView.QualifiedName)
+Out.WriteLine("============================")
+
+With objView
+
+	Out.WriteLine("Name:             {0}", .Name)
+	Out.WriteLine("Owner:            {0}", .Owner)
+	Out.WriteLine("Schema:           {0}", .Schema)
+	Out.WriteLine("CreateDate:       {0}", .CreateDate)
+	Out.WriteLine("AnsiNULLs:        {0}", .AnsiNULLsStatus)
+	Out.WriteLine("QuotedIdentifier: {0}", .QuotedIdentifierStatus)
+	Out.WriteLine
+
+	Out.WriteLine("Columns:")
+	Out.Indent
+	For Each objColumn As Column In .Columns
+		Out.WriteLine(objColumn.Name)
+	Next
+	Out.Unindent
+
+	Out.WriteLine
+	Out.WriteLine("Indexes:")
+	Out.Indent
+	For Each objIndex As Index In .Indexes
+		Out.WriteLine(objIndex.Name)
+	Next
+	Out.Unindent
+
+	Out.WriteLine
+	Out.WriteLine("Triggers:")
+	Out.Indent
+	For Each objTrigger As Trigger In .Triggers
+		Out.WriteLine(objTrigger.Name)
+	Next
+	Out.Unindent
+
+	Out.WriteLine
+	Out.WriteLine("IsActive:      {0}", .IsActive)
+	Out.WriteLine("IsChecked:     {0}", .IsChecked)
+	Out.WriteLine("IsFirstObject: {0}", .IsFirstProcessedObject)
+	Out.WriteLine("IsLastObject:  {0}", .IsLastProcessedObject)
+
+	Out.WriteLine
+	Out.WriteLine("Script:")
+	Out.WriteLine
+	Out.WriteLine(.Script)
+	Out.WriteLine("------------------------------------------------------")
+
+End With
+
+%>]]></templatecode>
+</template>

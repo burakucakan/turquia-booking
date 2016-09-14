@@ -1,0 +1,52 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>ExampleTemplateInfo</name>
+    <description>An example of using ITemplateInfo.</description>
+    <author>ApexSQL</author>
+    <legal>Copyright (C) 1999-2007 ApexSQL LLC. All rights reserved.</legal>
+    <ExpectedObjectTypes>Any</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>Documentation</output>
+    <scripting>CSharp</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>MultiFile</Mode>
+    <Encoding>20127</Encoding>
+  </outputfile>
+  <Import>
+    <includes />
+    <Namespaces />
+    <Assemblies />
+    <Templates />
+  </Import>
+  <templatecode><![CDATA[<%
+//------------------------------------------------------------ 
+// TEMPLATE : ExampleTemplateInfo
+// PURPOSE  : Demonstrates a using of ITemplateInfo.
+// EXPECTS  : noone
+// OUTPUT   : .txt
+// AUTHOR   : ApexSQL 
+// MODIFIED : January 2007
+// NOTES
+//------------------------------------------------------------
+%>
+Template:		<%= TemplateInfo.Name %>
+Author:			<%= TemplateInfo.Author %>
+Legal:			<%= TemplateInfo.Legal %>
+Description:	<%= TemplateInfo.Description %>
+
+Language:		<%= TemplateInfo.Language %>
+Output:			<%= TemplateInfo.OutputLanguage %>
+Encoding:		<%= TemplateInfo.OutputEncoding %>
+
+File:			<%= TemplateInfo.FilePathAndName %>
+Path:			<%= TemplateInfo.PathNameOnly %>
+File name:		<%= TemplateInfo.FileNameOnly %>]]></templatecode>
+</template>

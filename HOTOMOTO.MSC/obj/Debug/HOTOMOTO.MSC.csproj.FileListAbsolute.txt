@@ -1,0 +1,5 @@
+D:\PRJ\Turquia\HOTOMOTO.MSC\obj\Debug\ResolveAssemblyReference.cache
+D:\PRJ\Turquia\HOTOMOTO.MSC\obj\Debug\ResxTranslator.Form1.resources
+D:\PRJ\Turquia\HOTOMOTO.MSC\obj\Debug\HOTOMOTO.MSC.csproj.GenerateResource.Cache
+D:\PRJ\Turquia\HOTOMOTO.MSC\obj\Debug\HOTOMOTO.MSC.dll
+D:\PRJ\Turquia\HOTOMOTO.MSC\obj\Debug\HOTOMOTO.MSC.pdb

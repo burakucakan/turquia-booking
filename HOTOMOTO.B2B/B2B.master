@@ -1,0 +1,248 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="B2B.master.cs" Inherits="TurquiaB2B" %>
+<%@ Register Src="~/UserControls/Banner/uctRightBanner.ascx" TagName="uctRightBanner" TagPrefix="uc6" %>
+<%@ Register Src="~/UserControls/Common/uctQuickLinks.ascx" TagName="uctQuickLinks" TagPrefix="uc5" %>
+<%@ Register Src="~/UserControls/Common/uctClue.ascx" TagName="uctClue" TagPrefix="uc4" %>
+<%@ Register Src="~/UserControls/Common/uctExtraInfo.ascx" TagName="uctExtraInfo" TagPrefix="uc3" %>
+<%@ Register Src="~/UserControls/Common/uctLoginInfo.ascx" TagName="uctLoginInfo" TagPrefix="uc2" %>
+<%@ Register Src="~/UserControls/Common/uctTopMenu.ascx" TagName="uctTopMenu" TagPrefix="uc1" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!-- CARETTA -->
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head id="Head1" runat="server">
+
+    <!-- #INCLUDE FILE="Incs/Head.inc" -->
+
+<!-- Import css/ -->
+	<link href="Styles/Tag.css" rel="stylesheet" type="text/css" />
+	<link href="Styles/Format.css" rel="stylesheet" type="text/css" />
+	<link href="Styles/Form.css" rel="stylesheet" type="text/css" />
+	<link href="Styles/Text.css" rel="stylesheet" type="text/css" />
+	<link href="Styles/TopMenu.css" rel="stylesheet" type="text/css" />
+
+	<link href="Styles/Paging.css" rel="stylesheet" type="text/css" />	
+    <link href="Styles/Processing.css" rel="stylesheet" type="text/css" />
+	<link href="Styles/ModalPopup.css" rel="stylesheet" type="text/css" />
+<!--// Import css/ -->
+
+</head>
+
+<body>
+    <!-- #INCLUDE FILE="Incs/JSControl.inc" -->
+    
+    <!-- #INCLUDE FILE="UserControls/Processing/Processing.html" -->
+
+    <form id="form1" runat="server">
+
+    <asp:ScriptManager id="ScrMng1" runat="server" 
+    EnablePartialRendering="true">
+    <%-- AsyncPostBackTimeout="3600"
+    OnAsyncPostBackError="HandleError">--%>
+        <Scripts>
+            <asp:ScriptReference Path="~/Scripts/TopMenu.js" />
+            <asp:ScriptReference Path="~/Scripts/Custom.js" />
+            <asp:ScriptReference Path="~/Scripts/Util.js" />
+            <asp:ScriptReference Path="~/Scripts/AjaxUtil.js" />
+            <asp:ScriptReference Path="~/Scripts/ModalPopup.js" />
+        </Scripts>
+
+    </asp:ScriptManager>
+   
+    <script type="text/javascript">
+        Sys.WebForms.PageRequestManager.getInstance().add_beginRequest(beginRequest);
+        Sys.WebForms.PageRequestManager.getInstance().add_endRequest(endRequest);
+        Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(endRequest);
+    </script>
+   
+    <div id="divLogo">
+        <asp:HyperLink id="hlLogo" runat="server" NavigateUrl="~/Default.aspx" ImageUrl="~/Images/Util/Logo.gif" />
+    </div>    
+   
+    <table id="Tbl0" class="Tbl0">
+    
+    <%-- BEGIN TOP --%>
+    <tr>
+        <td valign="top">
+        
+            <table id="Table1" style="width: 100%">
+            
+                <%-- BEGIN LANGUAGE --%>
+                <tr>
+                    <td class="Top clAqua">
+
+                         <asp:LinkButton runat="server" CausesValidation="false" CssClass="clBlack" id="lbLogOut" Text="Güvenli Çýkýþ" OnClick="lbLogOut_Click" />
+
+                    </td>
+                </tr>
+                <%-- END LANGUAGE --%>
+                
+                <%-- BEGIN MENU --%>                
+                <tr>
+                    <td class="TopMenu">
+                        
+                        <uc1:uctTopMenu ID="UctTopMenu1" runat="server" />
+                        
+                    </td>
+                </tr>
+                <%-- END MENU --%>
+                
+                <tr>
+                    <td class="HrTd" />
+                </tr>
+            </table>
+        
+        </td>
+    </tr>
+    <%-- END TOP --%>
+    
+    <tr><td class="VSpace" /></tr>
+    
+    <%-- BEGIN CENTER --%>
+    <tr>
+        <td>
+        
+            <table id="Table5" width="100%">
+                <tr>
+                    <td>&nbsp;</td>
+                    
+                    <%-- BEGIN LEFT --%>
+                    <td id="LeftCell">
+                        
+                        <table id="Table6">
+                        
+                            <%-- BEGIN LOGIN INFO --%>
+                            <tr>
+                                <td>                                                                
+                                
+                                    <uc2:uctLoginInfo ID="UctLoginInfo1" runat="server" />
+                                
+                                </td>
+                            </tr>
+                            <%-- END LOGIN INFO --%>
+                            
+                            <tr><td class="VSpace" /></tr>
+                                                        
+                            <%-- BEGIN HIZLI ERÝÞÝM --%>
+                            <tr>
+                                <td>
+                                    
+                                    <uc5:uctQuickLinks ID="UctQuickLinks1" runat="server" />
+                                    
+                                </td>
+                            </tr>
+                            <%-- END HIZLI ERÝÞÝM --%>
+                            
+                            <tr><td class="VSpace" /></tr>
+                            
+                            <%-- BEGIN CLUE --%>
+                            <tr>
+                                <td>
+                                
+                                    <uc4:uctClue ID="UctClue1" runat="server" />
+                                    
+                                </td>
+                            </tr>
+                            <%-- END CLUE --%>
+                            
+                            <tr><td class="VSpace" /></tr>
+                            
+                            <%-- BEGIN EXTRA INFO --%>
+                            <tr>
+                                <td>
+                                    
+                                    <uc3:uctExtraInfo ID="UctExtraInfo1" runat="server" />
+                                    
+                                </td>
+                            </tr>
+                            <%-- END EXTRA INFO --%>
+                            
+                            <tr><td class="VSpace" /></tr>
+                                                                       
+                        </table>
+                         
+                    </td>
+                    <%-- BEGIN LEFT --%>
+                    
+                    <td id="LeftSpace">&nbsp;</td> 
+                    
+                    <%-- BEGIN PAGES --%>
+                    <td class="PageAlign">
+
+                        <asp:contentplaceholder id="CPH1" runat="server">
+                        
+                        </asp:contentplaceholder>
+                        
+                    </td>
+                    <%-- END PAGES --%>
+                    
+                    <td id="RightSpace">&nbsp;</td>
+
+                    <%-- BEGIN BANNER --%>                    
+                    <td valign="Top" id="RightCell">
+                    
+                        <uc6:uctRightBanner ID="UctRightBanner1" runat="server" />
+                        
+                    </td>
+                    <%-- END BANNER --%>
+                    
+                    <td>&nbsp;</td>
+                    
+                </tr>
+            </table>
+            
+        </td>
+    </tr>
+    <%-- END CENTER --%>
+    
+    <tr><td class="VSpace" /></tr>
+    
+    <%-- BEGIN BOTTOM --%>
+    <tr><td class="BottomBorder" /></tr>
+    <tr>
+        <td class="Bottom">
+            
+            <table id="Table18" style="width: 100%">
+                <tr>
+                    <td align="Left">
+                    
+                        <table id="Table19" cellspacing="2">
+                            <tr>
+                                <td class="clBlue">
+                                
+                                    <asp:HyperLink CssClass="TBlue" id="hlBottom0" runat="server" Text="Ana Sayfa" NavigateUrl="~/Default.aspx"></asp:HyperLink> &nbsp;&nbsp;|&nbsp;&nbsp;
+                                    <asp:HyperLink CssClass="TBlue" id="hlBottom1" runat="server" Text="Gizlilik Politikasý" NavigateUrl="javascript:OpenPrivacy()"></asp:HyperLink> &nbsp;&nbsp;|&nbsp;&nbsp;
+                                    <%--<asp:HyperLink CssClass="TBlue" id="hlBottom2" runat="server" Text="Bayilik Sözleþmesi" NavigateUrl="Default.aspx"></asp:HyperLink> &nbsp;&nbsp;|&nbsp;&nbsp;--%>
+                                    <asp:HyperLink CssClass="TBlue" id="hlBottom3" runat="server" Text="Ýletiþim" NavigateUrl="~/Contact.aspx"></asp:HyperLink>
+                                
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="HrTd" />
+                            </tr>
+                            <tr>
+                                <td class="clAqua">
+                                    <asp:Literal id="ltlCopyRight" runat="server" Text="Copyright © Retur Turizm ve Yayincilik A.S. - Estambul - Turquía"></asp:Literal>
+                                </td>
+                            </tr>                            
+                        </table>
+                        
+                    </td>
+                    <td align="Right">
+                        <asp:HyperLink id="hlCaretta" runat="server" NavigateUrl="http://www.caretta.net" Target="_blank" ImageUrl="~/Images/Util/CarettaLogo.jpg" />
+                    </td>
+                </tr>
+            </table>
+            
+        </td>
+    </tr>
+    <%-- END BOTTOM --%>
+    
+    </table>
+    <asp:Literal ID="ltlScript" runat="server" />
+    </form>
+</body>
+</html>
+
+<!--// CARETTA -->

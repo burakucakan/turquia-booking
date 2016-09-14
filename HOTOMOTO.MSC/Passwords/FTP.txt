@@ -1,0 +1,11 @@
+Web Adresiniz : www.turkey-turquia.com
+Disk alaný : 100 mb
+Sitenizin fiziksel yolu : d:\www\customer\turkey-turquia.com\
+
+> FTP BÝLGÝLERÝ <
+
+FTP Sunucusu : ftp.turkey-turquia.com (77.75.34.20)
+FTP portu : 21
+FTP Kullanýcýsý : turkey-turquiacom
+FTP Þifresi : turquiaftpbB
+

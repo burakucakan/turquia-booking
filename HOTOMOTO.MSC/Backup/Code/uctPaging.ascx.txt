@@ -1,0 +1,76 @@
+using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+
+public partial class UserControls_Common_uctPaging : BaseUserControl
+{
+    PagedDataSource objPaged;
+
+    public event evChangePageHandler evChangePage;
+    public delegate void evChangePageHandler(int CurrentPage);
+
+    public UserControls_Common_uctPaging() {
+        objPaged = new PagedDataSource();
+    }
+
+    //public int CurrentPage {
+    //    get { return int.Parse(ltlCurrentPage.Text); }
+    //    set { ltlCurrentPage.Text = value.ToString(); }
+    //}
+	
+    //public int PageCount {
+    //    get { return int.Parse(ltlPageCount.Text); }
+    //    set { ltlPageCount.Text = value.ToString(); }
+    //}
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack) {
+            FillPageLimit();
+        }
+    }
+
+    private void FillPageLimit() {
+        CARETTA.COM.DDLHelper.LoadNumberDDL(ref ddlPageLimit, 27, 3, 0);
+
+        try { ddlPageLimit.SelectedValue = ConfigurationManager.AppSettings["DefaultPageSize"].ToString(); }
+        catch (Exception) { }
+            
+    }
+
+    public void FillPageNumber(int PageCount) {
+        CARETTA.COM.DDLHelper.LoadNumberDDL(ref ddlPageNumber, PageCount);
+    }
+
+    protected void ddlPageNumber_SelectedIndexChanged(object sender, EventArgs e) {
+        if (evChangePage != null) {
+            //evChangePage(int.Parse(e));
+            evChangePage(2);
+        }
+    }
+
+    public void Paging(ref Repeater rpt, DataTable dtSource, int CurrentPage) {
+
+        this.objPaged.DataSource = dtSource.DefaultView;
+        this.objPaged.AllowPaging = true;
+        this.objPaged.PageSize = int.Parse(ConfigurationManager.AppSettings["DefaultPageSize"]);
+        this.objPaged.CurrentPageIndex = CurrentPage - 1;
+
+        ltlCurrentPage.Text = CurrentPage.ToString();
+        ltlPageCount.Text = this.objPaged.PageCount.ToString();
+
+        FillPageNumber(this.objPaged.PageCount);
+
+        rpt.DataSource = this.objPaged;
+        rpt.DataBind();
+
+    }
+
+}

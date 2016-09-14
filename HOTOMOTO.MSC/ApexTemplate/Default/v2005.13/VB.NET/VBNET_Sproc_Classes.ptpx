@@ -1,0 +1,323 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>VbNetSprocClasses</name>
+    <description>Objectifies a SQL Stored Procedure into a VB.NET Class</description>
+    <author>ApexSQL</author>
+    <legal>Copyright (C) 1999-2007 ApexSQL LLC. All rights reserved.</legal>
+    <ExpectedObjectTypes>Procedure</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>VB.NET</output>
+    <scripting>VB_NET</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>MultiFile</Mode>
+    <Encoding>20127</Encoding>
+  </outputfile>
+  <Import>
+    <includes>
+      <filename>VbNetHelper.vb</filename>
+    </includes>
+    <Namespaces />
+    <Assemblies />
+    <Templates />
+  </Import>
+  <templatecode><![CDATA[<%
+'------------------------------------------------------------ 
+'	TEMPLATE : VB.NET Exec Class
+'	PURPOSE  : Generates VB.NET class for execution of a sproc
+'	EXPECTS  : Procedures
+'	OUTPUT   : .VB
+'	AUTHOR   : ApexSQL 
+'	MODIFIED : February 2007
+'	NOTES   
+'		1.01	- Reformat output
+'------------------------------------------------------------
+
+	Dim objProc As Procedure
+	Dim objParam As Parameter
+		
+	objProc = Code.Database.ActiveProcedure	
+	
+%>
+
+Imports System.Data
+Imports System.Data.SqlClient
+
+Public Class Exec<%= objProc.Name %>
+
+	#Region "Member functions"
+	#Region "New Subs"
+	
+	Public Sub New()
+	
+		Init()	'	init object
+		Connectionstring = DefaultConnectionstring
+		
+	End Sub
+
+	Public Sub New(strConnectionString As String)
+	
+		Init()	'	init object
+		Connectionstring = strConnectionString
+		
+	End Sub
+	#End Region
+
+	#Region "Public member functions"
+	'	Executes the <%= objProc.Name %> sproc, gets output params and returns the value returned from sproc
+	'	Returns sproc's return value
+	Public Function Execute() As Long
+
+		Dim cmd As SqlCommand = GetCommandObject
+		Dim RetVal As Long = cmd.ExecuteNonQuery
+		GetOutputParameters(cmd)
+		Return RetVal
+		
+	End Function
+
+	'	Executes the <%= objProc.Name %> sproc and returns an open data reader to the data from the sproc
+	'	Returns an open data reader
+	Public Function OpenReader() As SqlDataReader
+
+		Dim cmd As SqlCommand = GetCommandObject
+		Dim reader As SqlDataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection)
+		Return reader
+		
+	End Function
+	#End Region
+
+	#Region "Object class override/overload member functions"
+	Public Overrides Function ToString() As String
+
+		Dim result As New System.Text.StringBuilder("Param values:" & vbCrLf)
+		<%
+			For Each objParam In objProc.Parameters
+		%>
+		result.Append("    <%= objParam.Name %> ")
+		If m_<%= objParam.GetPrefix("VB.NET") & objParam.Name %> Is Nothing Then
+			result.Append("is missing")
+		Else
+			If Not m_<%= objParam.GetPrefix("VB.NET") & objParam.Name %> Is DBNull.Value Then
+				result.Append("= """)
+				result.Append(m_<%= objParam.GetPrefix("VB.NET") & objParam.Name %>)
+				result.Append("""")
+			Else
+				result.Append("is NULL")
+			End If
+		End If
+		result.Append(vbCrLf)
+		<%
+			Next
+		%>
+		Return result.ToString()
+
+	End Function
+
+    Public Overloads Overrides Function Equals(ByVal o As Object) As Boolean
+
+		'	check the type of o
+		If Not (TypeOf o Is Exec<%= objProc.Name %>) Then
+
+			'	types not the same, return false
+			Return False
+
+		End If
+		
+		Dim other As Exec<%= objProc.Name %> = o
+		
+		'	compare values
+<%
+	For Each objParam In objProc.Parameters
+		Out.Write( vbTab & vbTab)
+		Out.WriteLine("If Not m_" & objParam.GetPrefix("VB.NET") & objParam.Name & ".Equals(other.m_" & objParam.GetPrefix("VB.NET") & objParam.Name & ") Then")
+%>			Return False ' because "<%= objParam.Name %>" values are not equal
+		End If
+		
+<%
+	Next
+%>
+		Return True	' because every value is equal
+
+	End Function
+
+	Public Overrides Function GetHashCode() As Integer
+	
+		Return Me.ToString().GetHashCode()
+		
+	End Function
+	#End Region
+
+	#Region "Private member functions"
+	'	Creates a SqlCommand objects, creates parameters for it and then returns it ready for execution.
+	'	Returns prepared command object
+	Private Function GetCommandObject() As SqlCommand
+	
+		'	contruct new connection And command objects
+		Dim conn As SqlConnection = GetConn()
+		Dim cmd As SqlCommand = GetSprocCmd("<%= objProc.Name %>", conn)
+  
+		Dim param As SqlParameter
+
+  		' Add params
+<%	
+	For Each objParam In objProc.Parameters
+		Out.IndentLevel = Out.IndentLevel + 2
+		VbNetHelper.MakeParameterWithPrefixFromParam(Out, objParam, "param", "m_")
+		Out.IndentLevel = Out.IndentLevel - 2
+%>		
+		cmd.Parameters.Add(param)
+
+<%	Next
+%>		'	open connection
+		conn.Open()
+		
+		Return cmd
+		
+	End Sub
+
+	'	Gets output parameters from the passed command object and sets appropriate member variables
+	Private Sub GetOutputParameters(cmd As SqlCommand)
+	
+<%
+	For Each objParam In objProc.Parameters
+		' only for output params
+		If objParam.IsOutput Then
+%>
+		'	check if param was passed
+		If Not m_<%= objParam.GetPrefix("VB.NET") & objparam.name %> Is Nothing Then
+			m_<%= objParam.GetPrefix("VB.NET") & objParam.Name & " = cmd.Parameters(""@" & objParam.Name & """" %>).Value
+		End If
+		<%
+		End If
+	Next	
+%>
+		
+	End Sub
+
+	Private Shared Function GetSprocCmd(ByVal strSprocName As String, ByVal conn As SqlConnection) As SqlCommand
+
+		Dim cmd As New SqlCommand(strSprocName, conn)
+		cmd.CommandType = CommandType.StoredProcedure
+		Return Cmd
+
+	End Function 
+
+	Private Function GetConn() As SqlConnection
+
+		Return New SqlConnection(Connectionstring)
+
+	End Function
+
+	Private Sub Init()
+
+		'	set the return value and all input param members to Mothing (ie. missing)
+		'	and all input/output and output param members to DBNull (ie. db NULL)
+<%
+			For Each objParam In objProc.Parameters
+				If Not objParam.IsOutput Then
+%>		m_<%= objParam.GetPrefix("VB.NET") & objParam.Name %> = Nothing
+<%				Else %>
+		m_<%= objParam.GetPrefix("VB.NET") & objParam.Name %> = DBNull.Value
+<%				End If
+			Next
+%>
+	End Sub
+
+    Private Shared Function GetSProcReturnValue(ByVal cmd As SqlCommand) As Integer
+
+        Dim result As Integer
+
+        Try
+            '	get return value of the sproc
+            result = cmd.Parameters("@RETURN_VALUE").Value
+        Catch ex As System.Exception '	catch all possible exceptions
+            result = 0 '	set result to 0
+        End Try
+
+        Return result
+
+    End Function
+	
+	#End Region
+	#End Region
+
+	#Region "Properties"
+	' Shared properties
+    Public Shared Property DefaultConnectionString() As String
+
+        Get
+            Return m_strDefaultConnection
+        End Get
+
+        Set(ByVal Value As String)
+            m_strDefaultConnection = Value
+        End Set
+
+    End Property
+
+	'	Properties
+    Public Property ConnectionString() As String
+
+        Get
+            Return m_strConnection
+        End Get
+
+        Set(ByVal Value As String)
+            m_strConnection = Value
+        End Set
+
+    End Property
+
+	#Region "Properties for param member variables"
+	'	Param properties
+	'	By default:
+	'		-	return value is null (but will be passed since return value is always passed)
+	'		-	input params are null ie. won't be passed unless they are set to some real value (NULL or value)
+	'		-	input/output and output params are DBNull (NULL) ie. will be passed
+	'	If you wish not to pass some parameter just set its value to null.
+<%
+	For Each objParam In objProc.Parameters
+%>
+	'	Pass null if the parameter is missing, DBNull.Value for NULL, otherwise normal values.
+	Public Property <%= objParam.Name %>() As Object
+		Get
+			Return m_<%= objParam.GetPrefix("VB.NET") & objParam.Name %>
+		End Get
+		
+		Set
+			m_<%= objParam.GetPrefix("VB.NET") & objParam.Name %> = Value
+		End Set
+	End Property
+	
+<%
+	Next
+%>
+	#End Region
+	#End Region
+
+	#Region "Member variables"
+	' Shared member variables
+	Private Shared m_strDefaultConnection As String	= "<%= Code.Database.ConnectionString %>" '	default connection string
+
+	' Member variables
+    Private m_strConnection As String
+
+	#Region "Member variables for sproc fields"
+
+<%
+	For Each objParam In objProc.Parameters
+%>	Private m_<%= objParam.GetPrefix("VB.NET") & objParam.Name %> As Object
+<%	Next %>
+	#End Region
+	#End Region
+
+End Class
+]]></templatecode>
+</template>

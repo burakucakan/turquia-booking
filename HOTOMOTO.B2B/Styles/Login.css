@@ -1,0 +1,82 @@
+﻿/* BEGIN DIV */
+
+.divLogin {
+	position: absolute; 
+	left: 106px; 
+	top: 179px;
+	width: 320px;
+	background-color: #FFFFFF;
+	z-index: 4;	
+	text-align: center;
+	padding: 15px 15px;/*
+	filter: alpha(opacity: 80);
+	-moz-opacity: 80%;*/
+}
+
+.divForgotPassword {
+	position: absolute; 
+	left: 106px; 
+	top: 486px;
+	width: 320px;
+	height: 30px;
+	background-color: #FFFFFF;
+	z-index: 1;
+	text-align: center;
+	padding: 15px 15px;/*
+	filter: alpha(opacity: 80);
+	-moz-opacity: 80%;*/
+}
+
+.divLoginTableTitle {
+	position: absolute; 
+	z-index: 1;		
+	left: 120px; 
+	top: 152px;
+}
+
+.divCopyright {
+	position: absolute;
+	top: 232px;
+	z-index: 1;
+	padding-right: 30px;
+}
+
+/*\///////// END DIV /////////\*/
+
+.LoginTop {
+	height: 256px;
+	background-color: #c5e6f8;
+	background-image: url('../Images/Login/TopBackRepeat.jpg');
+	background-repeat: repeat-x;
+}
+
+.LoginTable {
+	width: 100%;
+	border-spacing: 3px 3px;
+	text-align: center;
+}
+
+.ForgotPassTable {
+	width: 100%;
+	height: 30px;
+	text-align: left;
+}
+
+.LoginTableTitle {
+	font-family: Trebuchet MS;
+	font-size: 13pt;
+	text-align: left;
+}	
+
+.LoginText {
+	font-family: Trebuchet MS;
+	font-size: 10pt;
+	text-align: left;
+	color: #447099;
+}	
+
+.Caretta {
+	text-align: right;
+	height: 50px;
+	padding-right: 30px;
+}

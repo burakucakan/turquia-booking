@@ -1,0 +1,98 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>Example_Procedure</name>
+    <description>Illustrates Use of Procedure Object</description>
+    <author>ApexSQL</author>
+    <legal>Copyright (C) 1999-2007 ApexSQL LLC. All rights reserved.</legal>
+    <ExpectedObjectTypes>Procedure</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>Documentation</output>
+    <scripting>VB_NET</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>MultiFile</Mode>
+    <Encoding>20127</Encoding>
+  </outputfile>
+  <Import>
+    <includes />
+    <Namespaces />
+    <Assemblies />
+    <Templates />
+  </Import>
+  <templatecode><![CDATA[<%
+'------------------------------------------------------------
+'	TEMPLATE : Example_Procedure.ptpx
+'	PURPOSE  : This demonstrates the use of a Procedure Object including Parameter and Result Column collections
+'	MODEL    : Code.Database.ActiveProcedure
+'	EXPECTS  : PROCEDURE
+'	OUTPUT   : Generic Text Output
+'	AUTHOR   : ApexSQL
+'	SCRIPT	 : VB.NET 
+'	LANGUAGE : Documentation
+'	MODIFIED : Feb 2007
+'	NOTES    :  
+' ------------------------------------------------------------
+
+Dim proc As Procedure = Code.Database.ActiveProcedure
+
+If Nothing Is proc Then
+	Out.WriteLine("There's no selected procedure.")
+	Return
+End If
+%>
+===============================================================
+Procedure:			<%= proc.QualifiedName %>
+===============================================================
+
+Procedure Name:		<%= proc.Name %>
+Owner:				<%= proc.Owner %>
+Schema: 			<%= proc.Schema %>
+CreateDate: 		<%= proc.CreateDate %>
+
+AnsiNULLsStatus: 		<%= proc.AnsiNULLsStatus %>
+QuotedIdentifierStatus:	<%= proc.QuotedIdentifierStatus %>
+Is Recompiled:			<%= proc.IsRecompiled %>
+Is System Object:		<%= proc.IsSystemObject %>
+Is Recordset:			<%= proc.IsRecordset %>
+
+Is Active:				<%= proc.IsActive %>
+Is Checked:				<%= proc.IsChecked %>
+IsFirstProcessedObject: <%= proc.IsFirstProcessedObject %>
+IsLastProcessedObject:	<%= proc.IsLastProcessedObject %>
+
+Parameters: 
+<%
+	Out.Indent
+
+	For Each p As Parameter In proc.Parameters
+		Out.WriteLine("Parameter: {0} - {1}", p.Name, p.ParamType)
+	Next
+
+	Out.Unindent
+%>
+
+Result Columns:
+<%
+	Out.Indent
+
+	For Each rc As ResultColumn In proc.ResultColumns
+		Out.WriteLine("Result Column: {0} - {1}", rc.Name, rc.Datatype)
+	Next
+
+	Out.Unindent
+%>
+
+Script:
+---------------------------------------------------------------
+<%= proc.Script %>
+---------------------------------------------------------------
+
+]]></templatecode>
+</template>

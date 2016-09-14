@@ -1,0 +1,49 @@
+<Configuration>
+  <UnitTestRunner>
+    <CustomStartDirectory>
+    </CustomStartDirectory>
+    <UseShadowCopy>True</UseShadowCopy>
+    <UseCustomFolder>False</UseCustomFolder>
+    <EnableUnitTesting>True</EnableUnitTesting>
+    <Providers />
+  </UnitTestRunner>
+  <RecentFiles>
+    <RecentFiles>
+      <File id="D4560ACD-460E-4511-9774-827959C3E4D3/f:Default.aspx" caret="0" scrollPosition="0|0" />
+      <File id="59DAD14D-5F22-4AFD-A030-AC5A8F28FCA0/f:Default.aspx" caret="1126" scrollPosition="0|0" />
+      <File id="3BD2DBB0-32E7-4A5B-A8EA-1E2C8A62012F/f:Default.aspx" caret="356" scrollPosition="0|0" />
+      <File id="AB657C3C-D1A3-4E00-8E27-8CD068B18F71/d:Documents/d:GenerateResources/d:source/d:translate/d:WebWagon/f:HTMLPage.cs" caret="3639" scrollPosition="0|0" />
+      <File id="3AF2D353-DBB8-4594-957D-C57A3002B43C/f:Language.cs" caret="459" scrollPosition="0|0" />
+      <File id="72D43FC8-5638-4464-95AE-4C327E951E66/d:Entities/f:Languages.cs" caret="174" scrollPosition="0|0" />
+      <File id="59DAD14D-5F22-4AFD-A030-AC5A8F28FCA0/d:UserControls/d:Login/f:uctLogin.ascx.cs" caret="5929" scrollPosition="0|55" />
+      <File id="59DAD14D-5F22-4AFD-A030-AC5A8F28FCA0/d:UserControls/d:Common/f:uctClue.ascx.cs" caret="580" scrollPosition="0|4" />
+      <File id="3AF2D353-DBB8-4594-957D-C57A3002B43C/f:Help.cs" caret="843" scrollPosition="0|7" />
+      <File id="72D43FC8-5638-4464-95AE-4C327E951E66/f:DBHelper.cs" caret="945" scrollPosition="0|9" />
+      <File id="59DAD14D-5F22-4AFD-A030-AC5A8F28FCA0/d:App_Code/f:CacheMachine.cs" caret="1255" scrollPosition="0|18" />
+      <File id="72D43FC8-5638-4464-95AE-4C327E951E66/d:Custom/f:SPExec_Help.cs" caret="414" scrollPosition="0|0" />
+      <File id="59DAD14D-5F22-4AFD-A030-AC5A8F28FCA0/d:UserControls/d:Tour/f:uctTour.ascx" caret="0" scrollPosition="0|0" />
+      <File id="59DAD14D-5F22-4AFD-A030-AC5A8F28FCA0/d:UserControls/d:Common/f:uctClue.ascx" caret="0" scrollPosition="0|0" />
+      <File id="59DAD14D-5F22-4AFD-A030-AC5A8F28FCA0/d:UserControls/d:Login/f:uctLogin.ascx" caret="0" scrollPosition="0|0" />
+      <File id="59DAD14D-5F22-4AFD-A030-AC5A8F28FCA0/d:App_Code/f:Web.config" caret="4561" scrollPosition="0|56" />
+      <File id="59DAD14D-5F22-4AFD-A030-AC5A8F28FCA0/d:UserControls/d:Tour/f:uctTour.ascx.cs" caret="2529" scrollPosition="0|63" />
+    </RecentFiles>
+    <RecentEdits>
+      <File id="59DAD14D-5F22-4AFD-A030-AC5A8F28FCA0/d:App_Code/f:Web.config" caret="9326" scrollPosition="0|56" />
+      <File id="3BD2DBB0-32E7-4A5B-A8EA-1E2C8A62012F/f:Default.aspx" caret="356" scrollPosition="0|0" />
+      <File id="72D43FC8-5638-4464-95AE-4C327E951E66/f:DBHelper.cs" caret="1150" scrollPosition="0|13" />
+      <File id="59DAD14D-5F22-4AFD-A030-AC5A8F28FCA0/d:App_Code/f:Web.config" caret="9326" scrollPosition="0|0" />
+    </RecentEdits>
+  </RecentFiles>
+  <SettingsComponent>
+    <string />
+    <integer />
+    <boolean>
+      <setting name="SolutionAnalysisEnabled">False</setting>
+      <setting name="UseSolutionBuilder">False</setting>
+    </boolean>
+  </SettingsComponent>
+  <NAntValidationSettings>
+    <NAntPath value="" />
+  </NAntValidationSettings>
+  <CompletionStatisticsManager />
+</Configuration>

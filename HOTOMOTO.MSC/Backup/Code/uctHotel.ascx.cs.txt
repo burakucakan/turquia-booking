@@ -1,0 +1,68 @@
+using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+using System.Text;
+
+public partial class UserControls_Hotel_uctHotel : BaseUserControl
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        //Sayfalama deðiþtirilse
+        uctPaging1.evChangePage += new UserControls_Common_uctPaging.evChangePageHandler(uctPaging1_evChangePage);
+
+        //Arama Yapýlmýþsa
+        if (!IsPostBack) {
+            if ((Request.QueryString["Step"] != null) && (this.SessRoot.SearchCityID != 0)) {
+                StartSearch();
+            }
+        }
+    }
+
+#region ÝÞLEMLER
+
+    void StartSearch() {
+        //Hotel Listesini Getir ve Repeatera Bind Et
+        LoadHotelList(1, int.Parse(ConfigurationManager.AppSettings["DefaultPageSize"]));
+    }
+
+    private void LoadHotelList(int RowStart, int RowLimit) {
+
+        int RowCount;
+        DataTable dtHotelList;
+        dtHotelList = HOTOMOTO.BUS.Hotels.GetHotelList(this.SessRoot.LanguageID, this.SessRoot.SearchCountryID, this.SessRoot.SearchCityID, "%" + this.SessRoot.SearchHotelName + "%", this.SessRoot.SearchHotelClass, this.SessRoot.ArrivalDate, this.SessRoot.DepartureDate, RowStart, RowLimit, out RowCount);
+        
+        if (dtHotelList.Rows.Count > 0) {
+            pnlHotelList.Visible = true;
+
+            rptHotelList.DataSource = dtHotelList;
+            rptHotelList.DataBind();
+
+            uctPaging1.ModifyPaging(RowCount, RowLimit);
+            UctHotelSearch1.SearchPanelCollapsed = true;       //Arama Paneline Yukarý Kapa
+        } 
+        else {
+            pnlHotelList.Visible = false;
+
+            //Resx Dosyasýndan Hata Mesajlarý Alýnmasý 
+            UctHotelSearch1.ShowModal(UserControls_ModalPopup_ModalPopup.Icons.info,  "ARAMA SONUCU", "Aradýðýnýz Kriterlere Uygun Otel Bulunamadý!");
+        }
+
+    }
+
+    private void uctPaging1_evChangePage(int PageNumber, int GoToPage, int PageLimit) {
+        LoadHotelList(GoToPage, PageLimit);
+        uctPaging1.PageNumber = PageNumber;
+    }
+
+#endregion
+
+
+
+}

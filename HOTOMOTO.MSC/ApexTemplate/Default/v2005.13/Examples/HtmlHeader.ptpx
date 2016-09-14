@@ -1,0 +1,51 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>HtmlHeader</name>
+    <description>Generates a header for HTML page.</description>
+    <author>ApexSQL</author>
+    <legal>Copyright (C) 1999-2007 ApexSQL LLC. All rights reserved.</legal>
+    <ExpectedObjectTypes>Any</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>HTML</output>
+    <scripting>CSharp</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>MultiFile</Mode>
+    <Encoding>20127</Encoding>
+  </outputfile>
+  <CustomProperties>
+    <CustomProperty Name="Title" Type="Text" Description="" DefaultValue="" />
+    <CustomProperty Name="IncludeMeta" Type="Boolean" Description="" DefaultValue="False" />
+    <CustomProperty Name="CharSet" Type="Text" Description="" DefaultValue="windows-1252" />
+  </CustomProperties>
+  <Import>
+    <includes />
+    <Namespaces />
+    <Assemblies />
+    <Templates />
+  </Import>
+  <templatecode><![CDATA[<%
+//------------------------------------------------------------ 
+// TEMPLATE : HTML header
+// PURPOSE  : Generates a header for HTML page.
+// EXPECTS  : ANY
+// OUTPUT   : .html
+// AUTHOR   : ApexSQL
+// MODIFIED : March 2007
+// NOTES
+//------------------------------------------------------------
+%>
+<head>
+<% if (IncludeMeta) { %>
+<meta http-equiv="Content-Type" content="text/html; charset=<%= CharSet %>">
+<% } %>
+<title><%= Title %></title>
+</head>]]></templatecode>
+</template>

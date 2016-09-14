@@ -1,0 +1,334 @@
+<%@ Control Language="C#" AutoEventWireup="true" CodeFile="uctReservationSummary.ascx.cs" Inherits="UserControls_Common_uctReservationSummary" %>
+<table class="PagesTable Box">
+	<tr>
+		<td>
+			
+			<table width="100%">
+				<tr>
+					<td class="ReservationHeaderBack MainTopHeader"> RESERVATION SUMMARY </td>
+				</tr>
+				<tr>
+					<td align="center" bgcolor="#FFFFFF">
+					
+					    <br />
+					    
+	    			    <table cellpadding="3" cellspacing="3" style="text-align: left;" width="96%">
+						    <tr>
+							    <td class="Title">
+								    <asp:Literal ID="ltlTitleResrvationDefinition" runat="server">Rezervasyon Açýklamasý</asp:Literal>
+							    </td>
+						    </tr>
+						    <tr>
+						        <td class="ReservationInfoCell">
+						        
+						            <table cellpadding="2" cellspacing="2" width="100%">
+						                <tr>
+						                    <td id="tdHotel">						                        						                        
+						                        
+					                            <b><asp:Literal ID="ltlHotelName" runat="server" Text="Hotel Halý"></asp:Literal></b>
+					                            <br /><br />
+					                            <asp:Literal ID="ltlArrivalTitle" runat="server" Text="Arrival :"></asp:Literal>
+					                            <asp:Literal ID="ltlArrivalDate" runat="server"></asp:Literal>
+					                            <br /><br />
+					                            <asp:Literal ID="ltlDepartureTitle" runat="server" Text="Departure :"></asp:Literal>
+					                            <asp:Literal ID="ltlDepartureDate" runat="server"></asp:Literal>
+					                            <br /><br />
+					                            <asp:Literal ID="ltlNightsTitle" runat="server" Text="Nights :"></asp:Literal>
+					                            <asp:Literal ID="ltlNights" runat="server"></asp:Literal>
+					                            <br /><br />
+					                            <asp:Literal ID="ltlReservationStatusTitle" runat="server" Text="Reservation Status :"></asp:Literal>
+					                            <asp:Literal ID="ltlReservationStatus" runat="server"></asp:Literal>
+					                            <br /><br />
+					                            <asp:Literal ID="ltlTotalPriceTitle" runat="server" Text="Total :"></asp:Literal>
+					                            <asp:Literal ID="ltlHotelTotalPrice" runat="server"></asp:Literal>
+					                            
+					                            <br /><br />
+					                            
+<%--												<asp:Repeater ID="rptReservedRooms" runat="server">
+													<HeaderTemplate>--%>
+														<table cellpadding="0" cellspacing="0" border="0" width="100%">
+															<tr>
+																<th>Oda</th>
+																<th>Ziyaretçi</th>
+																<th>Yetiþkin</th>
+																<th>Çocuk</th>
+																<th>Kiþi baþý</th>
+																<th>Toplam</th>
+															</tr>
+<%--													</HeaderTemplate>
+													<ItemTemplate>
+														<tr>
+															<td>
+																<%# DataBinder.Eval(Container.DataItem, "RoomName") %>
+																(<%# DataBinder.Eval(Container.DataItem, "BedType") %>)
+															</td>
+															<td>
+																<%# DataBinder.Eval(Container.DataItem, "GuestName") %>
+															</td>
+															<td>
+																<%# DataBinder.Eval(Container.DataItem, "Adults") %>
+															</td>
+															<td>
+																<%# DataBinder.Eval(Container.DataItem, "Children") %>
+															</td>
+															<td><%# DataBinder.Eval(Container.DataItem, "PricePP", "$ {0:0.00}") %></td>
+															<td>
+																<%# DataBinder.Eval(Container.DataItem, "RoomTotalPrice", "$ {0:0.00}") %>
+															</td>
+														</tr>
+    													</ItemTemplate>
+													<FooterTemplate>--%>
+														</table>
+<%--													</FooterTemplate>
+												</asp:Repeater>--%>
+					                            <br />
+						                        <hr size="1" color="#AADDC9"/>
+						                    </td>
+						                </tr>
+						                <tr>
+						                    <td id="tdTour">
+						                        TURA AÝT BÝLGÝLER
+						                        <hr size="1" color="#AADDC9"/>
+						                    </td>
+						                </tr>
+						                <tr>
+						                    <td id="tdTransfer">
+						                        TRANSFERE AÝT BÝLGÝLER
+                                                <hr size="1" color="#AADDC9"/>
+						                    </td>
+						                </tr>						                
+						            </table>
+						       
+						        </td>
+						    </tr>
+						</table>
+					
+					    <br /><br />
+					
+					    <%--
+					
+						<asp:Panel ID="pnlHotelInfo" runat="server">
+							<asp:Repeater runat="server" ID="rptUnknow"></asp:Repeater>
+						
+									<table cellpadding="3" cellspacing="3" style="text-align: left;" width="96%">
+										<tr>
+											<td class="T clNavy">
+												<b>
+													<asp:Literal ID="ltlTitleHotelReservation" runat="server">HOTEL RESERVATION INFO</asp:Literal></b>
+											</td>
+										</tr>
+										<tr>
+											<td class="ReservationInfoCell" style="padding: 20px;">
+												<div>
+													<b>
+												<asp:Literal ID="ltlHotelName" runat="server" Text="Hotel Halý"></asp:Literal></b>
+												<asp:Literal ID="ltlHotelStars" runat="server"></asp:Literal></div>
+												<table border="0" cellpadding="0" cellspacing="0" width="100%">
+													<tr>
+														<td width="20%">
+															<asp:Literal ID="ltlArrivalTitle" runat="server" Text="Arrival :"></asp:Literal></td>
+														<td width="80%">
+															<asp:Literal ID="ltlArrivalDate" runat="server"></asp:Literal></td>
+													</tr>
+													<tr>
+														<td width="20%">
+															<asp:Literal ID="ltlDepartureTitle" runat="server" Text="Departure :"></asp:Literal></td>
+														<td width="80%">
+															<asp:Literal ID="ltlDepartureDate" runat="server"></asp:Literal></td>
+													</tr>
+													<tr>
+														<td width="30%">
+															</td>
+														<td width="70%">
+															<asp:Literal ID="ltlNights" runat="server"></asp:Literal></td>
+													</tr>
+													<tr>
+														<td width="30%">
+															&nbsp;</td>
+														<td width="70%">
+															&nbsp;</td>
+													</tr>
+													<tr>
+														<td width="30%">
+															<asp:Literal ID="ltlReservationStatusTitle" runat="server" Text="Reservation Status :"></asp:Literal></td>
+														<td width="70%">
+															<b>
+																<asp:Literal ID="ltlReservationStatus" runat="server"></asp:Literal></b></td>
+													</tr>
+													<tr>
+														<td width="30%">
+															<asp:Literal ID="ltlTotalPriceTitle" runat="server" Text="Total :"></asp:Literal></td>
+														<td width="70%">
+															<b>
+																<asp:Literal ID="ltlHotelTotalPrice" runat="server"></asp:Literal></b></td>
+													</tr>
+												</table>
+												<br />
+												<asp:Repeater ID="rptReservedRooms" runat="server">
+													<HeaderTemplate>
+														<table cellpadding="0" cellspacing="0" border="0" width="100%">
+															<tr>
+																<th>Oda</th>
+																<th>Ziyaretçi</th>
+																<th>Yetiþkin</th>
+																<th>Çocuk</th>
+																<th>Kiþi baþý</th>
+																<th>Toplam</th>
+															</tr>
+													</HeaderTemplate>
+													<ItemTemplate>
+														<tr>
+															<td>
+																<%# DataBinder.Eval(Container.DataItem, "RoomName") %>
+																(<%# DataBinder.Eval(Container.DataItem, "BedType") %>)
+															</td>
+															<td>
+																<%# DataBinder.Eval(Container.DataItem, "GuestName") %>
+															</td>
+															<td>
+																<%# DataBinder.Eval(Container.DataItem, "Adults") %>
+															</td>
+															<td>
+																<%# DataBinder.Eval(Container.DataItem, "Children") %>
+															</td>
+															<td><%# DataBinder.Eval(Container.DataItem, "PricePP", "$ {0:0.00}") %></td>
+															<td>
+																<%# DataBinder.Eval(Container.DataItem, "RoomTotalPrice", "$ {0:0.00}") %>
+															</td>
+														</tr>
+													</ItemTemplate>
+													<FooterTemplate>
+														</table>
+													</FooterTemplate>
+												</asp:Repeater>
+											</td>
+										</tr>
+									</table>
+									<br />
+							
+						</asp:Panel>
+						<asp:Panel ID="pnlTour" runat="server">
+							<table cellpadding="3" cellspacing="3" style="text-align: left;" width="96%">
+								<tr>
+									<td class="T clNavy">
+										<b>
+											<asp:Literal ID="ltlTitleRecommend" runat="server">TUR BÝLGÝLERÝ</asp:Literal></b>
+									</td>
+								</tr>
+								<tr>
+									<td class="ReservationInfoCell" style="padding: 20px;">
+									<asp:Repeater ID="rptTours" runat="server">
+										<HeaderTemplate>
+											<table cellpadding="0" cellspacing="0" border="0" width="100%">
+												<tr>
+													<th>Tur Adý</th>
+													<th>Kiþi Sayýsý</th>
+													<th>
+														Tarih</th>
+													<th>
+														Kiþi baþý</th>
+													<th>
+														Toplam</th>
+												</tr>
+										</HeaderTemplate>
+										<ItemTemplate>
+											<tr>
+												<td>
+													<b><%# DataBinder.Eval(Container.DataItem, "TourName") %></b>
+												</td>
+												<td><%# DataBinder.Eval(Container.DataItem, "GuestCount") %> kiþi</td>
+												<td>
+													<%# DataBinder.Eval(Container.DataItem, "TourDate") %></td>
+												<td><%# DataBinder.Eval(Container.DataItem, "TourPrice", "$ {0:0.00}") %></td>
+												<td>
+													<%# DataBinder.Eval(Container.DataItem, "TourTotalPrice", "$ {0:0.00}") %>
+												</td>
+											</tr>
+										</ItemTemplate>
+										<FooterTemplate>
+											</table></FooterTemplate>
+									</asp:Repeater>
+									</td>
+								</tr>
+							</table>
+							<br />
+						</asp:Panel>
+						<asp:Panel ID="pnlTransfer" runat="server">
+							<table cellpadding="3" cellspacing="3" style="text-align: left;" width="96%">
+								<tr>
+									<td class="T clNavy">
+										<b>
+											<asp:Literal ID="ltlTitleTransfer" runat="server">TRANSFER BÝLGÝLERÝ</asp:Literal></b>
+									</td>
+								</tr>
+								<tr>
+									<td class="ReservationInfoCell" style="padding: 20px;">
+										<asp:Repeater ID="rptTransfers" runat="server">
+											<HeaderTemplate>
+												<table border="0" cellpadding="0" cellspacing="0" width="100%">
+													<tr>
+														<th>
+															Transfer</th>
+														<th>
+															Havaalaný / Liman</th>
+														<th>
+															Tipi</th>
+														<th>
+															Tarih</th>
+														<th>
+															Kiþi sayýsý</th>
+														<th>
+															Kiþi baþý</th>
+														<th>
+															Toplam</th>
+													</tr>
+											</HeaderTemplate>
+											<ItemTemplate>
+												<tr>
+													<td>
+														<%# DataBinder.Eval(Container.DataItem, "TransferDirection") %>
+													</td>
+													<td>
+														<%# DataBinder.Eval(Container.DataItem, "PortName") %>
+													</td>
+													<td>
+														<%# DataBinder.Eval(Container.DataItem, "TransferType") %>
+													</td>
+													<td>
+														<%# DataBinder.Eval(Container.DataItem, "Date") %>
+													</td>
+													<td>
+														
+													</td>
+													<td>
+														<%# DataBinder.Eval(Container.DataItem, "Price", "$ {0:0.00}") %>
+													</td>
+													<td>
+														
+													</td>
+												</tr>
+											</ItemTemplate>
+											<FooterTemplate>
+												</table></FooterTemplate>
+										</asp:Repeater>
+									</td>
+								</tr>
+							</table>
+							<br />
+						</asp:Panel>
+						
+						--%>
+						
+					</td>
+				</tr>
+				<tr>
+					<td style="padding-left: 17px; height: 40px;">
+						<asp:Button ID="btnCheckOut" runat="server" CausesValidation="false" CssClass="Button" Text="REZERVASYONU TAMAMLA" OnClick="btnCheckOut_Click" />
+					</td>
+				</tr>
+				<tr><td class="HSpace"></td></tr>
+			</table>
+			
+		</td>
+	</tr>
+</table>

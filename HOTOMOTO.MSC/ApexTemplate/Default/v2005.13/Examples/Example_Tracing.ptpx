@@ -1,0 +1,53 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>ExampleOfTracing</name>
+    <description>Illustrates the tracing abilities of template processor.</description>
+    <author>ApexSQL</author>
+    <legal>Copyright (C) 1999-2007 ApexSQL LLC. All rights reserved.</legal>
+    <ExpectedObjectTypes>Any</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>Documentation</output>
+    <scripting>CSharp</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>MultiFile</Mode>
+    <Encoding>20127</Encoding>
+  </outputfile>
+  <Import>
+    <includes />
+    <Namespaces />
+    <Assemblies />
+    <Templates />
+  </Import>
+  <templatecode><![CDATA[<%
+//------------------------------------------------------------ 
+// TEMPLATE : Example of Tracing
+// PURPOSE  : Illustrates the tracing abilities of template processor
+// EXPECTS  : ANY
+// OUTPUT   : .txt
+// AUTHOR   : ApexSQL 
+// MODIFIED : January 2007
+// NOTES
+//------------------------------------------------------------
+
+for(int i=0; i<10; i++)
+{
+	// this is template output
+	Out.WriteLine("Counter {0}", i);
+	
+	// writes to output log if Debug option is set
+	Debug.WriteLine(i, "Message from Debug");
+	
+	// always writes to output log
+	Trace.WriteLine(i, "Message from Trace");
+}
+
+%>]]></templatecode>
+</template>

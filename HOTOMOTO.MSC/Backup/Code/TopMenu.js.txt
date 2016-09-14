@@ -1,0 +1,21 @@
+﻿function TabMenu(TabNo) {
+
+	var objTabBottom = document.getElementById('TabBottom'+TabNo);
+	var objTabTop = document.getElementById('TabTop'+TabNo);
+	var objSubMenu = document.getElementById('SubMenu'+TabNo);
+
+	objTabBottom.className='TabBottomOver';
+	objTabTop.className='TabTopOver';
+	objSubMenu.style.display='block';
+
+	for (i=0; i<30; i++) {
+		if (i!=TabNo) {
+		    if (document.getElementById('TabBottom'+i)!=null) {
+			    document.getElementById('TabBottom'+i).className='TabBottom';
+			    document.getElementById('TabTop'+i).className='TabTop';
+			    document.getElementById('SubMenu'+i).style.display='none';
+			}
+		}
+	}	
+	
+}

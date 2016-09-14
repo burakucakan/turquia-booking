@@ -1,0 +1,18 @@
+stored procedure template
+-------------------------
+ - top x / row_number()
+ - n(order by x asc / desc)
+ - where n((x =, <, >, <> y)and/or)
+ - paging 
+
+c# class template
+-----------------
+ + connection stringler web.config'den okunacak
+ - connectionlarý ayýrýp ayrý bir class oluþtur. tek yerden gelsin connection.
+   *opsiyonel - connection pooling.
+ - yeni eklenen sp'ler için fonksiyonlarýný yarat.
+
+
+c# multi-lingual template
+-------------------------
+ - çok dilli dosyaya dilleri ekle

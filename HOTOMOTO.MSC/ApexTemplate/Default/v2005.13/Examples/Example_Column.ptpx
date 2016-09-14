@@ -1,0 +1,119 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>Example_Column</name>
+    <description>Illustrates use of Column object</description>
+    <author>ApexSQL</author>
+    <legal>Copyright (C) 1999-2007 ApexSQL LLC. All rights reserved.</legal>
+    <ExpectedObjectTypes>Table, View</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>Documentation</output>
+    <scripting>VB_NET</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>MultiFile</Mode>
+    <Encoding>20127</Encoding>
+  </outputfile>
+  <Import>
+    <includes />
+    <Namespaces />
+    <Assemblies />
+    <Templates />
+  </Import>
+  <templatecode><![CDATA[<%
+'------------------------------------------------------------ 
+'	TEMPLATE : Example_Column.ptpx
+'	PURPOSE  : Illustrates properties of Column object
+'	MODEL    : Database.ActiveTable.Columns
+'	EXPECTS  : TABLE, VIEW
+'	OUTPUT   : Generic Text Output
+'	AUTHOR   : ApexSQL
+'	SCRIPT	 : VB.NET 
+'	LANGUAGE : Documentation                                        
+'	MODIFIED : April 2007
+'	NOTES    : 
+' ------------------------------------------------------------ 
+
+Dim objTable As Table
+
+%>TABLE INFORMATION
+============================
+<%
+objTable = Code.Database.ActiveTable ' this is the currently selected table from the user interface
+
+With objTable
+	Out.WriteLine("Table Name:{0}{0}{1}", vbTab, .Name)
+	Out.WriteLine("Table Owner:{0}{1}", vbTab, .Owner)
+
+%>   
+COLUMN INFORMATION
+===========================
+<%	' Notice use of object enumeration.
+	' Here the Column collection of the Column object is being enumerated
+	
+	For Each column As Column In .Columns
+
+		With column
+
+			Out.WriteLine("Column Name:" & vbTab & .Name)
+			Out.WriteLine("Collation:" & vbTab & .Collation)
+			Out.WriteLine("Definition:" & vbTab & .Definition)
+			Out.WriteLine("IsNullable:" & vbTab & vbTab & .IsNullable)
+			Out.WriteLine("Length:" & vbTab & vbTab & vbTab & .Length)
+			Out.WriteLine("OrdinalPosition:" & vbTab & .OrdinalPosition)
+			Out.WriteLine("Precision:" & vbTab & vbTab & .Precision)			
+			Out.WriteLine("Scale:" & vbTab & vbTab & vbTab & .Scale)
+			Out.WriteLine("Datatype:" & vbTab & vbTab & .Datatype)
+			Out.WriteLine("SQLDatatype:" & vbTab & .SQLDatatype)
+			Out.WriteLine("SQLDatatypeAndLength: " & .SQLDatatypeAndLength)
+			Out.WriteLine("AdoNetMapping:" & vbTab & .AdoNetMapping.CLRType)
+			Out.WriteLine("IsInPrimaryKey:" & vbTab & .IsInPrimaryKey)
+			Out.WriteLine("IsInForeignKey:" & vbTab & .IsInForeignKey)
+			Out.WriteLine("IsIdentity:" & vbTab & vbTab & .IsIdentity)
+			Out.WriteLine("IsTimeStamp:" & vbTab & .IsTimeStamp)
+			Out.WriteLine("Default:" & vbTab )
+					
+			If Not .SQLDefault Is Nothing Then
+				Out.WriteLine(vbTab & "Default Name:" & vbTab & .SQLDefault.Name)
+				Out.WriteLine(vbTab & "Text body:" & vbTab & .SQLDefault.TextBody)
+			End If
+			
+			Out.WriteLine("")
+			
+			If .ExtendedProperties.Count > 0 Then
+			
+				Out.WriteLine("Extended properties:")
+				Out.Indent
+				
+				For Each prop As ExtendedProperty In .ExtendedProperties
+			
+					Out.WriteLine("{0}: {1}", prop.Name, prop.Value)
+				Next
+				
+				Out.UnIndent								
+				Out.WriteLine("")
+				
+			End If
+			
+			Out.WriteLine("IsGUID:" & vbTab & vbTab & vbTab & .IsGUID)
+			Out.WriteLine("IsChecked:" & vbTab & vbTab & .IsChecked)
+			Out.WriteLine("ParentName:" & vbTab & vbTab & .ParentName)
+			Out.WriteLine("ParentOwner:" & vbTab & .ParentOwner)
+			Out.WriteLine("IsComputed:" & vbTab & vbTab & .IsComputed)
+			Out.WriteLine("ComputedText:" & vbTab & .ComputedText)                    
+			Out.WriteLine("------------------------------")
+			Out.WriteLine
+
+		End With
+
+	Next
+	
+End With
+%>]]></templatecode>
+</template>

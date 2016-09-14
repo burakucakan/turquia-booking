@@ -1,0 +1,10 @@
+D:\PRJ\Turquia\BUS\bin\Debug\HOTOMOTO.BUS.dll
+D:\PRJ\Turquia\BUS\bin\Debug\HOTOMOTO.BUS.pdb
+D:\PRJ\Turquia\BUS\bin\Debug\CARETTA.COM.dll
+D:\PRJ\Turquia\BUS\bin\Debug\HOTOMOTO.APEX.dll
+D:\PRJ\Turquia\BUS\bin\Debug\HOTOMOTO.APEX.pdb
+D:\PRJ\Turquia\BUS\bin\Debug\CARETTA.COM.pdb
+D:\PRJ\Turquia\BUS\obj\Debug\ResolveAssemblyReference.cache
+D:\PRJ\Turquia\BUS\obj\Debug\HOTOMOTO.BUS.csproj.ResolveComReference.cache
+D:\PRJ\Turquia\BUS\obj\Debug\HOTOMOTO.BUS.dll
+D:\PRJ\Turquia\BUS\obj\Debug\HOTOMOTO.BUS.pdb

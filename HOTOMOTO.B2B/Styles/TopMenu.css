@@ -1,0 +1,44 @@
+﻿.TopMenu {	
+	height: 3px;
+	background-color: #bcc8dc;
+}
+
+.divTopMenu {
+	position: absolute; 
+	left: 204px; 
+	top: 54px;
+}
+
+.Tab {
+	background-image: url('../Images/Backgrounds/TopMenu/TabBack.gif');
+	background-repeat: repeat-x;
+	text-align: center;
+	padding: 2px 10px;
+	cursor: pointer;	
+}
+
+.TabTop {
+	height: 2px;
+	background-image: url('../Images/Backgrounds/TopMenu/TabTop.gif');
+	background-repeat: repeat-x;	
+}
+
+.TabTopOver {
+	height: 3px;
+	background-image: url('../Images/Backgrounds/TopMenu/TabTop2.gif');
+	background-repeat: repeat-x;	
+}
+
+.TabLeft {
+	width: 2px;
+	height: 28px;
+	background-image: url('../Images/Backgrounds/TopMenu/TabLeft.gif');
+	background-repeat: no-repeat;	
+}
+
+.TabRight {
+	width: 2px;
+	height: 28px;
+	background-image: url('../Images/Backgrounds/TopMenu/TabRight.gif');
+	background-repeat: no-repeat;	
+}

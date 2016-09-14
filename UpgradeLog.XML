@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="HOTOMOTO">
+</Property><Property Name="Solution File" Value="C:\Documents and Settings\BS\Desktop\New Folder\HOTOMOTO\HOTOMOTO.sln">
+</Property><Property Name="Date" Value="23 Mart 2009 Pazartesi">
+</Property><Property Name="Time" Value="12:16">
+</Property></Properties><Event ErrorLevel="0" Project="HOTOMOTO.BUS" Source="BUS\HOTOMOTO.BUS.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="HOTOMOTO.BUS" Source="BUS\HOTOMOTO.BUS.csproj" Description="Converted">
+</Event><Event ErrorLevel="2" Project="HOTOMOTO.DAL" Source="DAL\HOTOMOTO.DAL.csproj" Description="Unable to open project file to perform upgrade.  ">
+</Event><Event ErrorLevel="0" Project="HOTOMOTO.APEX" Source="HOTOMOTO.APEX\HOTOMOTO.APEX.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="HOTOMOTO.APEX" Source="HOTOMOTO.APEX\HOTOMOTO.APEX.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="HOTOMOTO.COM" Source="HOTOMOTO.COM\HOTOMOTO.COM.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="HOTOMOTO.COM" Source="HOTOMOTO.COM\HOTOMOTO.COM.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="HOTOMOTO.MSC" Source="HOTOMOTO.MSC\HOTOMOTO.MSC.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="HOTOMOTO.MSC" Source="HOTOMOTO.MSC\HOTOMOTO.MSC.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="CARETTA.COM" Source="CARETTA.COM\CARETTA.COM.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="CARETTA.COM" Source="CARETTA.COM\CARETTA.COM.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="HOTOMOTO.sln" Description="The solution file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="" Source="HOTOMOTO.sln" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="HOTOMOTO.BUS" Source="BUS\HOTOMOTO.BUS.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="HOTOMOTO.APEX" Source="HOTOMOTO.APEX\HOTOMOTO.APEX.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="HOTOMOTO.COM" Source="HOTOMOTO.COM\HOTOMOTO.COM.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="HOTOMOTO.MSC" Source="HOTOMOTO.MSC\HOTOMOTO.MSC.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="CARETTA.COM" Source="CARETTA.COM\CARETTA.COM.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>

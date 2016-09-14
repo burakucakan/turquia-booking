@@ -1,0 +1,25 @@
+/*
+    private void AddAttributes() { 
+
+        #region TextBox Attributes
+        txtCriteria3.Attributes.Add("onclick", "this.className='TextBoxActive';");
+        txtCriteria3.Attributes.Add("onblur", "this.className='TextBox';");
+
+        txtCriteria4.Attributes.Add("onclick", "this.className='TextBoxActive';");
+        txtCriteria4.Attributes.Add("onblur", "this.className='TextBox';");
+
+        txtSearch.Attributes.Add("onclick", "this.className='TextBoxActive';");
+        txtSearch.Attributes.Add("onblur", "this.className='TextBox';");
+        #endregion
+
+        #region Button Attributes
+
+        btnQuickSearch.Attributes.Add("onmouseover", "this.className='ButtonOver';");
+        btnQuickSearch.Attributes.Add("onmouseout", "this.className='Button';");
+
+        btnSearch.Attributes.Add("onmouseover", "this.className='ButtonOver';");
+        btnSearch.Attributes.Add("onmouseout", "this.className='Button';");
+
+        #endregion
+    }
+    */

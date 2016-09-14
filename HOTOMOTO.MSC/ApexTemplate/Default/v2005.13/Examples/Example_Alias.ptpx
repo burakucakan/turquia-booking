@@ -1,0 +1,59 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>Example_CustomProperty</name>
+    <description>Illustrates how to use 'Alias' property of SQL object.
+</description>
+    <author>ApexSQL</author>
+    <legal>Copyright (C) 1999-2007 ApexSQL LLC. All rights reserved.</legal>
+    <ExpectedObjectTypes>Any</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>Documentation</output>
+    <scripting>CSharp</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>MultiFile</Mode>
+    <Encoding>20127</Encoding>
+  </outputfile>
+  <Import>
+    <includes />
+    <Namespaces />
+    <Assemblies />
+    <Templates />
+  </Import>
+  <templatecode><![CDATA[<%
+//	TEMPLATE : Example_Alias.ptpx
+//	PURPOSE  : This template illustrates how to use 'Alias' property of SQL object.
+//	EXPECTS  : Any
+//	OUTPUT   : Generic Text Output
+//	AUTHOR   : ApexSQL
+//	SCRIPT	 : C#
+//	LANGUAGE : Documentation
+//	MODIFIED : February 2007
+
+
+// using the Alias Property
+// To change the value of Alias, select a table in 'Schema Explorer' and
+// change value of 'Alias' in 'Properties' panel
+Table table = Code.Database.ActiveTable;
+
+if(table == null)
+{
+	Out.WriteLine("There is no active table.");
+}
+else
+{
+%>
+Table:			<%= table.Name %>
+QualifiedName:	<%= table.QualifiedName %>
+Alias:			<%=	table.Alias %>
+<%
+}
+%>]]></templatecode>
+</template>

@@ -1,0 +1,8 @@
+MS SQL 2005 veritabanýnýz açýlmýþtýr.
+Baðlantý için gerekli bilgiler aþaðýda sunulmuþtur.
+
+Veritabaný Adý : db003721
+Kullanýcý Adý : user003721
+Þifre : turquiaftpbB
+
+Sunucu Adresi : mssql01.radore.net (77.75.34.5)

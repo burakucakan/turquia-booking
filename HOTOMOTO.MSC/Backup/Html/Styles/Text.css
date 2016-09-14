@@ -1,0 +1,29 @@
+.T {
+	font-family: Tahoma;
+	font-size: 11px;
+}
+
+.01 { /*Sol Menu*/
+	color: #323c1b;	
+}
+
+.02 { /*Ana Sayfa Kutu Ici Yazýlar*/
+	color: #0982a0;	
+}
+
+.03 { /*Copyright*/
+	color: #a7bfe0;	
+}
+
+.BoxTitle {
+	font-family: Tahoma;
+	font-size: 11px;
+	font-weight: bold;
+	color: #6a82a3;	
+}
+
+.Treb {
+	font-family: Trebuchet MS; 
+	font-size: 9pt; 
+	color: #FFFFFF; 
+}

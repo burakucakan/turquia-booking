@@ -1,0 +1,107 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>Example_XmlIndex</name>
+    <description>Illustrates properties of XmlIndex Object.</description>
+    <author>ApexSQL</author>
+    <legal>Copyright (C) 1999-2007 ApexSQL LLC. All rights reserved.</legal>
+    <ExpectedObjectTypes>Table</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>Documentation</output>
+    <scripting>VB_NET</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>MultiFile</Mode>
+    <Encoding>20127</Encoding>
+  </outputfile>
+  <Import>
+    <includes />
+    <Namespaces />
+    <Assemblies />
+    <Templates />
+  </Import>
+  <templatecode><![CDATA[<%
+'------------------------------------------------------------ 
+'	TEMPLATE : Example_XmlIndex.ptpx
+'	PURPOSE  : Illustrates properties of XmlIndex object
+'	MODEL    : 
+'				Code.Database.ActiveTable.XmlIndexes
+
+'	EXPECTS  : TABLE
+'	OUTPUT   : Generic Text Output
+'	AUTHOR   : ApexSQL
+'	SCRIPT	 : VB.NET
+'	LANGUAGE : Documentation                                        
+'	MODIFIED : Feb 2007
+'	NOTES    :  
+' ------------------------------------------------------------ 
+
+' this is the currently selected table from the user interface
+Dim objTable As Table = Code.Database.ActiveTable
+    
+If Nothing Is objTable Then
+	Out.WriteLine("There's no selected table.")
+	Return
+End If
+%>
+TABLE INFORMATION
+=============================
+<%
+With objTable
+	
+	Out.WriteLine("Table Name: " & .Name)
+	Out.WriteLine("Table Owner: " & .Owner)
+	Out.WriteLine
+	Out.WriteLine("XML INDEX INFORMATION")
+	Out.WriteLine("=============================")
+	Out.WriteLine
+
+	For Each objIndex As XmlIndex In .XmlIndexes
+	
+		With objIndex
+			
+			Out.WriteLine("------------------------------")
+			Out.WriteLine("Name: " & .Name)
+			Out.WriteLine("------------------------------")
+			Out.WriteLine("fillfactor: " & .FillFactor)
+			Out.WriteLine("IsFullTextKey: " & .IsFullTextKey)
+			Out.WriteLine("NoRecompute: " & .NoRecompute)
+			
+			Out.WriteLine("IsPrimary: " & .IsPrimary)
+			Out.WriteLine("SecondaryType: " & .SecondaryType)
+			
+			Out.WriteLine("ParentName: " & .ParentName)
+			Out.WriteLine("ParentOwner: " & .ParentOwner)
+	
+			Out.WriteLine("------------------------------")	
+			Out.WriteLine
+			
+			Out.Indent
+			
+			Dim n As Integer = 1
+			For Each objColumn As Column In objIndex.IndexedColumns
+				Out.WriteLine("Indexed Column(" & n & "): " & objColumn.Name)
+				n += 1
+			Next
+		
+			Out.Unindent
+			
+			Out.WriteLine
+			Out.WriteLine("Script:")
+			Out.WriteLine
+			Out.WriteLine(.Script)
+	
+		End With
+	
+	Next
+
+End With
+
+%>]]></templatecode>
+</template>

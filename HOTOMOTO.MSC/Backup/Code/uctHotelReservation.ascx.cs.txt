@@ -1,0 +1,69 @@
+using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+
+public partial class UserControls_Hotel_uctHotelReservation : BaseUserControl {
+
+    private float m_fTotalPrice = 0;
+
+    protected void Page_Load(object sender, EventArgs e) {
+        FillOrderInfo();
+    }
+
+    private void FillOrderInfo() {
+        DataTable dtRooms = new DataTable();
+        dtRooms.Columns.Add("ItemNo");
+        dtRooms.Columns.Add("RoomName");
+        dtRooms.Columns.Add("Quantity");
+        dtRooms.Columns.Add("RoomPrice");
+        dtRooms.Columns.Add("Smoking");
+
+        //Otel-oda ve müþteri bilgilerinin alýnmasý
+        HOTOMOTO.BUS.Hotels hotel = new HOTOMOTO.BUS.Hotels(this.SessRoot.CurrentHotelID, this.SessRoot.LanguageID);
+
+        int roomCount = 0;
+        //Odalarýn fiyatlarýnýn hesaplanmasý ve odalarýn listeye eklenmesi
+        foreach(DataRow drOrderedRoom in this.SessRoot.RoomAndQuantity.Rows) {
+            float fRoomPrice = 0;
+            int intQuantity = int.Parse(drOrderedRoom["Quantity"].ToString());
+
+            HOTOMOTO.BUS.Rooms room = new HOTOMOTO.BUS.Rooms(int.Parse(drOrderedRoom["RoomID"].ToString()), this.SessRoot.LanguageID);
+
+            foreach(DataRow drRoomPrice in (HOTOMOTO.BUS.Rooms.GetRoomPriceAndAvailability(int.Parse(drOrderedRoom["RoomID"].ToString()), this.SessRoot.CustomerID, this.SessRoot.ArrivalDate, this.SessRoot.DepartureDate)).Rows) {
+                
+                if(this.SessRoot.CurrencyID == HOTOMOTO.BUS.Enumerations.CurrencyTypes.EUR)
+                    fRoomPrice += float.Parse(drRoomPrice["EURPrice"].ToString());
+                else if(this.SessRoot.CurrencyID == HOTOMOTO.BUS.Enumerations.CurrencyTypes.USD)
+                    fRoomPrice += float.Parse(drRoomPrice["USDPrice"].ToString());
+            }
+
+            //TODO: burada repeaterla odayý ekle
+            dtRooms.Rows.Add(++roomCount, room.RoomName, intQuantity, fRoomPrice, room.isSmokable.ToString());
+
+            this.m_fTotalPrice += (float)intQuantity * fRoomPrice;
+
+        }
+
+
+        //Form üzerindeki alanlarýn dolumu
+        this.ltlArrDepDate.Text = this.SessRoot.ArrivalDate.ToShortDateString() + " - " + this.SessRoot.DepartureDate.ToShortDateString();
+        this.ltlHotelInfo.Text = new System.Text.StringBuilder().Append("<strong>").Append(hotel.HotelName).Append("</strong>").ToString();
+        this.ltlTotalPrice.Text = this.m_fTotalPrice.ToString();
+
+        this.rptRooms.DataSource = dtRooms;
+        this.rptRooms.DataBind();
+    }
+
+    protected void btnCheckOut_Click(object sender, EventArgs e) {
+        //TODO: veritabaný kayýtlarýný yap
+
+        Response.Redirect("HotelReservationSummary.aspx");
+    }
+}

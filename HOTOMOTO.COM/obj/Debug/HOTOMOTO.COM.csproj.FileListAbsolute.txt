@@ -1,0 +1,11 @@
+D:\PRJ\Turquia\HOTOMOTO.COM\bin\Debug\HOTOMOTO.COM.dll
+D:\PRJ\Turquia\HOTOMOTO.COM\bin\Debug\HOTOMOTO.COM.pdb
+D:\PRJ\Turquia\HOTOMOTO.COM\bin\Debug\CARETTA.COM.dll
+D:\PRJ\Turquia\HOTOMOTO.COM\bin\Debug\HOTOMOTO.BUS.dll
+D:\PRJ\Turquia\HOTOMOTO.COM\bin\Debug\HOTOMOTO.APEX.dll
+D:\PRJ\Turquia\HOTOMOTO.COM\bin\Debug\CARETTA.COM.pdb
+D:\PRJ\Turquia\HOTOMOTO.COM\bin\Debug\HOTOMOTO.BUS.pdb
+D:\PRJ\Turquia\HOTOMOTO.COM\bin\Debug\HOTOMOTO.APEX.pdb
+D:\PRJ\Turquia\HOTOMOTO.COM\obj\Debug\ResolveAssemblyReference.cache
+D:\PRJ\Turquia\HOTOMOTO.COM\obj\Debug\HOTOMOTO.COM.dll
+D:\PRJ\Turquia\HOTOMOTO.COM\obj\Debug\HOTOMOTO.COM.pdb

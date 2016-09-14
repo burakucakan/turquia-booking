@@ -1,0 +1,54 @@
+.TextBox {
+	font-family: Tahoma;
+	font-size: 8pt;
+	height: 18px;
+	border: 1px solid #C0C0C0;
+	padding: 1px 2px 0px 3px;
+}
+
+.TextBoxActive {
+	font-family: Tahoma;
+	font-size: 8pt;
+	height: 20px;
+	border: 1px solid #c1e4f1;
+	padding: 2px 3px 0px 3px;
+	background-color: #eaf8fd;
+}
+
+.DropDownList {
+	font-family: Verdana;
+	font-size: 11px;
+	border: solid 1px #C0C0C0;
+}
+
+.ListBox {
+	font-family: Tahoma; 
+	font-size: 8pt; 
+	border: 1px solid #C0C0C0; 
+	padding-left: 4px; 
+	padding-right: 4px; 
+	padding-top: 2px; 
+	padding-bottom: 2px;
+}
+
+.Button {
+	font-family: Trebuchet MS;
+	font-size: 8pt;
+	color: #2B6E9D;
+	border: 1px solid #7DA8CA;
+	padding: 3px 4px 1px 4px;
+	background-image: url('../Images/Backgrounds/ButtonBack.gif');
+	background-repeat: repeat-x;
+	cursor: pointer;
+}
+
+.ButtonOver {
+	font-family: Trebuchet MS;
+	font-size: 8pt;	
+	color: #FFFFFF;
+	border: 1px solid #BDD2E4;
+	padding: 3px 4px 1px 4px;
+	background-image: url('../Images/Backgrounds/ButtonBackHover.gif');
+	background-repeat: repeat-x;
+	cursor: pointer;
+}

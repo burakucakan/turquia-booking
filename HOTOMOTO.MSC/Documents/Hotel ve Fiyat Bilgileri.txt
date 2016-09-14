@@ -1,0 +1,40 @@
+40
+Hotel Halý 3*                                 FECHA                                      DBL                 SGL                 TRP
+			        01.11.2007 – 23.12.2007           23 EUR pp17        33 EUR pp18        22 EUR pp30
+			        24.12.2007 – 05.01.2008           30 EUR pp20        40 EUR pp21        29 EUR pp22
+			        06.01.2008 – 15.03.2008           23 EUR pp17        33 EUR pp18        22 EUR pp30
+
+43
+Hotel The President 4*sup.            FECHA                                      DBL                 SGL                 TRP
+                                                  01.11.2007 - 04.12.2007            28 EUR pp23        46 EUR pp24        27 EUR pp25
+                                                  05.12.2007 - 10.12.2007            35 EUR pp26       58 EUR pp27        34 EUR pp28
+                                                  11.12.2007 - 24.12.2007            28 EUR pp23        46 EUR pp24        27 EUR pp25
+			        25.12.2007 - 02.01.2008            35 EUR pp26        58 EUR pp27        34 EUR pp28
+                                                  03.01.2008 - 14.03.2008            28 EUR pp23        46 EUR pp24        27 EUR pp25
+
+
+44
+Hotel Kent 4*                               FECHA                                      DBL                 SGL                 TRP
+			        01.11.2007 - 23.12.2007            23 EUR pp17        38 EUR pp29        22 EUR pp30
+			        24.12.2007 - 04.01.2008            33 EUR pp18        49 EUR pp31        32 EUR pp32
+                                                  05.01.2008 - 15.03.2008            23 EUR pp17        38 EUR pp29        22 EUR pp30
+
+
+45
+Hotel Barcelo Saray 4*sup.           FECHA                                       DBL                 SGL                 TRP       
+			        01.11.2007 - 26.12.2007            28 EUR pp29        49 EUR pp31        27 EUR pp25
+                                                  27.12.2007 - 02.01.2008            38 EUR pp29        64 EUR pp33        37 EUR pp34
+			        03.01.2008 - 15.03.2008            28 EUR pp23        49 EUR pp 31       27 EUR pp25
+
+46
+Hotel Richmond 4*                        FECHA                                      DBL                 SGL                 TRP
+			        01.11.2007 - 23.12.2007            33 EUR pp 18      58 EUR pp 27       32 EUR pp32
+                                                  24.12.2007 - 02.01.2008            41 EUR pp35        71 EUR pp36        40 EUR pp21
+                                                  03.01.2008 - 15.03.2008            33 EUR pp18        58 EUR pp27        32 EUR pp32
+
+
+47 
+Hotel Nippon 4* sup.                     FECHA                                      DBL                 SGL                 TRP
+                                                  01.11.2007 - 27.12.2007            41 EUR pp 35       69 EUR pp37        40 EUR pp21
+                                                  28.12.2007 - 02.01.2008            48 EUR pp38        85 EUR pp 39       47 EUR pp40
+                                                  03.01.2008 - 15.03.2008            41 EUR pp35        69 EUR pp37        40 EUR pp21   

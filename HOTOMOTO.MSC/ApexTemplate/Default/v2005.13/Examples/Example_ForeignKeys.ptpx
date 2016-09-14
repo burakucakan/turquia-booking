@@ -1,0 +1,106 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>NewTemplate</name>
+    <description>Demonstrates the use of the ForeignKeys property which is a property of the Table Object.</description>
+    <author>ApexSQL</author>
+    <legal>Copyright (C) 1999-2007 ApexSQL LLC. All rights reserved.</legal>
+    <ExpectedObjectTypes>Any</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>Documentation</output>
+    <scripting>CSharp</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>MultiFile</Mode>
+    <Encoding>20127</Encoding>
+  </outputfile>
+  <Import>
+    <includes />
+    <Namespaces />
+    <Assemblies />
+    <Templates />
+  </Import>
+  <templatecode><![CDATA[<%
+//------------------------------------------------------------ 
+//	TEMPLATE : Example_ForeignKeys.ptpx
+//	PURPOSE  : This template demonstrates the use of the ForeignKeys property which is a property of the Table Object  
+//	MODEL    : Code.Database.ActiveTable.Keys
+//	EXPECTS  : TABLES
+//	OUTPUT   : Generic Text Output
+//	AUTHOR   : ApexSQL
+//	SCRIPT	 : C# 
+//	LANGUAGE : Documentation                                        
+//	MODIFIED : March 2007
+// ------------------------------------------------------------ 
+
+
+// this is the currently selected table from the user interface
+Table objTable = Code.Database.ActiveTable;
+
+if(objTable == null)
+{
+	Out.WriteLine("There's no selected table.");
+	return;
+}
+%>
+TABLE INFORMATION
+============================
+
+Table Name:  <%= objTable.Name %>
+Table Owner: <%= objTable.Owner %>
+
+Foreign Keys count: <%= objTable.ForeignKeys.Count %>
+
+<%	
+for(int i=0; i<objTable.ForeignKeys.Count; i++)
+{
+	Key key = objTable.ForeignKeys[i];
+
+	Out.WriteLine("{0}. KEY INFORMATION for {1}", i+1, key.Name);
+	Out.WriteLine("============================");
+	Out.WriteLine();
+	Out.WriteLine("Name:        {0}", key.Name);
+	Out.WriteLine("Object Type: {0}", key.ObjectType);
+	Out.WriteLine();
+	Out.WriteLine("Script: ");
+	Out.WriteLine();
+	Out.WriteLine(key.Script );
+		
+	Out.WriteLine("Referenced Table:            {0}", key.ReferencedTable);
+	Out.WriteLine("Referenced Constraint:       {0}", key.ReferencedKey);
+	Out.WriteLine("Referenced Constraint Type:  {0}", key.ReferencedKey.ObjectType);
+	
+	Out.Indent();
+	
+	foreach(Column column in key.KeyColumns)
+	{
+		// this is a key colunm
+		Out.WriteLine("Key Column:     {0}", column.Name);
+		// this is a referenced column from referenced table
+		Out.WriteLine("Ref Key column: {0}", column.ReferencedColumn(key.Name).Name);
+	}
+	
+	Out.Unindent();
+	Out.WriteLine();			
+	Out.WriteLine();
+			
+	Out.WriteLine("Enabled:     {0}", key.IsEnabled);
+	Out.WriteLine("Clustered:   {0}", key.Clustered);
+	Out.WriteLine("ExcludeReplication: {0}", key.ExcludeReplication);
+	Out.WriteLine("FillFactor:  {0}", key.FillFactor);
+	Out.WriteLine("ParentName:  {0}", key.ParentName);
+	Out.WriteLine("ParentOwner: {0}", key.ParentOwner);
+	Out.WriteLine("KeyType:     {0}", key.KeyType);					
+	
+	Out.WriteLine();			
+	Out.WriteLine("------------------------------------------------------------");    
+	Out.WriteLine();
+}
+%>]]></templatecode>
+</template>

@@ -1,0 +1,83 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>Users</name>
+    <description>Illustrates properties of Schemas object</description>
+    <author>ApexSQL</author>
+    <legal>Copyright (C) 1999-2007 ApexSQL LLC. All rights reserved.</legal>
+    <ExpectedObjectTypes>Any</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>Documentation</output>
+    <scripting>CSharp</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>MultiFile</Mode>
+    <Encoding>20127</Encoding>
+  </outputfile>
+  <Import>
+    <includes />
+    <Namespaces />
+    <Assemblies />
+    <Templates />
+  </Import>
+  <templatecode><![CDATA[<%  
+//------------------------------------------------------------ 
+//	TEMPLATE : Example_Schemas.ptpx
+//	PURPOSE  : Illustrates properties of Schemas object
+//
+//	EXPECTS  : any
+//	OUTPUT   : Generic Text Output
+//	AUTHOR   : ApexSQL
+//	SCRIPT	 : C# 
+//	LANGUAGE : Documentation                                        
+//	MODIFIED : March 2007
+//	NOTES    :  
+//		
+// ------------------------------------------------------------ 
+%>
+Database: <%= Code.Database.Name %>
+Total Schemas: <%= Code.Database.Schemas.Count %>
+
+<%
+foreach(Schema objSchema in Code.Database.Schemas)
+{
+%>
+============================
+Schema:	<%= objSchema.Name %>
+============================
+Owner:		<%= objSchema.Owner %>
+IsSystem:	<%= objSchema.IsSystemObject %>
+
+<%
+if(objSchema.ExtendedProperties.Count > 0)
+{
+	Out.WriteLine("Extended properties:");	
+	
+	foreach(ExtendedProperty p in objSchema.ExtendedProperties)
+	{
+		Out.Write("{0}: ", p.Name);
+		Out.WriteLine(p.Value);
+		Out.WriteLine();
+	}
+	
+	Out.WriteLine();
+}
+	
+%>
+Script:
+
+<%= objSchema.Script %>
+
+----------------------------
+
+	
+<%
+}
+%>]]></templatecode>
+</template>

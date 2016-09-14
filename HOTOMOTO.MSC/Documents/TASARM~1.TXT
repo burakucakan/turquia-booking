@@ -1,0 +1,6 @@
+Tasarým Notlarý;
+	- Sitedeki hiç bir yazý, multilingual ve dinamik yapýya uygun olmasý için resim olarak kullanýlmamýþtýr.
+	- Üst Menünün otel tabýndan detaylý arama seçilmiþ hali 
+	- Kiþisel menüm > Ajax ReorderList (http://ajax.asp.net/ajaxtoolkit/ReorderList/ReorderList.aspx)
+	- 1,2,3 ile numaralandýrýlan tavsiye paketler > Ajax Accordion (http://ajax.asp.net/ajaxtoolkit/Accordion/Accordion.aspx)
+	- Arrow olan her kutu açýlýp kapanabilir > (http://ajax.asp.net/ajaxtoolkit/CollapsiblePanel/CollapsiblePanel.aspx)

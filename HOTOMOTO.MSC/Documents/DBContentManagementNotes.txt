@@ -1,0 +1,34 @@
+Help
+	HelpId
+	Title
+	Description
+	ParentId
+	isActive
+	
+Bulletin
+	BulletinId
+	UserId
+	Title
+	Description
+	ImageFileName
+	Status
+	
+Banner
+	BannerId
+	Position
+	Description
+	FileName
+	ToolTip
+	Width
+	Height
+	IsDefault
+	IsActive
+	
+BannerSchedule
+	BannerId
+	StartDate
+	EndDate
+	StartTime
+	EndTime
+	
+Favori Paketler

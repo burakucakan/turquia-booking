@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebWagon", "WebWagon\WebWagon.csproj", "{06049A94-2C16-4888-8168-AF9B31DE7576}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResxTranslator", "ResxTranslator\ResxTranslator.csproj", "{7B2E64D8-BD24-4420-A1B8-EC76EAC37A21}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{06049A94-2C16-4888-8168-AF9B31DE7576}.Debug.ActiveCfg = Debug|.NET
+		{06049A94-2C16-4888-8168-AF9B31DE7576}.Debug.Build.0 = Debug|.NET
+		{06049A94-2C16-4888-8168-AF9B31DE7576}.Release.ActiveCfg = Release|.NET
+		{06049A94-2C16-4888-8168-AF9B31DE7576}.Release.Build.0 = Release|.NET
+		{7B2E64D8-BD24-4420-A1B8-EC76EAC37A21}.Debug.ActiveCfg = Debug|.NET
+		{7B2E64D8-BD24-4420-A1B8-EC76EAC37A21}.Debug.Build.0 = Debug|.NET
+		{7B2E64D8-BD24-4420-A1B8-EC76EAC37A21}.Release.ActiveCfg = Release|.NET
+		{7B2E64D8-BD24-4420-A1B8-EC76EAC37A21}.Release.Build.0 = Release|.NET
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

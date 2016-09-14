@@ -1,0 +1,149 @@
+﻿body {
+	margin: 0px 0px 0px 0px;
+	font-family: Tahoma;
+	font-size: 11px;
+}
+
+table {
+	font-family: Tahoma;
+	font-size: 11px;
+	border-collapse: collapse;
+	border-spacing: 0px 0px;
+}
+
+.RoomName {
+	font-family: Arial; 
+	font-size: 12pt;
+	color: #9292ab;
+}
+
+.RoomDescription {
+	font-family: Tahoma; 
+	font-size: 11px;
+	color: #6a6a8d;
+}
+
+.PriceHeader {
+	font-family: Trebuchet MS; 
+	font-size: 12pt;
+	color: #FFFFFF;
+	background-color: #768aa5;
+	height: 24px;
+	padding-left: 15px;
+}
+
+.rptHeader {
+	height: 21px;
+	background-image: url('../Images/Backgrounds/rptHeaderBack.gif');
+	background-repeat: repeat-x;
+	text-align: left;
+}
+
+.rptItem {
+	height: 20px;
+	text-align: left;
+	background-color: #fbf9fa;
+}
+
+.rptTable {
+	border: 1px solid #ced4e2;
+	width: 100%;
+	border-spacing: 2px 2px;
+}
+
+.Top {	
+	height: 84px;
+	background-color: #fffbf7;
+	background-image: url('../Images/Backgrounds/TopBack.gif');
+	background-repeat: repeat-x;
+	text-align: left;
+}
+
+a.ULink {
+	color: #395a88;
+	text-decoration: underline;
+}
+
+a.ULink:hover {
+	color: #800000;
+	text-decoration: none;
+}
+
+.pnlContainer {	
+	position: relative;
+	width: 100%;
+	height: 400;
+	overflow: auto;
+	z-index: 1;
+	text-align: left;
+	SCROLLBAR-HIGHLIGHT-COLOR: #D9D6CA;
+	SCROLLBAR-SHADOW-COLOR: #D9D6CA;
+	SCROLLBAR-ARROW-COLOR: #FFFFFF;
+ 	SCROLLBAR-TRACK-COLOR: #EBEBEB;
+	SCROLLBAR-DARKSHADOW-COLOR: #DFDFD5;
+  	SCROLLBAR-BASE-COLOR: #DFDFD5;
+}
+
+
+.ListHeader {
+	width: 100%;
+	height: 77px;
+	background-color: #FFFFFF;
+	background-image: url('../Images/Backgrounds/ListHeaderBack.gif');
+	background-repeat: repeat-x;
+	background-position: top;
+}
+
+.TourListHeader {
+	width: 100%;
+	height: 77px;
+	background-color: #FFFFFF;
+	background-image: url('../Images/Backgrounds/TourListHeaderBack.gif');
+	background-repeat: repeat-x;
+	background-position: top;
+}
+
+.ListTitle {
+	color: #FFFFFF;
+	font-family: Trebuchet MS;
+	font-size: 12pt;
+	text-align: left;
+}
+
+.HotelDetailPropertiesBack {	
+	height: 47px;
+	background-image: url('../Images/Backgrounds/HotelDetailPropertiesBack.gif');
+	background-repeat: repeat-x;
+	text-align: left;
+	padding-left: 10px;
+}
+
+.T {
+	font-family: Tahoma;
+	font-size: 11px;
+}
+
+.clNavy {
+	color: #086178;	
+}
+
+
+.ToolTip {
+	display: none;
+	position: absolute;
+	background-color: #FFFFFF; 
+	border: #f2f1f7 2px solid; 
+	font-family: Verdana;
+	font-size: 10px;
+	padding: 4px 4px;
+	text-align: left;
+	width: 500px;
+}
+
+.Title {
+	color: #bdb8e5;
+	font-family: Trebuchet MS;
+	font-size: 12pt;
+	text-align: left;
+}
+

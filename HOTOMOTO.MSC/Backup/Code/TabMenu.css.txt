@@ -1,0 +1,61 @@
+﻿.divTabMenu {
+	position: absolute; 
+	left: 200px; 
+	top: 56px;
+}
+
+.divSubMenu {
+	position: absolute; 
+	left: 200px; 
+	top: 90px;	
+	display: none;
+	z-index: 1;
+}
+
+.TopMenuRow {
+	height: 32px;
+	background-image: url('../Images/Backgrounds/TopMenu/Back.gif');
+	background-repeat: repeat-x;	
+}
+
+.TabTopOver {
+	height: 3px;
+	background-image: url('../Images/Backgrounds/TopMenu/TabTop2.gif');
+	background-repeat: repeat-x;	
+}
+
+.TabBottom {
+	height: 1px;
+	background-color: #cecbce;	
+}
+
+.TabBottomOver {
+	height: 1px;
+	background-color: #F8F8F8;
+}
+
+.Tab {
+	background-image: url('../Images/Backgrounds/TopMenu/TabBack.gif');
+	background-repeat: repeat-x;
+	text-align: center;
+	padding: 2px 10px;
+	cursor: pointer;
+}
+
+.Seperator {
+	width: 10px;
+	background-image: url('../Images/Backgrounds/TopMenu/Seperator.gif');
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.SubMenu0 {	
+	height: 31px;
+	background-color: #FFFFFF;
+	background-image: url('../Images/Backgrounds/TopMenu/TopMenuBack.gif');
+	background-repeat: repeat-x;
+}
+
+
+
+/*  ----------------------------------------  */

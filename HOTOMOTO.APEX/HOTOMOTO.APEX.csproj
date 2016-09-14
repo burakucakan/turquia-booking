@@ -1,0 +1,191 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{72D43FC8-5638-4464-95AE-4C327E951E66}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HOTOMOTO.APEX</RootNamespace>
+    <AssemblyName>HOTOMOTO.APEX</AssemblyName>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Custom\SPExec_Authentication.cs" />
+    <Compile Include="Custom\SPExec_Error.cs" />
+    <Compile Include="Custom\SPExec_Guest.cs" />
+    <Compile Include="Custom\SPExec_Help.cs" />
+    <Compile Include="Custom\SPExec_Hotel.cs" />
+    <Compile Include="Custom\SPExec_Packages.cs" />
+    <Compile Include="Custom\SPExec_Payment.cs" />
+    <Compile Include="Custom\SPExec_Recommendations.cs" />
+    <Compile Include="Custom\SPExec_Reservation.cs" />
+    <Compile Include="Custom\SPExec_Room.cs" />
+    <Compile Include="Custom\SPExec_Tour.cs" />
+    <Compile Include="Custom\SPExec_Transfer.cs" />
+    <Compile Include="Custom\SPExec_UserManagement.cs" />
+    <Compile Include="Custom\SPExec_Customer.cs" />
+    <Compile Include="Entities\Currencies.cs" />
+    <Compile Include="Entities\CustomerCreditCards.cs" />
+    <Compile Include="Entities\Errors.cs" />
+    <Compile Include="Entities\Errors_ML.cs" />
+    <Compile Include="Entities\Help.cs" />
+    <Compile Include="Entities\Help_ML.cs" />
+    <Compile Include="Entities\AccessMainTypes.cs" />
+    <Compile Include="Entities\AccessMainTypes_ML.cs" />
+    <Compile Include="Entities\AccessOptions.cs" />
+    <Compile Include="Entities\AccessTypes.cs" />
+    <Compile Include="Entities\AccessTypes_ML.cs" />
+    <Compile Include="Entities\Addresses.cs" />
+    <Compile Include="Entities\AddressTypes.cs" />
+    <Compile Include="Entities\AddressTypes_ML.cs" />
+    <Compile Include="Entities\BannerPositions.cs" />
+    <Compile Include="Entities\BannerPositions_ML.cs" />
+    <Compile Include="Entities\Banners.cs" />
+    <Compile Include="Entities\Banners_ML.cs" />
+    <Compile Include="Entities\BookingStates.cs" />
+    <Compile Include="Entities\BookingStates_ML.cs" />
+    <Compile Include="Entities\Cities.cs" />
+    <Compile Include="Entities\Cities_ML.cs" />
+    <Compile Include="Entities\Countries.cs" />
+    <Compile Include="Entities\Countries_ML.cs" />
+    <Compile Include="Entities\CustomerCredibilities.cs" />
+    <Compile Include="Entities\Customers.cs" />
+    <Compile Include="Entities\Customers_AccessOptions.cs" />
+    <Compile Include="Entities\Customers_Addresses.cs" />
+    <Compile Include="Entities\CustomerTypes.cs" />
+    <Compile Include="Entities\CustomerTypes_ML.cs" />
+    <Compile Include="DBHelper.cs" />
+    <Compile Include="Entities\Guests.cs" />
+    <Compile Include="Entities\Guests_AccessOptions.cs" />
+    <Compile Include="Entities\Guests_Addresses.cs" />
+    <Compile Include="Entities\HotelChains.cs" />
+    <Compile Include="Entities\HotelChains_ML.cs" />
+    <Compile Include="Entities\HotelClasses.cs" />
+    <Compile Include="Entities\HotelClasses_ML.cs" />
+    <Compile Include="Entities\HotelComments.cs" />
+    <Compile Include="Entities\HotelImages.cs" />
+    <Compile Include="Entities\HotelPlaceDistances.cs" />
+    <Compile Include="Entities\HotelProperties.cs" />
+    <Compile Include="Entities\HotelProperties_ML.cs" />
+    <Compile Include="Entities\Hotels.cs" />
+    <Compile Include="Entities\Hotels_Addresses.cs" />
+    <Compile Include="Entities\Hotels_HotelProperties.cs" />
+    <Compile Include="Entities\Hotels_ML.cs" />
+    <Compile Include="Entities\Languages.cs" />
+    <Compile Include="Entities\LoginLogs.cs" />
+    <Compile Include="Entities\PackagedHotels.cs" />
+    <Compile Include="Entities\PackagedRooms.cs" />
+    <Compile Include="Entities\PackagedTours.cs" />
+    <Compile Include="Entities\PackagedTransfer.cs" />
+    <Compile Include="Entities\Packages.cs" />
+    <Compile Include="Entities\PaymentTypes.cs" />
+    <Compile Include="Entities\PaymentTypes_ML.cs" />
+    <Compile Include="Entities\PlaceImages.cs" />
+    <Compile Include="Entities\Places.cs" />
+    <Compile Include="Entities\Places_ML.cs" />
+    <Compile Include="Entities\Ports.cs" />
+    <Compile Include="Entities\Ports_AccessOptions.cs" />
+    <Compile Include="Entities\Ports_Addresses.cs" />
+    <Compile Include="Entities\Ports_ML.cs" />
+    <Compile Include="Entities\Prices.cs" />
+    <Compile Include="Entities\Recommendations.cs" />
+    <Compile Include="Entities\RoomBedPreferences.cs" />
+    <Compile Include="Entities\RoomBedPreferences_ML.cs" />
+    <Compile Include="Entities\TransferPriceLists.cs" />
+    <Compile Include="Entities\WebPosTransactions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Entities\Reservations.cs" />
+    <Compile Include="Entities\RoomAvailabilities.cs" />
+    <Compile Include="Entities\RoomComments.cs" />
+    <Compile Include="Entities\RoomImages.cs" />
+    <Compile Include="Entities\RoomPriceListCustomers.cs" />
+    <Compile Include="Entities\RoomPriceListPrices.cs" />
+    <Compile Include="Entities\RoomPriceLists.cs" />
+    <Compile Include="Entities\RoomProperties.cs" />
+    <Compile Include="Entities\RoomProperties_ML.cs" />
+    <Compile Include="Entities\RoomReservations.cs" />
+    <Compile Include="Entities\Rooms.cs" />
+    <Compile Include="Entities\RoomSpecialPrices.cs" />
+    <Compile Include="Entities\Rooms_ML.cs" />
+    <Compile Include="Entities\Rooms_RoomProperties.cs" />
+    <Compile Include="Custom\SPRunner.cs" />
+    <Compile Include="Entities\TourComments.cs" />
+    <Compile Include="Entities\TourImages.cs" />
+    <Compile Include="Entities\TourPriceListCustomers.cs" />
+    <Compile Include="Entities\TourPriceListPrices.cs" />
+    <Compile Include="Entities\TourPriceLists.cs" />
+    <Compile Include="Entities\TourProperties.cs" />
+    <Compile Include="Entities\TourProperties_ML.cs" />
+    <Compile Include="Entities\TourRecurrence.cs" />
+    <Compile Include="Entities\TourReservations.cs" />
+    <Compile Include="Entities\TourReservations_Guests.cs" />
+    <Compile Include="Entities\Tours.cs" />
+    <Compile Include="Entities\TourSpecialPrices.cs" />
+    <Compile Include="Entities\Tours_Cities.cs" />
+    <Compile Include="Entities\Tours_ML.cs" />
+    <Compile Include="Entities\Tours_TourProperties.cs" />
+    <Compile Include="Entities\TransferPriceListCustomers.cs" />
+    <Compile Include="Entities\TransferPriceListPrices.cs" />
+    <Compile Include="Entities\TransferReservations.cs" />
+    <Compile Include="Entities\TransferReservations_Guests.cs" />
+    <Compile Include="Entities\UserCommands.cs" />
+    <Compile Include="Entities\UserCommands_ML.cs" />
+    <Compile Include="Entities\UserPermissions.cs" />
+    <Compile Include="Entities\UserPermissions_ML.cs" />
+    <Compile Include="Entities\UserPermissions_UserCommands.cs" />
+    <Compile Include="Entities\UserRoles.cs" />
+    <Compile Include="Entities\UserRoles_ML.cs" />
+    <Compile Include="Entities\UserRoles_UserPermissions.cs" />
+    <Compile Include="Entities\Users.cs" />
+    <Compile Include="Entities\Users_AccessOptions.cs" />
+    <Compile Include="Entities\Users_Addresses.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

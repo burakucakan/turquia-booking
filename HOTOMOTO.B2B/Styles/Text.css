@@ -1,0 +1,106 @@
+.T {
+	font-family: Tahoma;
+	font-size: 11px;
+}
+
+.Treb {
+	font-family: Trebuchet MS; 
+	font-size: 9pt; 
+}
+
+.Verd {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; 
+	font-size: 10px; 
+}
+
+.clBlack {
+	color: #1E2310;	
+}
+
+.clBlue {
+	color: #0982a0;	
+}
+
+.clAqua {
+	color: #a7bfe0;	
+}
+
+.clRed {
+	color: #c50a0a;	
+}
+
+.clNavy {
+	color: #086178;	
+}
+
+.clWhite {
+	color: #FFFFFF;	
+}
+
+.Error {
+	color: #800000;
+	font-family: Verdana;
+	font-size: 11px;
+	font-weight: lighter;
+}
+
+.Price {
+	color: #6a698b;
+	font-family: Trebuchet MS;
+	font-size: 14pt;
+}
+
+
+.CurrPrefix {
+	color: #47465E;
+	font-family: Trebuchet MS;
+	font-weight: bold;
+	font-size: 11pt;
+}
+
+
+/* CUSTOM */ 
+
+.MainTopHeader {
+	font-family: Trebuchet MS; 
+	font-size: 12pt;
+	color: #FFFFFF;
+}
+
+.BoxTitle {
+	font-family: Tahoma;
+	font-size: 11px;
+	font-weight: bold;
+	color: #6a82a3;	
+}
+
+.RecommendNumber {
+	color: White;
+	font-family: Arial;
+	font-size: 25pt;
+	font-weight: bold;
+	width: 40px;
+	text-align: center;
+}
+
+.RecommendTitle {
+	color: White;
+	font-family: Arial;
+	font-size: 13pt;
+	text-align: left;
+}
+
+.ListTitle {
+	color: #FFFFFF;
+	font-family: Trebuchet MS;
+	font-size: 12pt;
+	text-align: left;
+}
+
+.Title {
+	font-family: Arial; 
+	font-size: 11pt;
+	color: #9292ab;
+}
+
+/* // CUSTOM // */ 

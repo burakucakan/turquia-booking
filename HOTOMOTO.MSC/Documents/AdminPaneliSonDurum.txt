@@ -1,0 +1,22 @@
+TAMAMLANAMAYANLAR
+------------------------------
+- Hotel Ekleme (Resim Hariç)
+- Hotel Güncelleme (Resim Hariç)
+- Oda Ekleme (%20)
+- Odalarýn fiyatlarýn her yatak tipi için girilmesi (%20)
+
+HÝÇ BAÞLANMAYANLAR
+------------------------------
+- Oda Güncelleme
+- Hotel Sil
+- Oda Sil
+- Odalarýn Uygunluk Tarihleri
+- Hotel Resimleri
+- Tur Ekleme
+- Tur Güncelleme
+- Tur Silme
+- Fiyat Listesi Ekle, Düzenle
+- Transfer Fiyat Düzenlemesi
+- Rezervasyonlarý Listele 
+- Havale rezervasyonlarý onayla
+- Yardým, Ports, Mekanlar tanýmlamalarý

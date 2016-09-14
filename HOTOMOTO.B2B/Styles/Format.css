@@ -1,0 +1,424 @@
+.Tbl0 {
+	width: 100%;
+	height: 100%;
+}
+
+.VSpace {
+	height: 14px;
+}
+
+.HSpace {
+	width: 18px;
+}
+
+#divLogo {
+	position: absolute; 
+	left: 28px; 
+	top: 15px;
+}
+
+.PagesTable {
+	width: 100%;
+}
+
+.Top {
+	height: 80px;
+	background-color: #fffbf7;
+	background-image: url('../Images/Backgrounds/TopBack.gif');
+	background-repeat: repeat-x;
+	text-align: right;
+	padding-right: 30px;
+}
+
+#LeftCell {
+	width: 10%;
+	vertical-align: top;
+}
+
+.DefaultLeft {
+	width: 268px;
+	vertical-align: top;
+}
+
+.DefaultRight {
+
+	vertical-align: top;
+}
+
+.LoginInfo {
+	width: 188px;
+	height: 99px;
+	border: 1px solid #B7CDE2;	
+	background-color: #FFFFFF;	
+	background-image: url('../Images/Backgrounds/LoginInfoBack.gif');
+	background-repeat: repeat-x;
+}
+
+.MessageBox {
+	width: 145px;
+	height: 25px;
+	background-image: url('../Images/Backgrounds/MailBack.jpg');
+	background-repeat: no-repeat;
+	padding-top: 5px;
+	text-align: center;
+}
+
+.MenuBox {	
+	width: 188px;
+	border: 1px solid #cfd5e3;
+	background-color: #FFFFFF;
+	background-image: url('../Images/Backgrounds/LeftMenuBack.gif');
+	background-repeat: repeat-x;
+	background-position: bottom;
+}
+
+.MenuHeader {
+	height: 22px;
+	background-image: url('../Images/Backgrounds/LeftMenuTitleBack.gif');
+	background-repeat: repeat-x;
+	background-position: top;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.LeftMenuBottomLeft {	
+	width: 3px;
+	height: 9px;
+	background-image: url('../Images/Backgrounds/LeftMenuBottomLeft.gif');
+	background-repeat: no-repeat;
+}
+
+.LeftMenuBottomRight {	
+	width: 5px;
+	height: 9px;
+	background-image: url('../Images/Backgrounds/LeftMenuBottomRight.gif');
+	background-repeat: no-repeat;
+}
+
+.LeftMenuBottom {
+	height: 9px;	
+	background-image: url('../Images/Backgrounds/LeftMenuBottomBack.gif');
+	background-repeat: repeat-x;
+}
+
+.LeftMenuLinkCell {
+	vertical-align: bottom;
+	padding-left: 3px;
+}
+
+.BottomBorder {
+	height: 1px;
+	background-color: #cad6e5;
+}
+
+.Bottom {	
+	height: 57px;
+	background-color: #FFFFFF;
+	background-image: url('../Images/Backgrounds/BottomBack.gif');
+	background-repeat: repeat-x;
+	padding: 6px 12px 6px 12px;
+}
+
+.MainTop {	
+	width: 633px;
+	height: 82px;
+	background-image: url('../Images/Backgrounds/MainTopBack.jpg');
+	background-repeat: no-repeat;
+	vertical-align: top;
+	text-align: left;
+	padding-left: 30px;
+	padding-top: 16px;
+}
+
+.MainTopBackRpt {	
+	background-image: url('../Images/Backgrounds/MainSearchBackRpt.jpg');
+	background-repeat: repeat-x;
+	background-position: top;
+	width: 100%;
+}
+
+.MainSearch {	
+	/*height: 114px;*/
+	background-color: #9dcdeb;
+	background-image: url('../Images/Backgrounds/MainSearchBack.jpg');
+	background-repeat: no-repeat;
+	background-position: left top;
+	vertical-align: top;
+	text-align: left;
+	padding-left: 30px;
+	padding-top: 6px;
+}
+
+.Box {	
+	background-color: #FFFFFF;
+	border: 1px solid #CBCBC9;	
+}
+
+.Box2 {
+	background-color: #EFEFEF;
+	border: 1px solid #D5D6CC;
+}
+
+.BoxHeader {	
+	width: 100%;
+	height: 24px;
+	background-image: url('../Images/Backgrounds/BoxHeaderBack.gif');
+	background-repeat: repeat-x;
+	background-position: top;
+	padding: 0px 8px 0px 5px;
+}
+
+.MainBottomBannerLeft {	
+	width: 29px;
+	height: 100%;
+	background-image: url('../Images/Backgrounds/BannerBottomLeftBack.gif');
+	background-repeat: repeat-y;
+	background-position: top;
+	text-align: center;
+}
+
+.MainBottomBannerRight {	
+	width: 29px;
+	height: 100%;
+	background-image: url('../Images/Backgrounds/BannerBottomRightBack.gif');
+	background-repeat: repeat-y;
+	background-position: top;
+	text-align: center;
+}
+
+.PageAlign {
+	width: 100%;
+	text-align: left;
+	vertical-align: top;
+}
+
+.RecommendHeaderBack {
+	width: 100%;
+	background-image: url('../Images/Backgrounds/RecommendHeaderRpt.gif');
+	background-repeat: repeat-x;
+	background-position: top;
+	text-align: left;
+	cursor: pointer;	
+}
+
+.RecommendHeader {
+	width: 327px;
+	height: 57px;
+	background-image: url('../Images/Backgrounds/RecommendTitleBack.jpg');
+	background-repeat: no-repeat;
+	background-position: left;
+}
+
+.RecommendContent {
+	height: 123px;
+	background-color: #FFFFFF;
+	background-image: url('../Images/Backgrounds/RecommendTextBack.jpg');
+	background-repeat: repeat-x;
+	background-position: left top;
+	padding-left: 10px;
+}
+
+.CursorHand {
+	cursor: pointer;
+}
+
+.Padding {
+	padding-left: 12px;
+	padding-bottom: 3px;
+	padding-top: 3px;
+	padding-right: 7px;
+}
+
+.HrTd {
+	background-color: #cacaca;
+	height: 1px;
+}
+
+
+/*.Scroll {
+	SCROLLBAR-HIGHLIGHT-COLOR: #D9D6CA;
+	SCROLLBAR-SHADOW-COLOR: #D9D6CA;
+	SCROLLBAR-ARROW-COLOR: #FFFFFF;
+ 	SCROLLBAR-TRACK-COLOR: #EBEBEB;
+	SCROLLBAR-DARKSHADOW-COLOR: #DFDFD5;
+  	SCROLLBAR-BASE-COLOR: #DFDFD5;
+}
+*/
+
+.Paging {
+	width: 23px;
+	height: 22px;
+	background-image: url('../Images/Backgrounds/PageNumberBack.jpg');
+	background-repeat: no-repeat;
+	text-align: center;	
+}
+
+.PageActive {
+	width: 23px;
+	height: 22px;
+	background-image: url('../Images/Backgrounds/PageActiveNumberBack.jpg');
+	background-repeat: no-repeat;
+	text-align: center;
+	color: #FFFFFF;
+}
+
+.WhiteRow {
+	height: 26px;
+	background-color: #FFFFFF;
+	text-align: left;
+	padding-left: 13px;	
+}
+
+.AlternateRow {
+	height: 26px;
+	background-color: #EBE0E6;
+	text-align: left;	
+	padding-left: 13px;	
+}
+
+.imgSmall {
+	border-color: #FFFFFF;
+	border-width: 3px;
+	border-style: solid;	
+}
+
+.ReservationHeaderBack {	
+	height: 36px;
+	background-image: url('../Images/Backgrounds/ReservationHeaderBack.jpg');
+	background-repeat: repeat-x;
+	text-align: left;
+	padding-left: 20px;
+}
+
+.TourReservationHeaderBack {
+	height: 36px;
+	background-image: url('../Images/Backgrounds/TourReservationHeaderBack.jpg');
+	background-repeat: repeat-x;
+	text-align: left;
+	padding-left: 20px;
+}
+
+.ReservationInfoCell {	
+	background-color: #d6f2ff;
+	text-align: left;
+	padding: 5px;
+	font-family: Trebuchet MS; 
+	font-size: 9pt; 
+}
+
+.rptHeader {
+	height: 21px;
+	background-image: url('../Images/Backgrounds/rptHeaderBack.gif');
+	background-position: left bottom;
+	background-color: #f6f8f9;
+	background-repeat: repeat-x;
+	text-align: left;
+}
+
+
+.rptHeader2 {
+	text-align: left;
+	background-color: #D5E4EE;	
+}
+
+.rptItem {
+	height: 20px;
+	text-align: left;
+	background-color: #F7F2F4;
+}
+
+.rptItem2 {
+	height: 20px;
+	text-align: left;
+	background-color: #FFFFFF;
+}
+
+.rptItem3 {
+	height: 20px;
+	text-align: left;
+	background-color: #DAEED7;
+	border: 1px solid #FFFFFF;
+}
+
+.rptItem4 {
+	height: 20px;
+	text-align: left;
+	background-color: #DDF0E2;
+	border: 1px solid #FFFFFF;
+}
+
+.rptItem5 {
+	height: 20px;
+	background-color: #f1e8eb;
+}
+
+.rptItem6 {
+	height: 20px;
+	background-color: #81adc2;
+}
+
+.rptItem7 {
+	height: 20px;
+	text-align: left;
+	background-color: #ebfaff;
+}
+
+.rptTable {
+	border: 1px solid #ced4e2;
+	width: 100%;
+	border-spacing: 2px 2px;
+}
+
+.TransferHeaderBack {
+	height: 36px;
+	background-image: url('../Images/Backgrounds/TransferHeaderBack.jpg');
+	background-repeat: repeat-x;
+	text-align: left;
+	padding-left: 20px;
+}
+
+.UserManagementHeaderBack {
+	height: 36px;
+	background-image: url('../Images/Backgrounds/UserManagementHeaderBack.jpg');
+	background-repeat: repeat-x;
+	text-align: left;
+	padding-left: 20px;
+}
+
+.PaymentsHeaderBack {
+	height: 36px;
+	background-image: url('../Images/Backgrounds/PaymentsHeaderBack.jpg');
+	background-repeat: repeat-x;
+	text-align: left;
+	padding-left: 20px;
+}
+
+.ReservationsHeaderBack {
+	height: 36px;
+	background-image: url('../Images/Backgrounds/PaymentsHeaderBack.jpg');
+	background-repeat: repeat-x;
+	text-align: left;
+	padding-left: 20px;
+}
+
+.DetailFormat {	
+	padding-left: 14px; 
+	padding-right: 14px;
+	background-color: #FFFFFF;
+	vertical-align: top;
+	text-align: center;
+}
+
+.Seperator {
+	background-image: url('../Images/Backgrounds/SepBack.gif');
+	background-position: center;
+	background-repeat: repeat-x;	
+}
+
+.PaymentHeaderBack {	
+	height: 36px;
+	background-image: url('../Images/Backgrounds/PaymentHeaderBack.jpg');
+	background-repeat: repeat-x;
+	text-align: left;
+	padding-left: 20px;
+}

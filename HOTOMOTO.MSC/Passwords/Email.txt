@@ -1,0 +1,31 @@
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+> E-POSTA BÝLGÝLERÝ <
+
+POP3 Sunucu Adresi : pop3.turkey-turquia.com
+SMTP Sunucu Adresi : mail.turkey-turquia.com
+Admin E-posta Kullanýcý Adý : postmaster@turkey-turquia.com
+Admin E-posta Þifresi : turquiaftpbB
+E-posta Adresi Adedi : 15 kullanýcý
+E-posta Yönetim Paneli : https://my.rh.com.tr
+
+E-postalarýnýzý okumak için kullanýcý adýnýz ve þifrenizi kullanmanýz gerekmektedir. Outlook, Outlook Express vb. programlarda kullanýcý adýnýzý yazarken kullaniciadi@turkey-turquia.com þeklinde yazmanýz gerekmektedir.
+
+Kullandýðýnýz E-posta programýnda giden posta sunucusunda kimlik doðrulamasýný aktif hale getirmeniz gerekmektedir.
+
+Ayarlar ile ilgili detaylý bilgiye http://www.rh.com.tr adresinden ulaþabilirsiniz.
+
+Ayrýca e-postalarýnýzý okumak için http://posta.rh.com.tr adresini de kullanabilirsiniz.
+
+E-posta ayarlarýný web tarayýcýnýzý kullanarak, https://my.rh.com.tr adresinden baðlanýp yapabilirsiniz.
+
+Kullanýcý adý olarak : postmaster@turkey-turquia.com
+Kullanýcý þifresi olarak : turquiaftpbB
+
+kullanarak sisteme girebilirsiniz.
+
+E-posta yönetici paneli ile;
+* E-posta kullanýcýsý ekliyebilir,
+* Varolan kullanýcýlarýn özelliklerini ve þifrelerini deðiþtirebilir,
+* Yönlendirme (alias) açabilirsiniz.
+---------------------------------------------------------------------------------
+

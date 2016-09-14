@@ -1,0 +1,75 @@
+<template version="2.0">
+  <header>
+    <app>
+    </app>
+    <name>Example_ResultColumns</name>
+    <description>Illustrates using the Result columns collection of a procedure object</description>
+    <author>ApexSQL</author>
+    <legal>Copyright (C) 1999-2007 ApexSQL LLC. All rights reserved.</legal>
+    <ExpectedObjectTypes>Procedure</ExpectedObjectTypes>
+  </header>
+  <languages>
+    <output>Documentation</output>
+    <scripting>VB_NET</scripting>
+  </languages>
+  <outputfile>
+    <name>
+    </name>
+    <path>
+    </path>
+    <Mode>MultiFile</Mode>
+    <Encoding>20127</Encoding>
+  </outputfile>
+  <Import>
+    <includes />
+    <Namespaces />
+    <Assemblies />
+    <Templates />
+  </Import>
+  <templatecode><![CDATA[<%
+'------------------------------------------------------------
+'	TEMPLATE : Example_ResultColumn.ptpx
+'	PURPOSE  : This demonstrates the use of a Result Column collection of a Procedure Object
+'	MODEL    : 
+'				Code.Database.ActiveProcedure.ResultColumns
+
+'	EXPECTS  : PROCEDURE
+'	OUTPUT   : Generic Text Output
+'	AUTHOR   : ApexSQL
+'	SCRIPT	 : VB.NET 
+'	LANGUAGE : Documentation
+'	MODIFIED : Feb 2007
+'	NOTES    : 
+' ------------------------------------------------------------
+
+Dim proc As Procedure = Code.Database.ActiveProcedure
+
+If Nothing Is proc Then
+	Out.WriteLine("There's no selected procedure.")
+	Return
+End If
+%>
+
+Procedure Name: <%= proc.QualifiedName %>
+Procedure IsRecordset: <%= proc.IsRecordset	%>
+
+<%
+For Each rc As ResultColumn In proc.ResultColumns
+%>	Name:				<%= rc.Name %>
+	-------------------------------------
+	Length:				<%= rc.Length %>
+	SQLDatatype:		<%= rc.SQLDatatype %>
+	SQLDatatypeAndLength: <%= rc.SQLDatatypeAndLength %>
+	Datatype:			<%= rc.Datatype %>
+	CLR Datatype:		<%= rc.AdoNetMapping.CLRType %>
+	OrdinalPosition: 	<%= rc.OrdinalPosition %>
+	IsChecked:			<%= rc.IsChecked %>
+	ParentName: 		<%= rc.ParentName %>
+	ParentOwner:		<%= rc.ParentOwner %>
+
+
+<%
+Next
+%>
+]]></templatecode>
+</template>

@@ -1,0 +1,14 @@
+﻿#dvProcessing {
+    display: none; 
+    position: absolute;
+    z-index: 5;
+}
+
+#TblProcessing {
+    width: 205px;
+    height: 56px;
+    border-collapse: collapse;
+    background-color: #f2f1f7;
+    border: 2px solid #bfeaf1;
+    border-spacing: 0px 0px;
+}
